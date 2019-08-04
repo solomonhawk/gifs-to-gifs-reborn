@@ -4,6 +4,9 @@ defmodule Ui.Application do
   use Application
 
   def start(_type, _args) do
+    # GameApp.ServerSupervisor.start_game("ABCD", %{id: "Sol"})
+    # IO.inspect GameApp.Server.summary("ABCD")
+
     children = [
       Ui.Endpoint
     ]

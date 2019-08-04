@@ -1,4 +1,11 @@
-defmodule Game.ServerSupervisor do
+defmodule GameApp.ServerSupervisor do
+  @moduledoc """
+  A dynamic supervisor that supervises child GameApp.Server processes.
+  """
+
+  @type shortcode :: String.t()
+  @type player :: %{id: String.t()}
+
   use DynamicSupervisor
 
   def start_link(_) do
@@ -10,10 +17,23 @@ defmodule Game.ServerSupervisor do
     DynamicSupervisor.init(strategy: :one_for_one)
   end
 
+  @doc """
+  Starts a game server with the given shortcode and creator(player).
+
+  Returns `{:ok, pid}` or `{:error, any}`.
+
+  ## Examples
+
+      iex> GameApp.ServerSupervisor.start_game("ABCD", %{id: "Gamer"})
+      {:ok, pid}
+
+  """
+  @spec start_game(shortcode(), player()) :: {:ok, pid()} | {:error, any()}
   def start_game(shortcode, player) do
     child_spec = %{
-      id: Game.Server,
-      start: {Game.Server, :start_link, [shortcode, player]},
+      id: GameApp.Server,
+      start: {GameApp.Server, :start_link, [shortcode, player]},
+      # don't game server restart processes that exit normally
       restart: :transient
     }
 
@@ -21,7 +41,7 @@ defmodule Game.ServerSupervisor do
   end
 
   def stop_game(shortcode) do
-    child_pid = Game.Server.game_pid(shortcode)
+    child_pid = GameApp.Server.game_pid(shortcode)
     DynamicSupervisor.terminate_child(__MODULE__, child_pid)
   end
 end

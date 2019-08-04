@@ -1,6 +1,7 @@
-defmodule Game.Server do
+defmodule GameApp.Server do
   use GenServer
   require Logger
+  alias GameApp.Game
 
   @game_timeout :timer.minutes(10)
   @round_start_timeout :timer.seconds(5)
@@ -81,7 +82,7 @@ defmodule Game.Server do
   Returns a tuple used to register and lookup a game server process by name.
   """
   def via_tuple(shortcode) do
-    {:via, Registry, {Game.Registry, "game:" <> shortcode}}
+    {:via, Registry, {GameApp.Registry, "game:" <> shortcode}}
   end
 
   @doc """

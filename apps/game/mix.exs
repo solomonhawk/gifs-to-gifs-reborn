@@ -1,4 +1,4 @@
-defmodule Game.MixProject do
+defmodule GameApp.MixProject do
   use Mix.Project
 
   def project do
@@ -19,16 +19,16 @@ defmodule Game.MixProject do
   def application do
     [
       extra_applications: [:logger],
-      mod: {Game.Application, []}
+      mod: {GameApp.Application, []}
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      # {:dep_from_hexpm, "~> 0.3.0"},
-      # {:dep_from_git, git: "https://github.com/elixir-lang/my_dep.git", tag: "0.1.0"},
-      # {:sibling_app_in_umbrella, in_umbrella: true}
+      {:earmark, "~> 1.2", only: :dev},
+      {:ex_doc, "~> 0.19", only: :dev},
+      {:cortex, "~> 0.1", only: [:dev, :test]}
     ]
   end
 end
