@@ -33,7 +33,7 @@ defmodule GameApp.ServerSupervisor do
     child_spec = %{
       id: GameApp.Server,
       start: {GameApp.Server, :start_link, [shortcode, player]},
-      # don't game server restart processes that exit normally
+      # don't restart game server processes that exit normally
       restart: :transient
     }
 
