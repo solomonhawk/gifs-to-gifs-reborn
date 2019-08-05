@@ -70,7 +70,7 @@ defmodule GameApp.Server do
 
   @impl true
   def handle_call(:summary, _from, game) do
-    {:reply, game, game, @game_timeout}
+    {:reply, Game.summary(game), game, @game_timeout}
   end
 
   @impl true

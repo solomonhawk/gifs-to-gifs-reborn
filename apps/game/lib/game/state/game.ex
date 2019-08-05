@@ -68,6 +68,48 @@ defmodule GameApp.Game do
   end
 
   @doc """
+  Returns a summary of the game state.
+
+  ## Examples
+
+      iex> g = Game.create("ABCD", Player.create("1", "Gamer"))
+      iex> Game.summary(g)
+      %{
+        creator: %Player{id: "1", name: "Gamer"},
+        funmaster: nil,
+        phase: :lobby,
+        players: %{"1" => %Player{id: "1", name: "Gamer"}},
+        prompt: nil,
+        reactions: nil,
+        round_number: nil,
+        scores: %{"1" => 0},
+        shortcode: "ABCD",
+        winner: nil
+      }
+
+  """
+  @spec summary(Game.t()) :: map()
+  @spec summary(Game.t(), map()) :: map()
+  def summary(%Game{rounds: []} = game), do: summary(game, %{})
+
+  def summary(%Game{rounds: rounds} = game), do: summary(game, hd(rounds))
+
+  def summary(%Game{} = game, round) when is_map(round) do
+    %{
+      shortcode: game.shortcode,
+      round_number: game.round_number,
+      players: game.players,
+      scores: game.scores,
+      phase: game.phase,
+      winner: game.winner,
+      creator: game.creator,
+      funmaster: game.funmaster,
+      prompt: Map.get(round, :prompt),
+      reactions: Map.get(round, :reactions)
+    }
+  end
+
+  @doc """
   Adds a player to a game.
 
   Returns `%Game{}`.
