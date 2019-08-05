@@ -3,14 +3,19 @@ defmodule Ui.GameController do
 
   plug :require_player
 
-  def new(conn, _params) do
+  def new(conn, _) do
     render(conn, "new.html")
   end
 
-  def create(conn, _params) do
-    shortcode = GameApp.Server.generate_shortcode()
+  def join(conn, %{"id" => shortcode}) do
+    redirect(conn, to: Routes.game_path(conn, :show, shortcode))
+  end
 
-    case GameApp.ServerSupervisor.start_game(shortcode, get_session(conn, :current_player)) do
+  def create(conn, _) do
+    shortcode = GameApp.Server.generate_shortcode()
+    player = get_session(conn, :current_player)
+
+    case GameApp.ServerSupervisor.start_game(shortcode, player) do
       {:ok, _pid} ->
         redirect(conn, to: Routes.game_path(conn, :show, shortcode))
 
@@ -22,11 +27,18 @@ defmodule Ui.GameController do
   end
 
   def show(conn, %{"id" => shortcode}) do
-    IO.inspect(shortcode)
+    case GameApp.Server.game_pid(shortcode) do
+      pid when is_pid(pid) ->
+        conn
+        |> assign(:shortcode, shortcode)
+        |> assign(:auth_token, generate_auth_token(conn))
+        |> render("show.html")
 
-    conn
-    |> assign(:shortcode, shortcode)
-    |> render("show.html")
+      nil ->
+        conn
+        |> put_flash(:error, "Game not found!")
+        |> redirect(to: Routes.game_path(conn, :new))
+    end
   end
 
   defp require_player(conn, _opts) do
@@ -40,5 +52,10 @@ defmodule Ui.GameController do
         |> redirect(to: Routes.session_path(conn, :new))
         |> halt()
     end
+  end
+
+  defp generate_auth_token(conn) do
+    current_player = get_session(conn, :current_player)
+    Phoenix.Token.sign(conn, "secret salt", current_player)
   end
 end

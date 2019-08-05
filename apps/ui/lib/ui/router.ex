@@ -18,6 +18,7 @@ defmodule Ui.Router do
     pipe_through :browser
 
     get "/", GameController, :new
+    post "/join", GameController, :join, as: :join
 
     resources "/games", GameController, only: [:new, :create, :show]
 

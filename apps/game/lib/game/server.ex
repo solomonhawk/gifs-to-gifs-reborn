@@ -129,16 +129,11 @@ defmodule GameApp.Server do
 
   @spec generate_shortcode() :: String.t()
   def generate_shortcode() do
-    <<a, b, c, d>> = :crypto.strong_rand_bytes(4)
-
     code =
-      to_string([
-        65 + rem(a, 26),
-        65 + rem(b, 26),
-        65 + rem(c, 26),
-        65 + rem(d, 26)
-      ])
+      shortcode_string()
+      |> String.downcase()
 
+    # ensure no duplicates
     case game_pid(code) do
       nil ->
         code
@@ -146,5 +141,16 @@ defmodule GameApp.Server do
       _ ->
         generate_shortcode()
     end
+  end
+
+  defp shortcode_string() do
+    <<a, b, c, d>> = :crypto.strong_rand_bytes(4)
+
+    to_string([
+      65 + rem(a, 26),
+      65 + rem(b, 26),
+      65 + rem(c, 26),
+      65 + rem(d, 26)
+    ])
   end
 end

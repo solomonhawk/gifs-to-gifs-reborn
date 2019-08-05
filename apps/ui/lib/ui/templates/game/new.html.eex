@@ -1,3 +1,9 @@
-<%= form_for @conn, Routes.game_path(@conn, :create), fn f -> %>
+<%= form_for @conn, Routes.join_path(@conn, :join), fn f -> %>
+  <%= label f, :id, "Enter code:" %>
+  <%= text_input f, :id, required: true, maxlength: 4 %>
+  <%= submit "Join Game" %>
+<% end %>
+
+<%= form_for @conn, Routes.game_path(@conn, :create), fn _ -> %>
   <%= submit "Create Game" %>
 <% end %>
