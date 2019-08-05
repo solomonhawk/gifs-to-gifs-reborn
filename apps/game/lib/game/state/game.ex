@@ -224,11 +224,17 @@ defmodule GameApp.Game do
     |> set_funmaster()
   end
 
+  @doc """
+  Starts prompt selection for the current round.
+  """
   @spec start_prompt_selection(Game.t()) :: Game.t()
   def start_prompt_selection(%Game{phase: :round_start} = game) do
     game |> set_phase(:prompt_selection)
   end
 
+  @doc """
+  Assigns a prompt to the current round.
+  """
   @spec select_prompt(Game.t(), String.t()) :: Game.t()
   def select_prompt(%Game{phase: :prompt_selection, rounds: rounds} = game, prompt) do
     game
@@ -236,16 +242,17 @@ defmodule GameApp.Game do
     |> update_round(Round.set_prompt(hd(rounds), prompt))
   end
 
+  @doc """
+  Adds a reaction in the current round for the given player.
+  """
   @spec select_reaction(Game.t(), Player.t(), String.t()) :: Game.t()
   def select_reaction(%Game{phase: :reaction_selection, rounds: rounds} = game, player, reaction) do
     update_round(game, Round.set_reaction(hd(rounds), player.id, reaction))
   end
 
-  @spec end_round(Game.t()) :: Game.t()
-  def end_round(%Game{phase: :winner_selection} = game) do
-    game |> set_phase(:round_end)
-  end
-
+  @doc """
+  Starts prompt selection for the current round.
+  """
   @spec select_round_winner(Game.t(), Player.t()) :: Game.t()
   def select_round_winner(%Game{phase: :winner_selection, rounds: rounds} = game, player) do
     game
