@@ -5,7 +5,7 @@ defmodule GameApp.Game do
   """
 
   alias __MODULE__, as: Game
-  alias GameApp.Round
+  alias GameApp.{Player, Round}
 
   defstruct shortcode: nil,
             round_number: nil,
@@ -28,22 +28,16 @@ defmodule GameApp.Game do
           | :round_end
           | :game_end
 
-  @type shortcode :: String.t()
-  @type player :: %{id: String.t()}
-  @type prompt :: String.t()
-  @type reaction :: String.t()
-  @type round :: %Round{}
-
   @type t() :: %Game{
           shortcode: String.t(),
           round_number: integer() | nil,
           rounds: list(Round.t()),
-          players: map(),
-          scores: map(),
+          players: %{optional(String.t()) => Player.t()},
+          scores: %{optional(String.t()) => integer()},
           phase: game_state,
-          winner: player() | nil,
-          creator: player(),
-          funmaster: player() | nil,
+          winner: Player.t() | nil,
+          creator: Player.t(),
+          funmaster: Player.t() | nil,
           funmaster_order: list(String.t())
         }
 
@@ -54,17 +48,17 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> GameApp.Game.create("ABCD", %{id: "Gamer"})
+      iex> GameApp.Game.create("ABCD", GameApp.Player.create("1", "Gamer"))
       %GameApp.Game{
         shortcode: "ABCD",
-        creator: %{id: "Gamer"},
-        players: %{"Gamer" => %{id: "Gamer"}},
-        scores: %{"Gamer" => 0}
+        creator: %GameApp.Player{id: "1", name: "Gamer"},
+        players: %{"1" => %GameApp.Player{id: "1", name: "Gamer"}},
+        scores: %{"1" => 0}
       }
 
   """
-  @spec create(shortcode(), player()) :: Game.t()
-  def create(shortcode, %{id: id} = creator) do
+  @spec create(String.t(), Player.t()) :: Game.t()
+  def create(shortcode, %Player{id: id} = creator) do
     %Game{
       shortcode: shortcode,
       creator: creator,
@@ -80,18 +74,21 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> g = GameApp.Game.create("ABCD", %{id: "Gamer"})
-      iex> GameApp.Game.player_join(g, %{id: "Gamer2"})
+      iex> g = GameApp.Game.create("ABCD", GameApp.Player.create("1", "Gamer"))
+      iex> GameApp.Game.player_join(g, GameApp.Player.create("2", "Gamer2"))
       %GameApp.Game{
         shortcode: "ABCD",
-        creator: %{id: "Gamer"},
-        players: %{"Gamer" => %{id: "Gamer"}, "Gamer2" => %{id: "Gamer2"}},
-        scores: %{"Gamer" => 0, "Gamer2" => 0}
+        creator: %GameApp.Player{id: "1", name: "Gamer"},
+        players: %{
+          "1" => %GameApp.Player{id: "1", name: "Gamer"},
+          "2" => %GameApp.Player{id: "2", name: "Gamer2"}
+        },
+        scores: %{"1" => 0, "2" => 0}
       }
 
   """
-  @spec player_join(Game.t(), player()) :: Game.t()
-  def player_join(%Game{players: players, scores: scores} = game, %{id: id} = player) do
+  @spec player_join(Game.t(), Player.t()) :: Game.t()
+  def player_join(%Game{players: players, scores: scores} = game, %Player{id: id} = player) do
     game
     |> Map.put(:players, Map.put(players, id, player))
     |> set_player_score(player, scores[player.id])
@@ -104,25 +101,26 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> g = GameApp.Game.create("ABCD", %{id: "Gamer"})
-      iex> g = GameApp.Game.player_join(g, %{id: "Gamer2"})
-      iex> GameApp.Game.player_leave(g, %{id: "Gamer2"})
+      iex> p1 = GameApp.Player.create("1", "Gamer")
+      iex> p2 = GameApp.Player.create("2", "Gamer2")
+      iex> g = GameApp.Game.create("ABCD", p1)
+      iex> g = GameApp.Game.player_join(g, p2)
+      iex> GameApp.Game.player_leave(g, p2)
       %GameApp.Game{
         shortcode: "ABCD",
-        creator: %{id: "Gamer"},
-        players: %{"Gamer" => %{id: "Gamer"}},
-        scores: %{"Gamer" => 0, "Gamer2" => 0}
+        creator: %GameApp.Player{id: "1", name: "Gamer"},
+        players: %{"1" => %GameApp.Player{id: "1", name: "Gamer"}},
+        scores: %{"1" => 0, "2" => 0}
       }
 
   """
-  @spec player_leave(Game.t(), player()) :: Game.t()
-  def player_leave(%Game{funmaster: %{id: funmaster_id}} = game, %{id: id} = player)
+  @spec player_leave(Game.t(), Player.t()) :: Game.t()
+  def player_leave(%Game{funmaster: %{id: funmaster_id}} = game, %Player{id: id} = player)
       when id == funmaster_id do
     game
     |> remove_player(player)
     |> set_funmaster_and_order()
   end
-
   def player_leave(%Game{} = game, player) do
     game |> remove_player(player)
   end
@@ -134,14 +132,14 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> g = GameApp.Game.create("ABCD", %{id: "Gamer"})
+      iex> g = GameApp.Game.create("ABCD", GameApp.Player.create("1", "Gamer"))
       iex> GameApp.Game.start_game(g)
       %GameApp.Game{
         shortcode: "ABCD",
         phase: :game_start,
-        creator: %{id: "Gamer"},
-        players: %{"Gamer" => %{id: "Gamer"}},
-        scores: %{"Gamer" => 0}
+        creator: %GameApp.Player{id: "1", name: "Gamer"},
+        players: %{"1" => %GameApp.Player{id: "1", name: "Gamer"}},
+        scores: %{"1" => 0}
       }
 
   """
@@ -150,6 +148,24 @@ defmodule GameApp.Game do
     game |> set_phase(:game_start)
   end
 
+  @doc """
+  Starts a round.
+
+  Returns `%Game{}`.
+
+  ## Examples
+
+      iex> g = GameApp.Game.create("ABCD", GameApp.Player.create("1", "Gamer"))
+      iex> GameApp.Game.start_game(g)
+      %GameApp.Game{
+        shortcode: "ABCD",
+        phase: :game_start,
+        creator: %GameApp.Player{id: "1", name: "Gamer"},
+        players: %{"1" => %GameApp.Player{id: "1", name: "Gamer"}},
+        scores: %{"1" => 0}
+      }
+
+  """
   @spec start_round(Game.t()) :: Game.t()
   def start_round(%Game{phase: :game_start} = game) do
     game
@@ -170,14 +186,14 @@ defmodule GameApp.Game do
     game |> set_phase(:prompt_selection)
   end
 
-  @spec select_prompt(Game.t(), any()) :: Game.t()
+  @spec select_prompt(Game.t(), String.t()) :: Game.t()
   def select_prompt(%Game{phase: :prompt_selection, rounds: rounds} = game, prompt) do
     game
     |> set_phase(:reaction_selection)
     |> update_round(Round.set_prompt(hd(rounds), prompt))
   end
 
-  @spec select_reaction(Game.t(), player(), reaction()) :: Game.t()
+  @spec select_reaction(Game.t(), Player.t(), String.t()) :: Game.t()
   def select_reaction(%Game{phase: :reaction_selection, rounds: rounds} = game, player, reaction) do
     update_round(game, Round.set_reaction(hd(rounds), player.id, reaction))
   end
@@ -187,7 +203,7 @@ defmodule GameApp.Game do
     game |> set_phase(:round_end)
   end
 
-  @spec select_round_winner(Game.t(), player()) :: Game.t()
+  @spec select_round_winner(Game.t(), Player.t()) :: Game.t()
   def select_round_winner(%Game{phase: :winner_selection, rounds: rounds} = game, player) do
     game
     |> update_round(Round.set_winner(hd(rounds), player))
@@ -242,17 +258,17 @@ defmodule GameApp.Game do
     Map.put(game, :funmaster, funmaster_for_round(order, players, round_number))
   end
 
-  @spec remove_player(Game.t(), player()) :: Game.t()
-  defp remove_player(%Game{players: players} = game, %{id: id} = player) do
+  @spec remove_player(Game.t(), Player.t()) :: Game.t()
+  defp remove_player(%Game{players: players} = game, %Player{id: id} = player) do
     game
     |> Map.put(:players, Map.delete(players, id))
     |> remove_reaction(player)
   end
 
-  @spec remove_reaction(Game.t(), player()) :: Game.t()
+  @spec remove_reaction(Game.t(), Player.t()) :: Game.t()
   defp remove_reaction(%Game{rounds: []} = game, _player), do: game
 
-  defp remove_reaction(%Game{rounds: [round | rounds]} = game, %{id: id}) do
+  defp remove_reaction(%Game{rounds: [round | rounds]} = game, %Player{id: id}) do
     Map.put(game, :rounds, [Round.remove_reaction(round, id)] ++ rounds)
   end
 
@@ -261,7 +277,7 @@ defmodule GameApp.Game do
     Map.put(game, :rounds, [new_round] ++ rounds)
   end
 
-  @spec funmaster_for_round([String.t()], map(), integer()) :: player()
+  @spec funmaster_for_round([String.t()], map(), integer()) :: Player.t()
   defp funmaster_for_round(funmaster_order, players, round_number) do
     funmaster_order
     |> Stream.cycle()

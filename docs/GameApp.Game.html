@@ -8,7 +8,7 @@
     <meta name="project" content=" v0.1.0">
     <title>GameApp.Game —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
-    <script src="dist/sidebar_items-d81b94c0aa.js"></script>
+    <script src="dist/sidebar_items-98221482f7.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
   </head>
@@ -87,37 +87,12 @@ functions that advance the game state based on actions that players can take.</p
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:game/0">game()</a>
-  </div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
     <a href="#t:game_state/0">game_state()</a>
   </div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#t:player/0">player()</a>
-  </div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:prompt/0">prompt()</a>
-  </div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:reaction/0">reaction()</a>
-  </div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:round/0">round()</a>
-  </div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:shortcode/0">shortcode()</a>
+    <a href="#t:t/0">t()</a>
   </div>
 </div>
   </div>
@@ -173,6 +148,7 @@ functions that advance the game state based on actions that players can take.</p
   <div class="summary-signature">
     <a href="#start_round/1">start_round(game)</a>
   </div>
+    <div class="summary-synopsis"><p>Starts a round.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -190,31 +166,6 @@ functions that advance the game state based on actions that players can take.</p
             </a>
 Types          </h1>
           <div class="types-list">
-<section class="detail" id="t:game/0">
-  <div class="detail-header">
-    <a href="#t:game/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">game()</h1>
-      <div class="specs">
-          <pre>game() :: %GameApp.Game{
-  creator: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  funmaster: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  funmaster_order: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  phase: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  players: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  round_number: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  rounds: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  scores: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  shortcode: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(),
-  winner: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()
-}</pre>
-      </div>
-  </div>
-  <section class="docstring">
-  </section>
-</section>
 <section class="detail" id="t:game_state/0">
   <div class="detail-header">
     <a href="#t:game_state/0" class="detail-link" title="Link to this type">
@@ -237,71 +188,26 @@ Types          </h1>
   <section class="docstring">
   </section>
 </section>
-<section class="detail" id="t:player/0">
+<section class="detail" id="t:t/0">
   <div class="detail-header">
-    <a href="#t:player/0" class="detail-link" title="Link to this type">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this type</span>
     </a>
-    <h1 class="signature">player()</h1>
+    <h1 class="signature">t()</h1>
       <div class="specs">
-          <pre>player() :: %{id: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}</pre>
-      </div>
-  </div>
-  <section class="docstring">
-  </section>
-</section>
-<section class="detail" id="t:prompt/0">
-  <div class="detail-header">
-    <a href="#t:prompt/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">prompt()</h1>
-      <div class="specs">
-          <pre>prompt() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-      </div>
-  </div>
-  <section class="docstring">
-  </section>
-</section>
-<section class="detail" id="t:reaction/0">
-  <div class="detail-header">
-    <a href="#t:reaction/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">reaction()</h1>
-      <div class="specs">
-          <pre>reaction() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-      </div>
-  </div>
-  <section class="docstring">
-  </section>
-</section>
-<section class="detail" id="t:round/0">
-  <div class="detail-header">
-    <a href="#t:round/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">round()</h1>
-      <div class="specs">
-          <pre>round() :: %GameApp.Round{number: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(), reactions: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>(), winner: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
-      </div>
-  </div>
-  <section class="docstring">
-  </section>
-</section>
-<section class="detail" id="t:shortcode/0">
-  <div class="detail-header">
-    <a href="#t:shortcode/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">shortcode()</h1>
-      <div class="specs">
-          <pre>shortcode() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+          <pre>t() :: %GameApp.Game{
+  creator: <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>(),
+  funmaster: <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>() | nil,
+  funmaster_order: [<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()],
+  phase: <a href="#t:game_state/0">game_state</a>(),
+  players: %{optional(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) => <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>()},
+  round_number: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>() | nil,
+  rounds: [<a href="GameApp.Round.html#t:t/0">GameApp.Round.t</a>()],
+  scores: %{optional(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) => <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()},
+  shortcode: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(),
+  winner: <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>() | nil
+}</pre>
       </div>
   </div>
   <section class="docstring">
@@ -325,7 +231,7 @@ Functions          </h1>
     </a>
     <h1 class="signature">create(shortcode, creator)</h1>
       <div class="specs">
-          <pre>create(<a href="#t:shortcode/0">shortcode</a>(), <a href="#t:player/0">player</a>()) :: <a href="#t:game/0">game</a>()</pre>
+          <pre>create(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>()) :: <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
       </div>
   </div>
   <section class="docstring">
@@ -336,13 +242,13 @@ Functions          </h1>
   Examples
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="6358721355-1">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6358721355-2">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="6358721355-2">}</span><span class="p" data-group-id="6358721355-1">)</span><span class="w">
-</span><span class="p" data-group-id="6358721355-3">%</span><span class="nc" data-group-id="6358721355-3">GameApp.Game</span><span class="p" data-group-id="6358721355-3">{</span><span class="w">
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="2421628637-1">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="nc">GameApp.Player</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="2421628637-2">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="2421628637-2">)</span><span class="p" data-group-id="2421628637-1">)</span><span class="w">
+</span><span class="p" data-group-id="2421628637-3">%</span><span class="nc" data-group-id="2421628637-3">GameApp.Game</span><span class="p" data-group-id="2421628637-3">{</span><span class="w">
   </span><span class="ss">shortcode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">creator</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6358721355-4">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="6358721355-4">}</span><span class="p">,</span><span class="w">
-  </span><span class="ss">players</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6358721355-5">%{</span><span class="s">&quot;Gamer&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="6358721355-6">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="6358721355-6">}</span><span class="p" data-group-id="6358721355-5">}</span><span class="p">,</span><span class="w">
-  </span><span class="ss">scores</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6358721355-7">%{</span><span class="s">&quot;Gamer&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="6358721355-7">}</span><span class="w">
-</span><span class="p" data-group-id="6358721355-3">}</span></code></pre>
+  </span><span class="ss">creator</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2421628637-4">%</span><span class="nc" data-group-id="2421628637-4">GameApp.Player</span><span class="p" data-group-id="2421628637-4">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="2421628637-4">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">players</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2421628637-5">%{</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="2421628637-6">%</span><span class="nc" data-group-id="2421628637-6">GameApp.Player</span><span class="p" data-group-id="2421628637-6">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="2421628637-6">}</span><span class="p" data-group-id="2421628637-5">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">scores</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2421628637-7">%{</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="2421628637-7">}</span><span class="w">
+</span><span class="p" data-group-id="2421628637-3">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="player_join/2">
@@ -353,7 +259,7 @@ Functions          </h1>
     </a>
     <h1 class="signature">player_join(game, player)</h1>
       <div class="specs">
-          <pre>player_join(<a href="#t:game/0">game</a>(), <a href="#t:player/0">player</a>()) :: <a href="#t:game/0">game</a>()</pre>
+          <pre>player_join(<a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>()) :: <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
       </div>
   </div>
   <section class="docstring">
@@ -364,14 +270,17 @@ Functions          </h1>
   Examples
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="4925498910-1">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4925498910-2">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4925498910-2">}</span><span class="p" data-group-id="4925498910-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">player_join</span><span class="p" data-group-id="4925498910-3">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4925498910-4">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer2&quot;</span><span class="p" data-group-id="4925498910-4">}</span><span class="p" data-group-id="4925498910-3">)</span><span class="w">
-</span><span class="p" data-group-id="4925498910-5">%</span><span class="nc" data-group-id="4925498910-5">GameApp.Game</span><span class="p" data-group-id="4925498910-5">{</span><span class="w">
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="1991585150-1">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="nc">GameApp.Player</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="1991585150-2">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="1991585150-2">)</span><span class="p" data-group-id="1991585150-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">player_join</span><span class="p" data-group-id="1991585150-3">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="nc">GameApp.Player</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="1991585150-4">(</span><span class="s">&quot;2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer2&quot;</span><span class="p" data-group-id="1991585150-4">)</span><span class="p" data-group-id="1991585150-3">)</span><span class="w">
+</span><span class="p" data-group-id="1991585150-5">%</span><span class="nc" data-group-id="1991585150-5">GameApp.Game</span><span class="p" data-group-id="1991585150-5">{</span><span class="w">
   </span><span class="ss">shortcode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">creator</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4925498910-6">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4925498910-6">}</span><span class="p">,</span><span class="w">
-  </span><span class="ss">players</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4925498910-7">%{</span><span class="s">&quot;Gamer&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="4925498910-8">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4925498910-8">}</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer2&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="4925498910-9">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer2&quot;</span><span class="p" data-group-id="4925498910-9">}</span><span class="p" data-group-id="4925498910-7">}</span><span class="p">,</span><span class="w">
-  </span><span class="ss">scores</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4925498910-10">%{</span><span class="s">&quot;Gamer&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer2&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="4925498910-10">}</span><span class="w">
-</span><span class="p" data-group-id="4925498910-5">}</span></code></pre>
+  </span><span class="ss">creator</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1991585150-6">%</span><span class="nc" data-group-id="1991585150-6">GameApp.Player</span><span class="p" data-group-id="1991585150-6">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="1991585150-6">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">players</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1991585150-7">%{</span><span class="w">
+    </span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="1991585150-8">%</span><span class="nc" data-group-id="1991585150-8">GameApp.Player</span><span class="p" data-group-id="1991585150-8">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="1991585150-8">}</span><span class="p">,</span><span class="w">
+    </span><span class="s">&quot;2&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="1991585150-9">%</span><span class="nc" data-group-id="1991585150-9">GameApp.Player</span><span class="p" data-group-id="1991585150-9">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;2&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer2&quot;</span><span class="p" data-group-id="1991585150-9">}</span><span class="w">
+  </span><span class="p" data-group-id="1991585150-7">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">scores</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1991585150-10">%{</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="1991585150-10">}</span><span class="w">
+</span><span class="p" data-group-id="1991585150-5">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="player_leave/2">
@@ -382,7 +291,7 @@ Functions          </h1>
     </a>
     <h1 class="signature">player_leave(game, player)</h1>
       <div class="specs">
-          <pre>player_leave(<a href="#t:game/0">game</a>(), <a href="#t:player/0">player</a>()) :: <a href="#t:game/0">game</a>()</pre>
+          <pre>player_leave(<a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>()) :: <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
       </div>
   </div>
   <section class="docstring">
@@ -393,15 +302,17 @@ Functions          </h1>
   Examples
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="2313418103-1">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2313418103-2">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="2313418103-2">}</span><span class="p" data-group-id="2313418103-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">player_join</span><span class="p" data-group-id="2313418103-3">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2313418103-4">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer2&quot;</span><span class="p" data-group-id="2313418103-4">}</span><span class="p" data-group-id="2313418103-3">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">player_leave</span><span class="p" data-group-id="2313418103-5">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2313418103-6">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer2&quot;</span><span class="p" data-group-id="2313418103-6">}</span><span class="p" data-group-id="2313418103-5">)</span><span class="w">
-</span><span class="p" data-group-id="2313418103-7">%</span><span class="nc" data-group-id="2313418103-7">GameApp.Game</span><span class="p" data-group-id="2313418103-7">{</span><span class="w">
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">p1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Player</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="3056180301-1">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="3056180301-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">p2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Player</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="3056180301-2">(</span><span class="s">&quot;2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer2&quot;</span><span class="p" data-group-id="3056180301-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="3056180301-3">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">p1</span><span class="p" data-group-id="3056180301-3">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">player_join</span><span class="p" data-group-id="3056180301-4">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p" data-group-id="3056180301-4">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">player_leave</span><span class="p" data-group-id="3056180301-5">(</span><span class="n">g</span><span class="p">,</span><span class="w"> </span><span class="n">p2</span><span class="p" data-group-id="3056180301-5">)</span><span class="w">
+</span><span class="p" data-group-id="3056180301-6">%</span><span class="nc" data-group-id="3056180301-6">GameApp.Game</span><span class="p" data-group-id="3056180301-6">{</span><span class="w">
   </span><span class="ss">shortcode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w">
-  </span><span class="ss">creator</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2313418103-8">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="2313418103-8">}</span><span class="p">,</span><span class="w">
-  </span><span class="ss">players</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2313418103-9">%{</span><span class="s">&quot;Gamer&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="2313418103-10">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="2313418103-10">}</span><span class="p" data-group-id="2313418103-9">}</span><span class="p">,</span><span class="w">
-  </span><span class="ss">scores</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2313418103-11">%{</span><span class="s">&quot;Gamer&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer2&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="2313418103-11">}</span><span class="w">
-</span><span class="p" data-group-id="2313418103-7">}</span></code></pre>
+  </span><span class="ss">creator</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3056180301-7">%</span><span class="nc" data-group-id="3056180301-7">GameApp.Player</span><span class="p" data-group-id="3056180301-7">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="3056180301-7">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">players</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3056180301-8">%{</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="3056180301-9">%</span><span class="nc" data-group-id="3056180301-9">GameApp.Player</span><span class="p" data-group-id="3056180301-9">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="3056180301-9">}</span><span class="p" data-group-id="3056180301-8">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">scores</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3056180301-10">%{</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;2&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="3056180301-10">}</span><span class="w">
+</span><span class="p" data-group-id="3056180301-6">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="select_prompt/2">
@@ -412,7 +323,7 @@ Functions          </h1>
     </a>
     <h1 class="signature">select_prompt(game, prompt)</h1>
       <div class="specs">
-          <pre>select_prompt(<a href="#t:game/0">game</a>(), <a href="#t:prompt/0">prompt</a>()) :: <a href="#t:game/0">game</a>()</pre>
+          <pre>select_prompt(<a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
       </div>
   </div>
   <section class="docstring">
@@ -426,7 +337,8 @@ Functions          </h1>
     </a>
     <h1 class="signature">select_reaction(game, player, reaction)</h1>
       <div class="specs">
-          <pre>select_reaction(<a href="#t:game/0">game</a>(), <a href="#t:player/0">player</a>(), <a href="#t:reaction/0">reaction</a>()) :: <a href="#t:game/0">game</a>()</pre>
+          <pre>select_reaction(<a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) ::
+  <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
       </div>
   </div>
   <section class="docstring">
@@ -440,7 +352,7 @@ Functions          </h1>
     </a>
     <h1 class="signature">select_round_winner(game, player)</h1>
       <div class="specs">
-          <pre>select_round_winner(<a href="#t:game/0">game</a>(), <a href="#t:player/0">player</a>()) :: <a href="#t:game/0">game</a>()</pre>
+          <pre>select_round_winner(<a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>()) :: <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
       </div>
   </div>
   <section class="docstring">
@@ -454,7 +366,7 @@ Functions          </h1>
     </a>
     <h1 class="signature">start_game(game)</h1>
       <div class="specs">
-          <pre>start_game(<a href="#t:game/0">game</a>()) :: <a href="#t:game/0">game</a>()</pre>
+          <pre>start_game(<a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()) :: <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
       </div>
   </div>
   <section class="docstring">
@@ -465,15 +377,15 @@ Functions          </h1>
   Examples
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="6024920066-1">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6024920066-2">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="6024920066-2">}</span><span class="p" data-group-id="6024920066-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">start_game</span><span class="p" data-group-id="6024920066-3">(</span><span class="n">g</span><span class="p" data-group-id="6024920066-3">)</span><span class="w">
-</span><span class="p" data-group-id="6024920066-4">%</span><span class="nc" data-group-id="6024920066-4">GameApp.Game</span><span class="p" data-group-id="6024920066-4">{</span><span class="w">
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="4075169641-1">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="nc">GameApp.Player</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="4075169641-2">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4075169641-2">)</span><span class="p" data-group-id="4075169641-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">start_game</span><span class="p" data-group-id="4075169641-3">(</span><span class="n">g</span><span class="p" data-group-id="4075169641-3">)</span><span class="w">
+</span><span class="p" data-group-id="4075169641-4">%</span><span class="nc" data-group-id="4075169641-4">GameApp.Game</span><span class="p" data-group-id="4075169641-4">{</span><span class="w">
   </span><span class="ss">shortcode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">phase</span><span class="p">:</span><span class="w"> </span><span class="ss">:game_start</span><span class="p">,</span><span class="w">
-  </span><span class="ss">creator</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6024920066-5">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="6024920066-5">}</span><span class="p">,</span><span class="w">
-  </span><span class="ss">players</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6024920066-6">%{</span><span class="s">&quot;Gamer&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="6024920066-7">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="6024920066-7">}</span><span class="p" data-group-id="6024920066-6">}</span><span class="p">,</span><span class="w">
-  </span><span class="ss">scores</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6024920066-8">%{</span><span class="s">&quot;Gamer&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="6024920066-8">}</span><span class="w">
-</span><span class="p" data-group-id="6024920066-4">}</span></code></pre>
+  </span><span class="ss">creator</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4075169641-5">%</span><span class="nc" data-group-id="4075169641-5">GameApp.Player</span><span class="p" data-group-id="4075169641-5">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4075169641-5">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">players</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4075169641-6">%{</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="4075169641-7">%</span><span class="nc" data-group-id="4075169641-7">GameApp.Player</span><span class="p" data-group-id="4075169641-7">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4075169641-7">}</span><span class="p" data-group-id="4075169641-6">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">scores</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4075169641-8">%{</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="4075169641-8">}</span><span class="w">
+</span><span class="p" data-group-id="4075169641-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="start_prompt_selection/1">
@@ -484,7 +396,7 @@ Functions          </h1>
     </a>
     <h1 class="signature">start_prompt_selection(game)</h1>
       <div class="specs">
-          <pre>start_prompt_selection(<a href="#t:game/0">game</a>()) :: <a href="#t:game/0">game</a>()</pre>
+          <pre>start_prompt_selection(<a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()) :: <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
       </div>
   </div>
   <section class="docstring">
@@ -498,10 +410,26 @@ Functions          </h1>
     </a>
     <h1 class="signature">start_round(game)</h1>
       <div class="specs">
-          <pre>start_round(<a href="#t:game/0">game</a>()) :: <a href="#t:game/0">game</a>()</pre>
+          <pre>start_round(<a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()) :: <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
       </div>
   </div>
   <section class="docstring">
+<p>Starts a round.</p>
+<p>Returns <code class="inline">%Game{}</code>.</p>
+<h2 id="start_round/1-examples" class="section-heading">
+  <a href="#start_round/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">g</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="5872229464-1">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="nc">GameApp.Player</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="5872229464-2">(</span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="5872229464-2">)</span><span class="p" data-group-id="5872229464-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Game</span><span class="o">.</span><span class="n">start_game</span><span class="p" data-group-id="5872229464-3">(</span><span class="n">g</span><span class="p" data-group-id="5872229464-3">)</span><span class="w">
+</span><span class="p" data-group-id="5872229464-4">%</span><span class="nc" data-group-id="5872229464-4">GameApp.Game</span><span class="p" data-group-id="5872229464-4">{</span><span class="w">
+  </span><span class="ss">shortcode</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">phase</span><span class="p">:</span><span class="w"> </span><span class="ss">:game_start</span><span class="p">,</span><span class="w">
+  </span><span class="ss">creator</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5872229464-5">%</span><span class="nc" data-group-id="5872229464-5">GameApp.Player</span><span class="p" data-group-id="5872229464-5">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="5872229464-5">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">players</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5872229464-6">%{</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="p" data-group-id="5872229464-7">%</span><span class="nc" data-group-id="5872229464-7">GameApp.Player</span><span class="p" data-group-id="5872229464-7">{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;1&quot;</span><span class="p">,</span><span class="w"> </span><span class="ss">name</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="5872229464-7">}</span><span class="p" data-group-id="5872229464-6">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">scores</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5872229464-8">%{</span><span class="s">&quot;1&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="mi">0</span><span class="p" data-group-id="5872229464-8">}</span><span class="w">
+</span><span class="p" data-group-id="5872229464-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="start_round_end/1">
@@ -512,7 +440,7 @@ Functions          </h1>
     </a>
     <h1 class="signature">start_round_end(game)</h1>
       <div class="specs">
-          <pre>start_round_end(<a href="#t:game/0">game</a>()) :: <a href="#t:game/0">game</a>()</pre>
+          <pre>start_round_end(<a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()) :: <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
       </div>
   </div>
   <section class="docstring">

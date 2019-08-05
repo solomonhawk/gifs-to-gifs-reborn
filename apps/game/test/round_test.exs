@@ -2,9 +2,9 @@ defmodule RoundTest do
   use ExUnit.Case, async: true
   doctest GameApp.Round
 
-  alias GameApp.Round
+  alias GameApp.{Player, Round}
 
-  @player %{id: "Gamer"}
+  @player Player.create("1", "Gamer")
 
   setup do
     [round: Round.create(1)]

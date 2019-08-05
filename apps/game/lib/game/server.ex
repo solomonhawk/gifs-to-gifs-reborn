@@ -1,17 +1,21 @@
 defmodule GameApp.Server do
+  @moduledoc """
+  `GameApp.Server` provides a stateful process that maintains an internal `Game`
+  state and provides a public API for interacting with the game.
+  """
+
   use GenServer
-  require Logger
+
+  alias __MODULE__, as: Server
   alias GameApp.Game
+
+  require Logger
 
   @game_timeout :timer.minutes(10)
   @round_start_timeout :timer.seconds(5)
 
   def start_link(shortcode, player) do
-    GenServer.start_link(
-      __MODULE__,
-      Game.create(shortcode, player),
-      name: via_tuple(shortcode)
-    )
+    GenServer.start_link(Server, Game.create(shortcode, player), name: via_tuple(shortcode))
   end
 
   ### Client API
@@ -76,7 +80,7 @@ defmodule GameApp.Server do
     {:noreply, Game.start_prompt_selection(game), @game_timeout}
   end
 
-  ###
+  ### Helpers
 
   @doc """
   Returns a tuple used to register and lookup a game server process by name.

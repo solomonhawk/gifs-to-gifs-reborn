@@ -8,7 +8,7 @@
     <meta name="project" content=" v0.1.0">
     <title>GameApp.ServerSupervisor —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
-    <script src="dist/sidebar_items-d81b94c0aa.js"></script>
+    <script src="dist/sidebar_items-98221482f7.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
   </head>
@@ -69,7 +69,7 @@ GameApp.ServerSupervisor      </h1>
 
 
         <section id="moduledoc">
-<p>A dynamic supervisor that supervises child GameApp.Server processes.</p>
+<p>A dynamic supervisor that supervises child <a href="GameApp.Server.html"><code class="inline">GameApp.Server</code></a> processes.</p>
         </section>
 
         <section id="summary" class="details-list">
@@ -87,11 +87,6 @@ GameApp.ServerSupervisor      </h1>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#t:player/0">player()</a>
-  </div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#t:shortcode/0">shortcode()</a>
   </div>
 </div>
   </div>
@@ -146,20 +141,6 @@ Types          </h1>
   <section class="docstring">
   </section>
 </section>
-<section class="detail" id="t:shortcode/0">
-  <div class="detail-header">
-    <a href="#t:shortcode/0" class="detail-link" title="Link to this type">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this type</span>
-    </a>
-    <h1 class="signature">shortcode()</h1>
-      <div class="specs">
-          <pre>shortcode() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
-      </div>
-  </div>
-  <section class="docstring">
-  </section>
-</section>
           </div>
         </section>
         <section id="functions" class="details-list">
@@ -191,7 +172,7 @@ Functions          </h1>
     </a>
     <h1 class="signature">start_game(shortcode, player)</h1>
       <div class="specs">
-          <pre>start_game(<a href="#t:shortcode/0">shortcode</a>(), <a href="#t:player/0">player</a>()) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
+          <pre>start_game(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="#t:player/0">player</a>()) :: {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | {:error, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">any</a>()}</pre>
       </div>
   </div>
   <section class="docstring">
@@ -202,8 +183,8 @@ Functions          </h1>
   Examples
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.ServerSupervisor</span><span class="o">.</span><span class="n">start_game</span><span class="p" data-group-id="4228674733-1">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4228674733-2">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4228674733-2">}</span><span class="p" data-group-id="4228674733-1">)</span><span class="w">
-</span><span class="p" data-group-id="4228674733-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p" data-group-id="4228674733-3">}</span></code></pre>
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.ServerSupervisor</span><span class="o">.</span><span class="n">start_game</span><span class="p" data-group-id="6650810832-1">(</span><span class="s">&quot;ABCD&quot;</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="6650810832-2">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="6650810832-2">}</span><span class="p" data-group-id="6650810832-1">)</span><span class="w">
+</span><span class="p" data-group-id="6650810832-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">pid</span><span class="p" data-group-id="6650810832-3">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="start_link/1">

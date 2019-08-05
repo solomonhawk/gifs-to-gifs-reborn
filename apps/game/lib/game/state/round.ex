@@ -1,22 +1,21 @@
 defmodule GameApp.Round do
   @moduledoc """
-  GameApp.Round defines a struct that encapsulates Round state as well as
+  `GameApp.Round` defines a struct that encapsulates Round state as well as
   functions that update the round state.
   """
 
   alias __MODULE__, as: Round
+  alias GameApp.Player
 
   defstruct number: nil,
             prompt: nil,
             winner: nil,
             reactions: %{}
 
-  @type player :: %{id: String.t()}
-
   @type t :: %Round{
           number: integer(),
           prompt: String.t() | nil,
-          winner: player() | nil,
+          winner: Player.t() | nil,
           reactions: map()
         }
 
@@ -113,7 +112,7 @@ defmodule GameApp.Round do
       }
 
   """
-  @spec set_winner(Round.t(), player()) :: Round.t()
+  @spec set_winner(Round.t(), Player.t()) :: Round.t()
   def set_winner(round, winner) do
     Map.put(round, :winner, winner)
   end

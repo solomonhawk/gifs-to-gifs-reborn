@@ -2,12 +2,12 @@ defmodule GameTest do
   use ExUnit.Case, async: true
   doctest GameApp.Game
 
-  alias GameApp.Game
+  alias GameApp.{Game, Player}
 
   @shortcode "ABCD"
-  @player %{id: "Gamer"}
-  @player2 %{id: "Gamer2"}
-  @player3 %{id: "Gamer3"}
+  @player Player.create("1", "Gamer")
+  @player2 Player.create("2", "Gamer2")
+  @player3 Player.create("3", "Gamer3")
 
   setup do
     [game: Game.create(@shortcode, @player)]

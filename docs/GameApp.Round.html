@@ -8,7 +8,7 @@
     <meta name="project" content=" v0.1.0">
     <title>GameApp.Round —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
-    <script src="dist/sidebar_items-d81b94c0aa.js"></script>
+    <script src="dist/sidebar_items-98221482f7.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
   </head>
@@ -68,6 +68,10 @@
 GameApp.Round      </h1>
 
 
+        <section id="moduledoc">
+<p><a href="#content"><code class="inline">GameApp.Round</code></a> defines a struct that encapsulates Round state as well as
+functions that update the round state.</p>
+        </section>
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -77,6 +81,16 @@ GameApp.Round      </h1>
             </a>
             Summary
           </h1>
+  <div class="summary-types summary">
+    <h2>
+      <a href="#types">Types</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#t:t/0">t()</a>
+  </div>
+</div>
+  </div>
   <div class="summary-functions summary">
     <h2>
       <a href="#functions">Functions</a>
@@ -85,25 +99,64 @@ GameApp.Round      </h1>
   <div class="summary-signature">
     <a href="#create/1">create(number)</a>
   </div>
+    <div class="summary-synopsis"><p>Creates a round for the given round number.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#remove_reaction/2">remove_reaction(round, id)</a>
   </div>
+    <div class="summary-synopsis"><p>Removes the reaction for a player in a round.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#set_prompt/2">set_prompt(round, prompt)</a>
+  </div>
+    <div class="summary-synopsis"><p>Sets the prompt for a round.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#set_reaction/3">set_reaction(round, id, reaction)</a>
   </div>
+    <div class="summary-synopsis"><p>Sets the reaction for a player in a round.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#set_winner/2">set_winner(round, winner)</a>
   </div>
+    <div class="summary-synopsis"><p>Sets the winner for a round.</p></div>
 </div>
   </div>
         </section>
 
+        <section id="types" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#types">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Types          </h1>
+          <div class="types-list">
+<section class="detail" id="t:t/0">
+  <div class="detail-header">
+    <a href="#t:t/0" class="detail-link" title="Link to this type">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this type</span>
+    </a>
+    <h1 class="signature">t()</h1>
+      <div class="specs">
+          <pre>t() :: %GameApp.Round{
+  number: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>(),
+  prompt: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>() | nil,
+  reactions: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>(),
+  winner: <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>() | nil
+}</pre>
+      </div>
+  </div>
+  <section class="docstring">
+  </section>
+</section>
+          </div>
+        </section>
         <section id="functions" class="details-list">
           <h1 class="section-heading">
             <a class="hover-link" href="#functions">
@@ -119,8 +172,23 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">create(number)</h1>
+      <div class="specs">
+          <pre>create(<a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">integer</a>()) :: <a href="GameApp.Round.html#t:t/0">GameApp.Round.t</a>()</pre>
+      </div>
   </div>
   <section class="docstring">
+<p>Creates a round for the given round number.</p>
+<h2 id="create/1-examples" class="section-heading">
+  <a href="#create/1-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="3862591846-1">(</span><span class="mi">1</span><span class="p" data-group-id="3862591846-1">)</span><span class="w">
+</span><span class="p" data-group-id="3862591846-2">%</span><span class="nc" data-group-id="3862591846-2">GameApp.Round</span><span class="p" data-group-id="3862591846-2">{</span><span class="w">
+  </span><span class="ss">number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
+  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3862591846-3">%{</span><span class="p" data-group-id="3862591846-3">}</span><span class="w">
+</span><span class="p" data-group-id="3862591846-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="remove_reaction/2">
@@ -130,8 +198,53 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">remove_reaction(round, id)</h1>
+      <div class="specs">
+          <pre>remove_reaction(<a href="GameApp.Round.html#t:t/0">GameApp.Round.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="GameApp.Round.html#t:t/0">GameApp.Round.t</a>()</pre>
+      </div>
   </div>
   <section class="docstring">
+<p>Removes the reaction for a player in a round.</p>
+<h2 id="remove_reaction/2-examples" class="section-heading">
+  <a href="#remove_reaction/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="3618965018-1">(</span><span class="mi">1</span><span class="p" data-group-id="3618965018-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_reaction</span><span class="p" data-group-id="3618965018-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OMG!&quot;</span><span class="p" data-group-id="3618965018-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">remove_reaction</span><span class="p" data-group-id="3618965018-3">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="3618965018-3">)</span><span class="w">
+</span><span class="p" data-group-id="3618965018-4">%</span><span class="nc" data-group-id="3618965018-4">GameApp.Round</span><span class="p" data-group-id="3618965018-4">{</span><span class="w">
+  </span><span class="ss">number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
+  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="3618965018-5">%{</span><span class="p" data-group-id="3618965018-5">}</span><span class="w">
+</span><span class="p" data-group-id="3618965018-4">}</span></code></pre>
+  </section>
+</section>
+<section class="detail" id="set_prompt/2">
+  <div class="detail-header">
+    <a href="#set_prompt/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">set_prompt(round, prompt)</h1>
+      <div class="specs">
+          <pre>set_prompt(<a href="GameApp.Round.html#t:t/0">GameApp.Round.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="GameApp.Round.html#t:t/0">GameApp.Round.t</a>()</pre>
+      </div>
+  </div>
+  <section class="docstring">
+<p>Sets the prompt for a round.</p>
+<h2 id="set_prompt/2-examples" class="section-heading">
+  <a href="#set_prompt/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="7388736255-1">(</span><span class="mi">1</span><span class="p" data-group-id="7388736255-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_prompt</span><span class="p" data-group-id="7388736255-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Wat&quot;</span><span class="p" data-group-id="7388736255-2">)</span><span class="w">
+</span><span class="p" data-group-id="7388736255-3">%</span><span class="nc" data-group-id="7388736255-3">GameApp.Round</span><span class="p" data-group-id="7388736255-3">{</span><span class="w">
+  </span><span class="ss">number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="ss">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Wat&quot;</span><span class="p">,</span><span class="w">
+  </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
+  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7388736255-4">%{</span><span class="p" data-group-id="7388736255-4">}</span><span class="w">
+</span><span class="p" data-group-id="7388736255-3">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="set_reaction/3">
@@ -141,8 +254,26 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">set_reaction(round, id, reaction)</h1>
+      <div class="specs">
+          <pre>set_reaction(<a href="GameApp.Round.html#t:t/0">GameApp.Round.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="GameApp.Round.html#t:t/0">GameApp.Round.t</a>()</pre>
+      </div>
   </div>
   <section class="docstring">
+<p>Sets the reaction for a player in a round.</p>
+<h2 id="set_reaction/3-examples" class="section-heading">
+  <a href="#set_reaction/3-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="2053273926-1">(</span><span class="mi">1</span><span class="p" data-group-id="2053273926-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_reaction</span><span class="p" data-group-id="2053273926-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OMG!&quot;</span><span class="p" data-group-id="2053273926-2">)</span><span class="w">
+</span><span class="p" data-group-id="2053273926-3">%</span><span class="nc" data-group-id="2053273926-3">GameApp.Round</span><span class="p" data-group-id="2053273926-3">{</span><span class="w">
+  </span><span class="ss">number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
+  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="2053273926-4">%{</span><span class="w">
+    </span><span class="s">&quot;Gamer&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="s">&quot;OMG!&quot;</span><span class="w">
+  </span><span class="p" data-group-id="2053273926-4">}</span><span class="w">
+</span><span class="p" data-group-id="2053273926-3">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="set_winner/2">
@@ -152,8 +283,24 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">set_winner(round, winner)</h1>
+      <div class="specs">
+          <pre>set_winner(<a href="GameApp.Round.html#t:t/0">GameApp.Round.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>()) :: <a href="GameApp.Round.html#t:t/0">GameApp.Round.t</a>()</pre>
+      </div>
   </div>
   <section class="docstring">
+<p>Sets the winner for a round.</p>
+<h2 id="set_winner/2-examples" class="section-heading">
+  <a href="#set_winner/2-examples" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Examples
+</h2>
+
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="4104231639-1">(</span><span class="mi">1</span><span class="p" data-group-id="4104231639-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_winner</span><span class="p" data-group-id="4104231639-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4104231639-3">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4104231639-3">}</span><span class="p" data-group-id="4104231639-2">)</span><span class="w">
+</span><span class="p" data-group-id="4104231639-4">%</span><span class="nc" data-group-id="4104231639-4">GameApp.Round</span><span class="p" data-group-id="4104231639-4">{</span><span class="w">
+  </span><span class="ss">number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
+  </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4104231639-5">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4104231639-5">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4104231639-6">%{</span><span class="p" data-group-id="4104231639-6">}</span><span class="w">
+</span><span class="p" data-group-id="4104231639-4">}</span></code></pre>
   </section>
 </section>
           </div>
