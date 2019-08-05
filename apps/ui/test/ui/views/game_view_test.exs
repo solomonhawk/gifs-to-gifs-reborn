@@ -1,3 +1,3 @@
-defmodule Ui.PageViewTest do
+defmodule Ui.GameViewTest do
   use Ui.ConnCase, async: true
 end

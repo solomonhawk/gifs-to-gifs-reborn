@@ -8,7 +8,7 @@
     <meta name="project" content=" v0.1.0">
     <title>GameApp.Server —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
-    <script src="dist/sidebar_items-361edfa007.js"></script>
+    <script src="dist/sidebar_items-9cb5ee89c5.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
   </head>
@@ -100,6 +100,11 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#generate_shortcode/0">generate_shortcode()</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#join/2">join(shortcode, player)</a>
   </div>
     <div class="summary-synopsis"><p>Joins a player to the game with the given shortcode.</p></div>
@@ -171,12 +176,26 @@ Functions          </h1>
     </a>
     <h1 class="signature">game_pid(shortcode)</h1>
       <div class="specs">
-          <pre>game_pid(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
+          <pre>game_pid(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>() | nil</pre>
       </div>
   </div>
   <section class="docstring">
 <p>Returns the <code class="inline">pid</code> of the game server process registered under the
 given <code class="inline">shortcode</code>, or <code class="inline">nil</code> if no process is registered.</p>
+  </section>
+</section>
+<section class="detail" id="generate_shortcode/0">
+  <div class="detail-header">
+    <a href="#generate_shortcode/0" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">generate_shortcode()</h1>
+      <div class="specs">
+          <pre>generate_shortcode() :: <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()</pre>
+      </div>
+  </div>
+  <section class="docstring">
   </section>
 </section>
 <section class="detail" id="join/2">

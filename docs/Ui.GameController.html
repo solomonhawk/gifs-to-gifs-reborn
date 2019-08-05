@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.21.1">
     <meta name="project" content=" v0.1.0">
-    <title>Ui.ErrorHelpers —  v0.1.0</title>
+    <title>Ui.GameController —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
     <script src="dist/sidebar_items-9cb5ee89c5.js"></script>
       <script src="docs_config.js"></script>
@@ -65,12 +65,9 @@
 
       <h1>
         <small class="app-vsn"> v0.1.0</small>
-Ui.ErrorHelpers      </h1>
+Ui.GameController      </h1>
 
 
-        <section id="moduledoc">
-<p>Conveniences for translating and building error messages.</p>
-        </section>
 
         <section id="summary" class="details-list">
           <h1 class="section-heading">
@@ -86,15 +83,18 @@ Ui.ErrorHelpers      </h1>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#error_tag/2">error_tag(form, field)</a>
+    <a href="#create/2">create(conn, params)</a>
   </div>
-    <div class="summary-synopsis"><p>Generates tag for inlined form input errors.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#translate_error/1">translate_error(arg)</a>
+    <a href="#new/2">new(conn, params)</a>
   </div>
-    <div class="summary-synopsis"><p>Translates an error message using gettext.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#show/2">show(conn, map)</a>
+  </div>
 </div>
   </div>
         </section>
@@ -107,28 +107,37 @@ Ui.ErrorHelpers      </h1>
             </a>
 Functions          </h1>
           <div class="functions-list">
-<section class="detail" id="error_tag/2">
+<section class="detail" id="create/2">
   <div class="detail-header">
-    <a href="#error_tag/2" class="detail-link" title="Link to this function">
+    <a href="#create/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">error_tag(form, field)</h1>
+    <h1 class="signature">create(conn, params)</h1>
   </div>
   <section class="docstring">
-<p>Generates tag for inlined form input errors.</p>
   </section>
 </section>
-<section class="detail" id="translate_error/1">
+<section class="detail" id="new/2">
   <div class="detail-header">
-    <a href="#translate_error/1" class="detail-link" title="Link to this function">
+    <a href="#new/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">translate_error(arg)</h1>
+    <h1 class="signature">new(conn, params)</h1>
   </div>
   <section class="docstring">
-<p>Translates an error message using gettext.</p>
+  </section>
+</section>
+<section class="detail" id="show/2">
+  <div class="detail-header">
+    <a href="#show/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">show(conn, map)</h1>
+  </div>
+  <section class="docstring">
   </section>
 </section>
           </div>

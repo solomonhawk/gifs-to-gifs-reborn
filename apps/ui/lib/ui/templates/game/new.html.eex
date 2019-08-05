@@ -1,0 +1,3 @@
+<%= form_for @conn, Routes.game_path(@conn, :create), fn f -> %>
+  <%= submit "Create Game" %>
+<% end %>
