@@ -127,6 +127,9 @@ defmodule GameApp.Server do
     |> GenServer.whereis()
   end
 
+  @doc """
+  Generates a 4-letter code used as the identifier for a game server.
+  """
   @spec generate_shortcode() :: String.t()
   def generate_shortcode() do
     code =

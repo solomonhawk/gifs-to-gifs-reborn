@@ -140,13 +140,13 @@ refuse authorization, return <code class="inline">{:error, reason}</code>.</p>
   Example
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="kd">def</span><span class="w"> </span><span class="nf">join</span><span class="p" data-group-id="9130339797-1">(</span><span class="s">&quot;room:lobby&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="9130339797-1">)</span><span class="w"> </span><span class="k" data-group-id="9130339797-2">do</span><span class="w">
-  </span><span class="k">if</span><span class="w"> </span><span class="n">authorized?</span><span class="p" data-group-id="9130339797-3">(</span><span class="n">payload</span><span class="p" data-group-id="9130339797-3">)</span><span class="w"> </span><span class="k" data-group-id="9130339797-4">do</span><span class="w">
-    </span><span class="p" data-group-id="9130339797-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="9130339797-5">}</span><span class="w">
-  </span><span class="k" data-group-id="9130339797-4">else</span><span class="w">
-    </span><span class="p" data-group-id="9130339797-6">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9130339797-7">%{</span><span class="ss">reason</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;unauthorized&quot;</span><span class="p" data-group-id="9130339797-7">}</span><span class="p" data-group-id="9130339797-6">}</span><span class="w">
-  </span><span class="k" data-group-id="9130339797-4">end</span><span class="w">
-</span><span class="k" data-group-id="9130339797-2">end</span></code></pre>
+<pre><code class="nohighlight makeup elixir"><span class="kd">def</span><span class="w"> </span><span class="nf">join</span><span class="p" data-group-id="2010747562-1">(</span><span class="s">&quot;room:lobby&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="2010747562-1">)</span><span class="w"> </span><span class="k" data-group-id="2010747562-2">do</span><span class="w">
+  </span><span class="k">if</span><span class="w"> </span><span class="n">authorized?</span><span class="p" data-group-id="2010747562-3">(</span><span class="n">payload</span><span class="p" data-group-id="2010747562-3">)</span><span class="w"> </span><span class="k" data-group-id="2010747562-4">do</span><span class="w">
+    </span><span class="p" data-group-id="2010747562-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="2010747562-5">}</span><span class="w">
+  </span><span class="k" data-group-id="2010747562-4">else</span><span class="w">
+    </span><span class="p" data-group-id="2010747562-6">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2010747562-7">%{</span><span class="ss">reason</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;unauthorized&quot;</span><span class="p" data-group-id="2010747562-7">}</span><span class="p" data-group-id="2010747562-6">}</span><span class="w">
+  </span><span class="k" data-group-id="2010747562-4">end</span><span class="w">
+</span><span class="k" data-group-id="2010747562-2">end</span></code></pre>
 <p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Channel.html#c:join/3"><code class="inline">Phoenix.Channel.join/3</code></a>.</p>
   </section>
 </section>
