@@ -7,6 +7,7 @@ defmodule GameApp.Game do
   alias __MODULE__, as: Game
   alias GameApp.{Player, Round}
 
+  @enforce_keys [:shortcode, :creator]
   defstruct shortcode: nil,
             round_number: nil,
             rounds: [],
@@ -222,7 +223,7 @@ defmodule GameApp.Game do
   """
   @spec select_reaction(Game.t(), Player.t(), String.t()) :: Game.t()
   def select_reaction(%Game{phase: :reaction_selection, rounds: rounds} = game, player, reaction) do
-    update_round(game, Round.set_reaction(hd(rounds), player.id, reaction))
+    update_round(game, Round.set_reaction(hd(rounds), player, reaction))
   end
 
   @doc """

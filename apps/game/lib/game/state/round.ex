@@ -7,6 +7,7 @@ defmodule GameApp.Round do
   alias __MODULE__, as: Round
   alias GameApp.Player
 
+  @enforce_keys [:number]
   defstruct number: nil,
             prompt: nil,
             winner: nil,
@@ -24,8 +25,8 @@ defmodule GameApp.Round do
 
   ## Examples
 
-      iex> GameApp.Round.create(1)
-      %GameApp.Round{
+      iex> Round.create(1)
+      %Round{
         number: 1,
         winner: nil,
         reactions: %{}
@@ -34,7 +35,7 @@ defmodule GameApp.Round do
   """
   @spec create(integer()) :: Round.t()
   def create(number) do
-    %__MODULE__{number: number}
+    %Round{number: number}
   end
 
   @doc """
@@ -42,9 +43,9 @@ defmodule GameApp.Round do
 
   ## Examples
 
-      iex> r = GameApp.Round.create(1)
-      iex> GameApp.Round.set_prompt(r, "Wat")
-      %GameApp.Round{
+      iex> r = Round.create(1)
+      iex> Round.set_prompt(r, "Wat")
+      %Round{
         number: 1,
         prompt: "Wat",
         winner: nil,
@@ -62,20 +63,20 @@ defmodule GameApp.Round do
 
   ## Examples
 
-      iex> r = GameApp.Round.create(1)
-      iex> GameApp.Round.set_reaction(r, "Gamer", "OMG!")
-      %GameApp.Round{
+      iex> r = Round.create(1)
+      iex> Round.set_reaction(r, Player.create("1", "Gamer"), "OMG!")
+      %Round{
         number: 1,
         winner: nil,
         reactions: %{
-          "Gamer" => "OMG!"
+          "1" => "OMG!"
         }
       }
 
   """
-  @spec set_reaction(Round.t(), String.t(), String.t()) :: Round.t()
-  def set_reaction(%Round{reactions: reactions} = round, id, reaction) do
-    Map.put(round, :reactions, Map.put(reactions, id, reaction))
+  @spec set_reaction(Round.t(), Player.t(), String.t()) :: Round.t()
+  def set_reaction(%Round{reactions: reactions} = round, player, reaction) do
+    Map.put(round, :reactions, Map.put(reactions, player.id, reaction))
   end
 
   @doc """
@@ -83,19 +84,20 @@ defmodule GameApp.Round do
 
   ## Examples
 
-      iex> r = GameApp.Round.create(1)
-      iex> r = GameApp.Round.set_reaction(r, "Gamer", "OMG!")
-      iex> GameApp.Round.remove_reaction(r, "Gamer")
-      %GameApp.Round{
+      iex> r = Round.create(1)
+      iex> p = Player.create("1", "Gamer")
+      iex> r = Round.set_reaction(r, p, "OMG!")
+      iex> Round.remove_reaction(r, p)
+      %Round{
         number: 1,
         winner: nil,
         reactions: %{}
       }
 
   """
-  @spec remove_reaction(Round.t(), String.t()) :: Round.t()
-  def remove_reaction(%Round{reactions: reactions} = round, id) do
-    Map.put(round, :reactions, Map.delete(reactions, id))
+  @spec remove_reaction(Round.t(), Player.t()) :: Round.t()
+  def remove_reaction(%Round{reactions: reactions} = round, player) do
+    Map.put(round, :reactions, Map.delete(reactions, player.id))
   end
 
   @doc """
@@ -103,11 +105,11 @@ defmodule GameApp.Round do
 
   ## Examples
 
-      iex> r = GameApp.Round.create(1)
-      iex> GameApp.Round.set_winner(r, %{id: "Gamer"})
-      %GameApp.Round{
+      iex> r = Round.create(1)
+      iex> Round.set_winner(r, Player.create("1", "Gamer"))
+      %Round{
         number: 1,
-        winner: %{id: "Gamer"},
+        winner: %Player{id: "1", name: "Gamer"},
         reactions: %{}
       }
 

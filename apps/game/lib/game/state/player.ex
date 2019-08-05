@@ -1,4 +1,8 @@
 defmodule GameApp.Player do
+  @moduledoc """
+  A player in the game.
+  """
+
   alias __MODULE__, as: Player
 
   @enforce_keys [:id, :name]
