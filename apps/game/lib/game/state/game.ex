@@ -94,7 +94,7 @@ defmodule GameApp.Game do
 
   def summary(%Game{rounds: rounds} = game), do: summary(game, hd(rounds))
 
-  def summary(%Game{} = game, round) when is_map(round) do
+  defp summary(%Game{} = game, round) when is_map(round) do
     %{
       shortcode: game.shortcode,
       round_number: game.round_number,
@@ -241,8 +241,8 @@ defmodule GameApp.Game do
     update_round(game, Round.set_reaction(hd(rounds), player.id, reaction))
   end
 
-  @spec start_round_end(Game.t()) :: Game.t()
-  def start_round_end(%Game{phase: :winner_selection} = game) do
+  @spec end_round(Game.t()) :: Game.t()
+  def end_round(%Game{phase: :winner_selection} = game) do
     game |> set_phase(:round_end)
   end
 
