@@ -1,4 +1,7 @@
+- [x] [ui] Add basic player sessions
+- [x] [ui] Add game routes
+- [x] [ui] Add `GameChannel`
 - [ ] [game] Figure out what to do if funmaster leaves or disconnects in the middle of a round
-- [ ] [ui] Add basic player sessions
-- [ ] [ui] Add game routes
-- [ ] [ui] Add `GameChannel`
+- [ ] [game] Advance to winner selection after all reactions are in (countdown or just UI transition)
+- [ ] [game] Assign points for winning
+- [ ] [game] Determine win condition (point target parameter on create game screen?, max number of rounds?)
