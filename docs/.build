@@ -1,11 +1,11 @@
-dist/search_items-34e90b72fd.js
+dist/search_items-4be19787c3.js
 dist/html-9914b37a220eb2c313b6.css
 dist/html-9914b37a220eb2c313b6.js
 dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/sidebar_items-9cb5ee89c5.js
+dist/sidebar_items-a73374f015.js
 api-reference.html
 readme.html
 search.html
@@ -19,6 +19,7 @@ Ui.html
 Ui.Endpoint.html
 Ui.ErrorHelpers.html
 Ui.ErrorView.html
+Ui.GameChannel.html
 Ui.GameController.html
 Ui.GameView.html
 Ui.Gettext.html

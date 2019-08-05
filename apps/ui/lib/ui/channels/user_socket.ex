@@ -2,7 +2,7 @@ defmodule Ui.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", Ui.RoomChannel
+  channel "games:*", Ui.GameChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After
@@ -15,6 +15,16 @@ defmodule Ui.UserSocket do
   #
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
+  def connect(%{"token" => token}, socket) do
+    case Phoenix.Token.verify(socket, "secret salt", token, max_age: 86400) do
+      {:ok, player} ->
+        {:ok, assign(socket, :current_player, player)}
+
+      {:error, _reason} ->
+        :error
+    end
+  end
+
   def connect(_params, socket, _connect_info) do
     {:ok, socket}
   end

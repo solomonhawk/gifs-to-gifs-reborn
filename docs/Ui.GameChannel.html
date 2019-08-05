@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.21.1">
     <meta name="project" content=" v0.1.0">
-    <title>Ui.GameView —  v0.1.0</title>
+    <title>Ui.GameChannel —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
     <script src="dist/sidebar_items-a73374f015.js"></script>
       <script src="docs_config.js"></script>
@@ -65,7 +65,7 @@
 
       <h1>
         <small class="app-vsn"> v0.1.0</small>
-Ui.GameView      </h1>
+Ui.GameChannel      </h1>
 
 
 
@@ -83,35 +83,20 @@ Ui.GameView      </h1>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#__phoenix_recompile__?/0">__phoenix_recompile__?()</a>
+    <a href="#handle_info/2">handle_info(arg, socket)</a>
   </div>
-    <div class="summary-synopsis"><p>Returns true whenever the list of templates changes in the filesystem.</p></div>
+    <div class="summary-synopsis"><p>Handle regular Elixir process messages.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#__resource__/0">__resource__()</a>
+    <a href="#join/3">join(arg, params, socket)</a>
   </div>
-    <div class="summary-synopsis"><p>The resource name, as an atom, for this view</p></div>
+    <div class="summary-synopsis"><p>Handle channel joins by <code class="inline">topic</code>.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#__templates__/0">__templates__()</a>
+    <a href="#start_link/1">start_link(triplet)</a>
   </div>
-    <div class="summary-synopsis"><p>Returns the template root alongside all templates.</p></div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#render/2">render(template, assigns \\ %{})</a>
-  </div>
-    <div class="summary-synopsis"><p>Renders the given template locally.</p></div>
-</div>
-<div class="summary-row">
-  <div class="summary-signature">
-    <a href="#template_not_found/2">template_not_found(template, assigns)</a>
-  </div>
-    <div class="summary-synopsis"><p>Callback invoked when no template is found.
-By default it raises but can be customized
-to render a particular template.</p></div>
 </div>
   </div>
         </section>
@@ -124,70 +109,56 @@ to render a particular template.</p></div>
             </a>
 Functions          </h1>
           <div class="functions-list">
-<section class="detail" id="__phoenix_recompile__?/0">
+<section class="detail" id="handle_info/2">
   <div class="detail-header">
-    <a href="#__phoenix_recompile__?/0" class="detail-link" title="Link to this function">
+    <a href="#handle_info/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">__phoenix_recompile__?()</h1>
+    <h1 class="signature">handle_info(arg, socket)</h1>
   </div>
   <section class="docstring">
-<p>Returns true whenever the list of templates changes in the filesystem.</p>
+<p>Handle regular Elixir process messages.</p>
+<p>See <a href="https://hexdocs.pm/elixir/GenServer.html#handle_info/2"><code class="inline">GenServer.handle_info/2</code></a>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Channel.html#c:handle_info/2"><code class="inline">Phoenix.Channel.handle_info/2</code></a>.</p>
   </section>
 </section>
-<section class="detail" id="__resource__/0">
+<section class="detail" id="join/3">
   <div class="detail-header">
-    <a href="#__resource__/0" class="detail-link" title="Link to this function">
+    <a href="#join/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">__resource__()</h1>
+    <h1 class="signature">join(arg, params, socket)</h1>
   </div>
   <section class="docstring">
-<p>The resource name, as an atom, for this view</p>
+<p>Handle channel joins by <code class="inline">topic</code>.</p>
+<p>To authorize a socket, return <code class="inline">{:ok, socket}</code> or <code class="inline">{:ok, reply, socket}</code>. To
+refuse authorization, return <code class="inline">{:error, reason}</code>.</p>
+<h2 id="join/3-example" class="section-heading">
+  <a href="#join/3-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Example
+</h2>
+
+<pre><code class="nohighlight makeup elixir"><span class="kd">def</span><span class="w"> </span><span class="nf">join</span><span class="p" data-group-id="9130339797-1">(</span><span class="s">&quot;room:lobby&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="9130339797-1">)</span><span class="w"> </span><span class="k" data-group-id="9130339797-2">do</span><span class="w">
+  </span><span class="k">if</span><span class="w"> </span><span class="n">authorized?</span><span class="p" data-group-id="9130339797-3">(</span><span class="n">payload</span><span class="p" data-group-id="9130339797-3">)</span><span class="w"> </span><span class="k" data-group-id="9130339797-4">do</span><span class="w">
+    </span><span class="p" data-group-id="9130339797-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="9130339797-5">}</span><span class="w">
+  </span><span class="k" data-group-id="9130339797-4">else</span><span class="w">
+    </span><span class="p" data-group-id="9130339797-6">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9130339797-7">%{</span><span class="ss">reason</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;unauthorized&quot;</span><span class="p" data-group-id="9130339797-7">}</span><span class="p" data-group-id="9130339797-6">}</span><span class="w">
+  </span><span class="k" data-group-id="9130339797-4">end</span><span class="w">
+</span><span class="k" data-group-id="9130339797-2">end</span></code></pre>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Channel.html#c:join/3"><code class="inline">Phoenix.Channel.join/3</code></a>.</p>
   </section>
 </section>
-<section class="detail" id="__templates__/0">
+<section class="detail" id="start_link/1">
   <div class="detail-header">
-    <a href="#__templates__/0" class="detail-link" title="Link to this function">
+    <a href="#start_link/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">__templates__()</h1>
+    <h1 class="signature">start_link(triplet)</h1>
   </div>
   <section class="docstring">
-<p>Returns the template root alongside all templates.</p>
-  </section>
-</section>
-<section class="detail" id="render/2">
-    <span id="render/1"></span>
-  <div class="detail-header">
-    <a href="#render/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">render(template, assigns \\ %{})</h1>
-  </div>
-  <section class="docstring">
-<p>Renders the given template locally.</p>
-  </section>
-</section>
-<section class="detail" id="template_not_found/2">
-  <div class="detail-header">
-    <a href="#template_not_found/2" class="detail-link" title="Link to this function">
-      <span class="icon-link" aria-hidden="true"></span>
-      <span class="sr-only">Link to this function</span>
-    </a>
-    <h1 class="signature">template_not_found(template, assigns)</h1>
-      <div class="specs">
-          <pre>template_not_found(<a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Template.html#t:name/0">Phoenix.Template.name</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>()</pre>
-      </div>
-  </div>
-  <section class="docstring">
-<p>Callback invoked when no template is found.
-By default it raises but can be customized
-to render a particular template.</p>
   </section>
 </section>
           </div>

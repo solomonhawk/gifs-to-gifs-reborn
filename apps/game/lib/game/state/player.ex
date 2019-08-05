@@ -5,6 +5,7 @@ defmodule GameApp.Player do
 
   alias __MODULE__, as: Player
 
+  @derive Jason.Encoder
   @enforce_keys [:id, :name]
   defstruct id: nil,
             name: nil
