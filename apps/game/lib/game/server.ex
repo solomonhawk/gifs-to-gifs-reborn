@@ -1,6 +1,6 @@
 defmodule GameApp.Server do
   @moduledoc """
-  `GameApp.Server` provides a stateful process that maintains an internal `Game`
+  `GameApp.Server` provides a stateful process that maintains an internal game
   state and provides a public API for interacting with the game.
   """
 
@@ -20,22 +20,37 @@ defmodule GameApp.Server do
 
   ### Client API
 
+  @doc """
+  Returns a summary of the game state for a game with the given shortcode.
+  """
   def summary(shortcode) do
     GenServer.call(via_tuple(shortcode), :summary)
   end
 
+  @doc """
+  Joins a player to the game with the given shortcode.
+  """
   def join(shortcode, player) do
     GenServer.cast(via_tuple(shortcode), {:player_join, player})
   end
 
+  @doc """
+  Removes a player from the game with the given shortcode.
+  """
   def leave(shortcode, player) do
     GenServer.cast(via_tuple(shortcode), {:player_leave, player})
   end
 
+  @doc """
+  Starts the game with the given shortcode.
+  """
   def start_game(shortcode) do
     GenServer.cast(via_tuple(shortcode), :start_game)
   end
 
+  @doc """
+  Starts the next round for the game with the given shortcode.
+  """
   def start_round(shortcode) do
     GenServer.cast(via_tuple(shortcode), :start_round)
   end

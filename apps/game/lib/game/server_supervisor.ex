@@ -4,8 +4,7 @@ defmodule GameApp.ServerSupervisor do
   """
 
   alias __MODULE__, as: ServerSupervisor
-
-  @type player :: %{id: String.t()}
+  alias GameApp.Player
 
   use DynamicSupervisor
 
@@ -29,7 +28,7 @@ defmodule GameApp.ServerSupervisor do
       {:ok, pid}
 
   """
-  @spec start_game(String.t(), player()) :: {:ok, pid()} | {:error, any()}
+  @spec start_game(String.t(), Player.t()) :: {:ok, pid()} | {:error, any()}
   def start_game(shortcode, player) do
     child_spec = %{
       id: GameApp.Server,
@@ -41,6 +40,12 @@ defmodule GameApp.ServerSupervisor do
     DynamicSupervisor.start_child(ServerSupervisor, child_spec)
   end
 
+  @doc """
+  Stops a game server with the given shortcode.
+
+  Returns `:ok` or `{:error, :not_found}`.
+  """
+  @spec stop_game(String.t()) :: :ok | {:error, :not_found}
   def stop_game(shortcode) do
     child_pid = GameApp.Server.game_pid(shortcode)
     DynamicSupervisor.terminate_child(ServerSupervisor, child_pid)

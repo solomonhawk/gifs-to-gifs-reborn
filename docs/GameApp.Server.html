@@ -8,7 +8,7 @@
     <meta name="project" content=" v0.1.0">
     <title>GameApp.Server —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
-    <script src="dist/sidebar_items-a5142729f0.js"></script>
+    <script src="dist/sidebar_items-5048d9b289.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
   </head>
@@ -69,7 +69,7 @@ GameApp.Server      </h1>
 
 
         <section id="moduledoc">
-<p><a href="#content"><code class="inline">GameApp.Server</code></a> provides a stateful process that maintains an internal <code class="inline">Game</code>
+<p><a href="#content"><code class="inline">GameApp.Server</code></a> provides a stateful process that maintains an internal game
 state and provides a public API for interacting with the game.</p>
         </section>
 
@@ -102,16 +102,19 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
   <div class="summary-signature">
     <a href="#join/2">join(shortcode, player)</a>
   </div>
+    <div class="summary-synopsis"><p>Joins a player to the game with the given shortcode.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#leave/2">leave(shortcode, player)</a>
   </div>
+    <div class="summary-synopsis"><p>Removes a player from the game with the given shortcode.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#start_game/1">start_game(shortcode)</a>
   </div>
+    <div class="summary-synopsis"><p>Starts the game with the given shortcode.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -122,11 +125,13 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
   <div class="summary-signature">
     <a href="#start_round/1">start_round(shortcode)</a>
   </div>
+    <div class="summary-synopsis"><p>Starts the next round for the game with the given shortcode.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
     <a href="#summary/1">summary(shortcode)</a>
   </div>
+    <div class="summary-synopsis"><p>Returns a summary of the game state for a game with the given shortcode.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -180,6 +185,7 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
     <h1 class="signature">join(shortcode, player)</h1>
   </div>
   <section class="docstring">
+<p>Joins a player to the game with the given shortcode.</p>
   </section>
 </section>
 <section class="detail" id="leave/2">
@@ -191,6 +197,7 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
     <h1 class="signature">leave(shortcode, player)</h1>
   </div>
   <section class="docstring">
+<p>Removes a player from the game with the given shortcode.</p>
   </section>
 </section>
 <section class="detail" id="start_game/1">
@@ -202,6 +209,7 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
     <h1 class="signature">start_game(shortcode)</h1>
   </div>
   <section class="docstring">
+<p>Starts the game with the given shortcode.</p>
   </section>
 </section>
 <section class="detail" id="start_link/2">
@@ -224,6 +232,7 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
     <h1 class="signature">start_round(shortcode)</h1>
   </div>
   <section class="docstring">
+<p>Starts the next round for the game with the given shortcode.</p>
   </section>
 </section>
 <section class="detail" id="summary/1">
@@ -235,6 +244,7 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
     <h1 class="signature">summary(shortcode)</h1>
   </div>
   <section class="docstring">
+<p>Returns a summary of the game state for a game with the given shortcode.</p>
   </section>
 </section>
 <section class="detail" id="via_tuple/1">

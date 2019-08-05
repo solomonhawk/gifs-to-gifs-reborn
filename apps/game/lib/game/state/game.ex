@@ -1,6 +1,6 @@
 defmodule GameApp.Game do
   @moduledoc """
-  GameApp.Game defines a struct that encapsulates Game state as well as many
+  `GameApp.Game` defines a struct that encapsulates game state as well as many
   functions that advance the game state based on actions that players can take.
   """
 
@@ -121,6 +121,7 @@ defmodule GameApp.Game do
     |> remove_player(player)
     |> set_funmaster_and_order()
   end
+
   def player_leave(%Game{} = game, player) do
     game |> remove_player(player)
   end
