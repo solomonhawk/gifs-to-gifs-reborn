@@ -1,0 +1,4 @@
+- [ ] [game] Figure out what to do if funmaster leaves or disconnects in the middle of a round
+- [ ] [ui] Add basic player sessions
+- [ ] [ui] Add game routes
+- [ ] [ui] Add `GameChannel`

@@ -89,7 +89,7 @@ defmodule GameApp.Game do
   """
   @spec summary(Game.t()) :: map()
   def summary(%Game{rounds: []} = game), do: summarize(game, %{})
-  def summary(%Game{rounds: rounds} = game), do: summarize(game, hd(rounds))
+  def summary(%Game{rounds: [round | _]} = game), do: summarize(game, round)
 
   @doc """
   Adds a player to a game.
@@ -212,27 +212,31 @@ defmodule GameApp.Game do
   Assigns a prompt to the current round.
   """
   @spec select_prompt(Game.t(), String.t()) :: Game.t()
-  def select_prompt(%Game{phase: :prompt_selection, rounds: rounds} = game, prompt) do
+  def select_prompt(%Game{phase: :prompt_selection, rounds: [round | _]} = game, prompt) do
     game
     |> set_phase(:reaction_selection)
-    |> update_round(Round.set_prompt(hd(rounds), prompt))
+    |> update_round(Round.set_prompt(round, prompt))
   end
 
   @doc """
   Adds a reaction in the current round for the given player.
   """
   @spec select_reaction(Game.t(), Player.t(), String.t()) :: Game.t()
-  def select_reaction(%Game{phase: :reaction_selection, rounds: rounds} = game, player, reaction) do
-    update_round(game, Round.set_reaction(hd(rounds), player, reaction))
+  def select_reaction(
+        %Game{phase: :reaction_selection, rounds: [round | _]} = game,
+        player,
+        reaction
+      ) do
+    update_round(game, Round.set_reaction(round, player, reaction))
   end
 
   @doc """
   Starts prompt selection for the current round.
   """
   @spec select_round_winner(Game.t(), Player.t()) :: Game.t()
-  def select_round_winner(%Game{phase: :winner_selection, rounds: rounds} = game, player) do
+  def select_round_winner(%Game{phase: :winner_selection, rounds: [round | _]} = game, player) do
     game
-    |> update_round(Round.set_winner(hd(rounds), player))
+    |> update_round(Round.set_winner(round, player))
     |> set_phase(:round_end)
   end
 
