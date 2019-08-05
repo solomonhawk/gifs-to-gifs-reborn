@@ -4,31 +4,29 @@ defmodule GameApp.Game do
   functions that advance the game state based on actions that players can take.
   """
 
-  alias __MODULE__
+  alias __MODULE__, as: Game
   alias GameApp.Round
 
-  defstruct [
-    shortcode: nil,
-    round_number: nil,
-    rounds: [],
-    players: %{},
-    scores: %{},
-    phase: :lobby,
-    winner: nil,
-    creator: nil,
-    funmaster: nil,
-    funmaster_order: []
-  ]
+  defstruct shortcode: nil,
+            round_number: nil,
+            rounds: [],
+            players: %{},
+            scores: %{},
+            phase: :lobby,
+            winner: nil,
+            creator: nil,
+            funmaster: nil,
+            funmaster_order: []
 
   @type game_state ::
-    :lobby |              # join/leave
-    :game_start |         # pre-game summary
-    :round_start |        # pre-round summary (scores, round funmaster)
-    :prompt_selection |   # funmaster selects prompt
-    :reaction_selection | # players select reactions
-    :winner_selection |   # funmaster chooses winner(s)
-    :round_end |          # post-round summary
-    :game_end             # post-game summary
+          :lobby
+          | :game_start
+          | :round_start
+          | :prompt_selection
+          | :reaction_selection
+          | :winner_selection
+          | :round_end
+          | :game_end
 
   @type shortcode :: String.t()
   @type player :: %{id: String.t()}
@@ -36,18 +34,18 @@ defmodule GameApp.Game do
   @type reaction :: String.t()
   @type round :: %Round{}
 
-  @type t() :: %__MODULE__{
-    shortcode: String.t(),
-    round_number: integer() | nil,
-    rounds: list(Round.t()),
-    players: map(),
-    scores: map(),
-    phase: game_state,
-    winner: player() | nil,
-    creator: player(),
-    funmaster: player() | nil,
-    funmaster_order: list(String.t())
-  }
+  @type t() :: %Game{
+          shortcode: String.t(),
+          round_number: integer() | nil,
+          rounds: list(Round.t()),
+          players: map(),
+          scores: map(),
+          phase: game_state,
+          winner: player() | nil,
+          creator: player(),
+          funmaster: player() | nil,
+          funmaster_order: list(String.t())
+        }
 
   @doc """
   Creates a game.
@@ -67,7 +65,7 @@ defmodule GameApp.Game do
   """
   @spec create(shortcode(), player()) :: Game.t()
   def create(shortcode, %{id: id} = creator) do
-    %__MODULE__{
+    %Game{
       shortcode: shortcode,
       creator: creator,
       players: Map.new([{id, creator}]),
@@ -118,11 +116,13 @@ defmodule GameApp.Game do
 
   """
   @spec player_leave(Game.t(), player()) :: Game.t()
-  def player_leave(%Game{funmaster: %{id: funmaster_id}} = game, %{id: id} = player) when id == funmaster_id do
+  def player_leave(%Game{funmaster: %{id: funmaster_id}} = game, %{id: id} = player)
+      when id == funmaster_id do
     game
     |> remove_player(player)
     |> set_funmaster_and_order()
   end
+
   def player_leave(%Game{} = game, player) do
     game |> remove_player(player)
   end
@@ -157,6 +157,7 @@ defmodule GameApp.Game do
     |> set_round(1)
     |> set_funmaster_and_order()
   end
+
   def start_round(%Game{phase: :round_end, round_number: round_number} = game) do
     game
     |> set_phase(:round_start)
@@ -216,6 +217,7 @@ defmodule GameApp.Game do
   defp set_player_score(game, player, nil) do
     Map.put(game, :scores, Map.put(game.scores, player.id, 0))
   end
+
   defp set_player_score(game, player, score) do
     Map.put(game, :scores, Map.put(game.scores, player.id, score))
   end
@@ -226,6 +228,7 @@ defmodule GameApp.Game do
     |> Map.put(:funmaster, nil)
     |> Map.put(:funmaster_order, [])
   end
+
   defp set_funmaster_and_order(%Game{players: players} = game) do
     game
     |> Map.put(:funmaster_order, generate_funmaster_order(players))
@@ -233,8 +236,10 @@ defmodule GameApp.Game do
   end
 
   @spec set_funmaster(Game.t()) :: Game.t()
-  defp set_funmaster(%Game{players: players, funmaster_order: funmaster_order, round_number: round_number} = game) do
-    Map.put(game, :funmaster, funmaster_for_round(funmaster_order, players, round_number))
+  defp set_funmaster(
+         %Game{players: players, funmaster_order: order, round_number: round_number} = game
+       ) do
+    Map.put(game, :funmaster, funmaster_for_round(order, players, round_number))
   end
 
   @spec remove_player(Game.t(), player()) :: Game.t()
@@ -246,6 +251,7 @@ defmodule GameApp.Game do
 
   @spec remove_reaction(Game.t(), player()) :: Game.t()
   defp remove_reaction(%Game{rounds: []} = game, _player), do: game
+
   defp remove_reaction(%Game{rounds: [round | rounds]} = game, %{id: id}) do
     Map.put(game, :rounds, [Round.remove_reaction(round, id)] ++ rounds)
   end
@@ -260,17 +266,17 @@ defmodule GameApp.Game do
     funmaster_order
     |> Stream.cycle()
     |> Enum.take(round_number)
-    |> List.last
-    |> (&(Map.get(players, &1))).()
+    |> List.last()
+    |> (&Map.get(players, &1)).()
   end
 
   @spec generate_funmaster_order(map()) :: [String.t()] | []
   defp generate_funmaster_order(players) do
-    :random.seed(:os.timestamp)
+    :random.seed(:os.timestamp())
 
     players
     |> Map.values()
     |> Enum.shuffle()
-    |> Enum.map(&(&1.id))
+    |> Enum.map(& &1.id)
   end
 end

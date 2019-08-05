@@ -4,23 +4,21 @@ defmodule GameApp.Round do
   functions that update the round state.
   """
 
-  alias __MODULE__
+  alias __MODULE__, as: Round
 
-  defstruct [
-    number: nil,
-    prompt: nil,
-    winner: nil,
-    reactions: %{}
-  ]
+  defstruct number: nil,
+            prompt: nil,
+            winner: nil,
+            reactions: %{}
 
   @type player :: %{id: String.t()}
 
-  @type t :: %__MODULE__{
-    number: integer(),
-    prompt: String.t() | nil,
-    winner: player() | nil,
-    reactions: map()
-  }
+  @type t :: %Round{
+          number: integer(),
+          prompt: String.t() | nil,
+          winner: player() | nil,
+          reactions: map()
+        }
 
   @doc """
   Creates a round for the given round number.
