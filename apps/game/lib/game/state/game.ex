@@ -44,8 +44,6 @@ defmodule GameApp.Game do
   @doc """
   Creates a game.
 
-  Returns `%Game{}`.
-
   ## Examples
 
       iex> Game.create("ABCD", Player.create("1", "Gamer"))
@@ -89,30 +87,11 @@ defmodule GameApp.Game do
 
   """
   @spec summary(Game.t()) :: map()
-  @spec summary(Game.t(), map()) :: map()
-  def summary(%Game{rounds: []} = game), do: summary(game, %{})
-
-  def summary(%Game{rounds: rounds} = game), do: summary(game, hd(rounds))
-
-  defp summary(%Game{} = game, round) when is_map(round) do
-    %{
-      shortcode: game.shortcode,
-      round_number: game.round_number,
-      players: game.players,
-      scores: game.scores,
-      phase: game.phase,
-      winner: game.winner,
-      creator: game.creator,
-      funmaster: game.funmaster,
-      prompt: Map.get(round, :prompt),
-      reactions: Map.get(round, :reactions)
-    }
-  end
+  def summary(%Game{rounds: []} = game), do: summarize(game, %{})
+  def summary(%Game{rounds: rounds} = game), do: summarize(game, hd(rounds))
 
   @doc """
   Adds a player to a game.
-
-  Returns `%Game{}`.
 
   ## Examples
 
@@ -137,9 +116,9 @@ defmodule GameApp.Game do
   end
 
   @doc """
-  Removes a player from a game.
-
-  Returns `%Game{}`.
+  Removes a player from a game. Removing a player doesn't remove their score
+  which allows for a player to possibly leave and rejoin a game in progress
+  without losing their prior points.
 
   ## Examples
 
@@ -171,8 +150,6 @@ defmodule GameApp.Game do
   @doc """
   Starts a game.
 
-  Returns `%Game{}`.
-
   ## Examples
 
       iex> g = Game.create("ABCD", Player.create("1", "Gamer"))
@@ -193,8 +170,6 @@ defmodule GameApp.Game do
 
   @doc """
   Starts a round.
-
-  Returns `%Game{}`.
 
   ## Examples
 
@@ -261,6 +236,22 @@ defmodule GameApp.Game do
   end
 
   # private
+
+  @spec summarize(Game.t(), map()) :: map()
+  defp summarize(%Game{} = game, round) when is_map(round) do
+    %{
+      shortcode: game.shortcode,
+      round_number: game.round_number,
+      players: game.players,
+      scores: game.scores,
+      phase: game.phase,
+      winner: game.winner,
+      creator: game.creator,
+      funmaster: game.funmaster,
+      prompt: Map.get(round, :prompt),
+      reactions: Map.get(round, :reactions)
+    }
+  end
 
   @spec set_round(Game.t(), integer()) :: Game.t()
   defp set_round(%Game{rounds: rounds} = game, round_number) do

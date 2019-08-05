@@ -183,12 +183,12 @@ Functions          </h1>
   Examples
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="5910721674-1">(</span><span class="mi">1</span><span class="p" data-group-id="5910721674-1">)</span><span class="w">
-</span><span class="p" data-group-id="5910721674-2">%</span><span class="nc" data-group-id="5910721674-2">GameApp.Round</span><span class="p" data-group-id="5910721674-2">{</span><span class="w">
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="1362871136-1">(</span><span class="mi">1</span><span class="p" data-group-id="1362871136-1">)</span><span class="w">
+</span><span class="p" data-group-id="1362871136-2">%</span><span class="nc" data-group-id="1362871136-2">GameApp.Round</span><span class="p" data-group-id="1362871136-2">{</span><span class="w">
   </span><span class="ss">number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
-  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5910721674-3">%{</span><span class="p" data-group-id="5910721674-3">}</span><span class="w">
-</span><span class="p" data-group-id="5910721674-2">}</span></code></pre>
+  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1362871136-3">%{</span><span class="p" data-group-id="1362871136-3">}</span><span class="w">
+</span><span class="p" data-group-id="1362871136-2">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="remove_reaction/2">
@@ -209,14 +209,14 @@ Functions          </h1>
   Examples
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="7781181178-1">(</span><span class="mi">1</span><span class="p" data-group-id="7781181178-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_reaction</span><span class="p" data-group-id="7781181178-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OMG!&quot;</span><span class="p" data-group-id="7781181178-2">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">remove_reaction</span><span class="p" data-group-id="7781181178-3">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="7781181178-3">)</span><span class="w">
-</span><span class="p" data-group-id="7781181178-4">%</span><span class="nc" data-group-id="7781181178-4">GameApp.Round</span><span class="p" data-group-id="7781181178-4">{</span><span class="w">
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="5528123563-1">(</span><span class="mi">1</span><span class="p" data-group-id="5528123563-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_reaction</span><span class="p" data-group-id="5528123563-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OMG!&quot;</span><span class="p" data-group-id="5528123563-2">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">remove_reaction</span><span class="p" data-group-id="5528123563-3">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="5528123563-3">)</span><span class="w">
+</span><span class="p" data-group-id="5528123563-4">%</span><span class="nc" data-group-id="5528123563-4">GameApp.Round</span><span class="p" data-group-id="5528123563-4">{</span><span class="w">
   </span><span class="ss">number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
-  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7781181178-5">%{</span><span class="p" data-group-id="7781181178-5">}</span><span class="w">
-</span><span class="p" data-group-id="7781181178-4">}</span></code></pre>
+  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="5528123563-5">%{</span><span class="p" data-group-id="5528123563-5">}</span><span class="w">
+</span><span class="p" data-group-id="5528123563-4">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="set_prompt/2">
@@ -237,14 +237,14 @@ Functions          </h1>
   Examples
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="4296510186-1">(</span><span class="mi">1</span><span class="p" data-group-id="4296510186-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_prompt</span><span class="p" data-group-id="4296510186-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Wat&quot;</span><span class="p" data-group-id="4296510186-2">)</span><span class="w">
-</span><span class="p" data-group-id="4296510186-3">%</span><span class="nc" data-group-id="4296510186-3">GameApp.Round</span><span class="p" data-group-id="4296510186-3">{</span><span class="w">
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="7540065745-1">(</span><span class="mi">1</span><span class="p" data-group-id="7540065745-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_prompt</span><span class="p" data-group-id="7540065745-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Wat&quot;</span><span class="p" data-group-id="7540065745-2">)</span><span class="w">
+</span><span class="p" data-group-id="7540065745-3">%</span><span class="nc" data-group-id="7540065745-3">GameApp.Round</span><span class="p" data-group-id="7540065745-3">{</span><span class="w">
   </span><span class="ss">number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="ss">prompt</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Wat&quot;</span><span class="p">,</span><span class="w">
   </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
-  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4296510186-4">%{</span><span class="p" data-group-id="4296510186-4">}</span><span class="w">
-</span><span class="p" data-group-id="4296510186-3">}</span></code></pre>
+  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="7540065745-4">%{</span><span class="p" data-group-id="7540065745-4">}</span><span class="w">
+</span><span class="p" data-group-id="7540065745-3">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="set_reaction/3">
@@ -265,15 +265,15 @@ Functions          </h1>
   Examples
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="6895748781-1">(</span><span class="mi">1</span><span class="p" data-group-id="6895748781-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_reaction</span><span class="p" data-group-id="6895748781-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OMG!&quot;</span><span class="p" data-group-id="6895748781-2">)</span><span class="w">
-</span><span class="p" data-group-id="6895748781-3">%</span><span class="nc" data-group-id="6895748781-3">GameApp.Round</span><span class="p" data-group-id="6895748781-3">{</span><span class="w">
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="1579286013-1">(</span><span class="mi">1</span><span class="p" data-group-id="1579286013-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_reaction</span><span class="p" data-group-id="1579286013-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;OMG!&quot;</span><span class="p" data-group-id="1579286013-2">)</span><span class="w">
+</span><span class="p" data-group-id="1579286013-3">%</span><span class="nc" data-group-id="1579286013-3">GameApp.Round</span><span class="p" data-group-id="1579286013-3">{</span><span class="w">
   </span><span class="ss">number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
   </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="no">nil</span><span class="p">,</span><span class="w">
-  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="6895748781-4">%{</span><span class="w">
+  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1579286013-4">%{</span><span class="w">
     </span><span class="s">&quot;Gamer&quot;</span><span class="w"> </span><span class="o">=</span><span class="o">&gt;</span><span class="w"> </span><span class="s">&quot;OMG!&quot;</span><span class="w">
-  </span><span class="p" data-group-id="6895748781-4">}</span><span class="w">
-</span><span class="p" data-group-id="6895748781-3">}</span></code></pre>
+  </span><span class="p" data-group-id="1579286013-4">}</span><span class="w">
+</span><span class="p" data-group-id="1579286013-3">}</span></code></pre>
   </section>
 </section>
 <section class="detail" id="set_winner/2">
@@ -294,13 +294,13 @@ Functions          </h1>
   Examples
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="4872452430-1">(</span><span class="mi">1</span><span class="p" data-group-id="4872452430-1">)</span><span class="w">
-</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_winner</span><span class="p" data-group-id="4872452430-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4872452430-3">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4872452430-3">}</span><span class="p" data-group-id="4872452430-2">)</span><span class="w">
-</span><span class="p" data-group-id="4872452430-4">%</span><span class="nc" data-group-id="4872452430-4">GameApp.Round</span><span class="p" data-group-id="4872452430-4">{</span><span class="w">
+<pre><code class="nohighlight makeup elixir"><span class="gp unselectable">iex&gt; </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">create</span><span class="p" data-group-id="1624877730-1">(</span><span class="mi">1</span><span class="p" data-group-id="1624877730-1">)</span><span class="w">
+</span><span class="gp unselectable">iex&gt; </span><span class="nc">GameApp.Round</span><span class="o">.</span><span class="n">set_winner</span><span class="p" data-group-id="1624877730-2">(</span><span class="n">r</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1624877730-3">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="1624877730-3">}</span><span class="p" data-group-id="1624877730-2">)</span><span class="w">
+</span><span class="p" data-group-id="1624877730-4">%</span><span class="nc" data-group-id="1624877730-4">GameApp.Round</span><span class="p" data-group-id="1624877730-4">{</span><span class="w">
   </span><span class="ss">number</span><span class="p">:</span><span class="w"> </span><span class="mi">1</span><span class="p">,</span><span class="w">
-  </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4872452430-5">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="4872452430-5">}</span><span class="p">,</span><span class="w">
-  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4872452430-6">%{</span><span class="p" data-group-id="4872452430-6">}</span><span class="w">
-</span><span class="p" data-group-id="4872452430-4">}</span></code></pre>
+  </span><span class="ss">winner</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1624877730-5">%{</span><span class="ss">id</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;Gamer&quot;</span><span class="p" data-group-id="1624877730-5">}</span><span class="p">,</span><span class="w">
+  </span><span class="ss">reactions</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="1624877730-6">%{</span><span class="p" data-group-id="1624877730-6">}</span><span class="w">
+</span><span class="p" data-group-id="1624877730-4">}</span></code></pre>
   </section>
 </section>
           </div>
