@@ -48,11 +48,11 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> GameApp.Game.create("ABCD", GameApp.Player.create("1", "Gamer"))
-      %GameApp.Game{
+      iex> Game.create("ABCD", Player.create("1", "Gamer"))
+      %Game{
         shortcode: "ABCD",
-        creator: %GameApp.Player{id: "1", name: "Gamer"},
-        players: %{"1" => %GameApp.Player{id: "1", name: "Gamer"}},
+        creator: %Player{id: "1", name: "Gamer"},
+        players: %{"1" => %Player{id: "1", name: "Gamer"}},
         scores: %{"1" => 0}
       }
 
@@ -74,14 +74,14 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> g = GameApp.Game.create("ABCD", GameApp.Player.create("1", "Gamer"))
-      iex> GameApp.Game.player_join(g, GameApp.Player.create("2", "Gamer2"))
-      %GameApp.Game{
+      iex> g = Game.create("ABCD", Player.create("1", "Gamer"))
+      iex> Game.player_join(g, Player.create("2", "Gamer2"))
+      %Game{
         shortcode: "ABCD",
-        creator: %GameApp.Player{id: "1", name: "Gamer"},
+        creator: %Player{id: "1", name: "Gamer"},
         players: %{
-          "1" => %GameApp.Player{id: "1", name: "Gamer"},
-          "2" => %GameApp.Player{id: "2", name: "Gamer2"}
+          "1" => %Player{id: "1", name: "Gamer"},
+          "2" => %Player{id: "2", name: "Gamer2"}
         },
         scores: %{"1" => 0, "2" => 0}
       }
@@ -101,15 +101,15 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> p1 = GameApp.Player.create("1", "Gamer")
-      iex> p2 = GameApp.Player.create("2", "Gamer2")
-      iex> g = GameApp.Game.create("ABCD", p1)
-      iex> g = GameApp.Game.player_join(g, p2)
-      iex> GameApp.Game.player_leave(g, p2)
-      %GameApp.Game{
+      iex> p1 = Player.create("1", "Gamer")
+      iex> p2 = Player.create("2", "Gamer2")
+      iex> g = Game.create("ABCD", p1)
+      iex> g = Game.player_join(g, p2)
+      iex> Game.player_leave(g, p2)
+      %Game{
         shortcode: "ABCD",
-        creator: %GameApp.Player{id: "1", name: "Gamer"},
-        players: %{"1" => %GameApp.Player{id: "1", name: "Gamer"}},
+        creator: %Player{id: "1", name: "Gamer"},
+        players: %{"1" => %Player{id: "1", name: "Gamer"}},
         scores: %{"1" => 0, "2" => 0}
       }
 
@@ -133,13 +133,13 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> g = GameApp.Game.create("ABCD", GameApp.Player.create("1", "Gamer"))
-      iex> GameApp.Game.start_game(g)
-      %GameApp.Game{
+      iex> g = Game.create("ABCD", Player.create("1", "Gamer"))
+      iex> Game.start_game(g)
+      %Game{
         shortcode: "ABCD",
         phase: :game_start,
-        creator: %GameApp.Player{id: "1", name: "Gamer"},
-        players: %{"1" => %GameApp.Player{id: "1", name: "Gamer"}},
+        creator: %Player{id: "1", name: "Gamer"},
+        players: %{"1" => %Player{id: "1", name: "Gamer"}},
         scores: %{"1" => 0}
       }
 
@@ -156,13 +156,13 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> g = GameApp.Game.create("ABCD", GameApp.Player.create("1", "Gamer"))
-      iex> GameApp.Game.start_game(g)
-      %GameApp.Game{
+      iex> g = Game.create("ABCD", Player.create("1", "Gamer"))
+      iex> Game.start_game(g)
+      %Game{
         shortcode: "ABCD",
         phase: :game_start,
-        creator: %GameApp.Player{id: "1", name: "Gamer"},
-        players: %{"1" => %GameApp.Player{id: "1", name: "Gamer"}},
+        creator: %Player{id: "1", name: "Gamer"},
+        players: %{"1" => %Player{id: "1", name: "Gamer"}},
         scores: %{"1" => 0}
       }
 

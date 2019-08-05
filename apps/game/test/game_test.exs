@@ -1,8 +1,8 @@
 defmodule GameTest do
   use ExUnit.Case, async: true
-  doctest GameApp.Game
-
   alias GameApp.{Game, Player}
+
+  doctest GameApp.Game, import: true
 
   @shortcode "ABCD"
   @player Player.create("1", "Gamer")

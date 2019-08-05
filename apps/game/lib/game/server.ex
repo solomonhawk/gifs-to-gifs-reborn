@@ -7,7 +7,7 @@ defmodule GameApp.Server do
   use GenServer
 
   alias __MODULE__, as: Server
-  alias GameApp.Game
+  alias GameApp.{Game, Player}
 
   require Logger
 
@@ -23,6 +23,7 @@ defmodule GameApp.Server do
   @doc """
   Returns a summary of the game state for a game with the given shortcode.
   """
+  @spec summary(String.t()) :: Game.t()
   def summary(shortcode) do
     GenServer.call(via_tuple(shortcode), :summary)
   end
@@ -30,6 +31,7 @@ defmodule GameApp.Server do
   @doc """
   Joins a player to the game with the given shortcode.
   """
+  @spec join(String.t(), Player.t()) :: :ok
   def join(shortcode, player) do
     GenServer.cast(via_tuple(shortcode), {:player_join, player})
   end
@@ -37,6 +39,7 @@ defmodule GameApp.Server do
   @doc """
   Removes a player from the game with the given shortcode.
   """
+  @spec leave(String.t(), Player.t()) :: :ok
   def leave(shortcode, player) do
     GenServer.cast(via_tuple(shortcode), {:player_leave, player})
   end
@@ -44,6 +47,7 @@ defmodule GameApp.Server do
   @doc """
   Starts the game with the given shortcode.
   """
+  @spec start_game(String.t()) :: :ok
   def start_game(shortcode) do
     GenServer.cast(via_tuple(shortcode), :start_game)
   end
@@ -51,6 +55,7 @@ defmodule GameApp.Server do
   @doc """
   Starts the next round for the game with the given shortcode.
   """
+  @spec start_round(String.t()) :: :ok
   def start_round(shortcode) do
     GenServer.cast(via_tuple(shortcode), :start_round)
   end
@@ -100,6 +105,7 @@ defmodule GameApp.Server do
   @doc """
   Returns a tuple used to register and lookup a game server process by name.
   """
+  @spec via_tuple(String.t()) :: {:via, Registry, {GameApp.Registry, String.t()}}
   def via_tuple(shortcode) do
     {:via, Registry, {GameApp.Registry, "game:" <> shortcode}}
   end
@@ -108,6 +114,7 @@ defmodule GameApp.Server do
   Returns the `pid` of the game server process registered under the
   given `shortcode`, or `nil` if no process is registered.
   """
+  @spec game_pid(String.t()) :: pid()
   def game_pid(shortcode) do
     shortcode
     |> via_tuple()

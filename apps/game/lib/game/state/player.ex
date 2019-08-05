@@ -10,6 +10,10 @@ defmodule GameApp.Player do
           name: String.t()
         }
 
+  @doc """
+  Creates a player.
+  """
+  @spec create(String.t(), String.t()) :: Player.t()
   def create(id, name) do
     %Player{id: id, name: name}
   end

@@ -170,6 +170,9 @@ Functions          </h1>
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">game_pid(shortcode)</h1>
+      <div class="specs">
+          <pre>game_pid(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()</pre>
+      </div>
   </div>
   <section class="docstring">
 <p>Returns the <code class="inline">pid</code> of the game server process registered under the
@@ -183,6 +186,9 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">join(shortcode, player)</h1>
+      <div class="specs">
+          <pre>join(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>()) :: :ok</pre>
+      </div>
   </div>
   <section class="docstring">
 <p>Joins a player to the game with the given shortcode.</p>
@@ -195,6 +201,9 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">leave(shortcode, player)</h1>
+      <div class="specs">
+          <pre>leave(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>()) :: :ok</pre>
+      </div>
   </div>
   <section class="docstring">
 <p>Removes a player from the game with the given shortcode.</p>
@@ -207,6 +216,9 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">start_game(shortcode)</h1>
+      <div class="specs">
+          <pre>start_game(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: :ok</pre>
+      </div>
   </div>
   <section class="docstring">
 <p>Starts the game with the given shortcode.</p>
@@ -230,6 +242,9 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">start_round(shortcode)</h1>
+      <div class="specs">
+          <pre>start_round(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: :ok</pre>
+      </div>
   </div>
   <section class="docstring">
 <p>Starts the next round for the game with the given shortcode.</p>
@@ -242,6 +257,9 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">summary(shortcode)</h1>
+      <div class="specs">
+          <pre>summary(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: <a href="GameApp.Game.html#t:t/0">GameApp.Game.t</a>()</pre>
+      </div>
   </div>
   <section class="docstring">
 <p>Returns a summary of the game state for a game with the given shortcode.</p>
@@ -254,6 +272,9 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
       <span class="sr-only">Link to this function</span>
     </a>
     <h1 class="signature">via_tuple(shortcode)</h1>
+      <div class="specs">
+          <pre>via_tuple(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: {:via, Registry, {GameApp.Registry, <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()}}</pre>
+      </div>
   </div>
   <section class="docstring">
 <p>Returns a tuple used to register and lookup a game server process by name.</p>

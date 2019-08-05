@@ -1,8 +1,8 @@
 defmodule RoundTest do
   use ExUnit.Case, async: true
-  doctest GameApp.Round
-
   alias GameApp.{Player, Round}
+
+  doctest GameApp.Round, import: true
 
   @player Player.create("1", "Gamer")
 
