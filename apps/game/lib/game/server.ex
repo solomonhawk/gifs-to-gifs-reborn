@@ -64,7 +64,7 @@ defmodule GameApp.Server do
 
   @impl true
   def init(game) do
-    Logger.info("Spawned game server process with code '#{game.shortcode}'.")
+    Logger.info("Spawned game server process '#{game.shortcode}'.")
     {:ok, game, @game_timeout}
   end
 
@@ -98,6 +98,12 @@ defmodule GameApp.Server do
   @impl true
   def handle_info(:round_start_timeout, game) do
     {:noreply, Game.start_prompt_selection(game), @game_timeout}
+  end
+
+  @impl true
+  def handle_info(:timeout, game) do
+    Logger.info("Shutting down game '#{game.shortcode}', timed out.")
+    {:stop, :normal, game}
   end
 
   ### Helpers
