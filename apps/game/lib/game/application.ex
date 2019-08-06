@@ -9,6 +9,8 @@ defmodule GameApp.Application do
       GameApp.ServerSupervisor
     ]
 
+    :ets.new(:games_table, [:public, :named_table])
+
     opts = [strategy: :one_for_one, name: GameApp.Supervisor]
     Supervisor.start_link(children, opts)
   end

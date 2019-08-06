@@ -75,8 +75,8 @@ defmodule GameApp.Round do
 
   """
   @spec set_reaction(Round.t(), Player.t(), String.t()) :: Round.t()
-  def set_reaction(%Round{reactions: reactions} = round, player, reaction) do
-    Map.put(round, :reactions, Map.put(reactions, player.id, reaction))
+  def set_reaction(%Round{reactions: reactions} = round, %Player{id: id}, reaction) do
+    Map.put(round, :reactions, Map.put(reactions, id, reaction))
   end
 
   @doc """
@@ -96,8 +96,8 @@ defmodule GameApp.Round do
 
   """
   @spec remove_reaction(Round.t(), Player.t()) :: Round.t()
-  def remove_reaction(%Round{reactions: reactions} = round, player) do
-    Map.put(round, :reactions, Map.delete(reactions, player.id))
+  def remove_reaction(%Round{reactions: reactions} = round, %Player{id: id}) do
+    Map.put(round, :reactions, Map.delete(reactions, id))
   end
 
   @doc """

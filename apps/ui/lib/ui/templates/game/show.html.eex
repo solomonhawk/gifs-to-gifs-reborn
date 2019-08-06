@@ -1,5 +1,10 @@
-<h1>Game</h1>
+<h1>Game <small><%= @shortcode %></small></h1>
 
-<div id="app" data-shortcode="<%= @shortcode %>" data-auth-token="<%= @auth_token %>"></div>
+<div id="app"
+  data-shortcode="<%= @shortcode %>"
+  data-auth-token="<%= @auth_token %>"
+  data-player="<%= Jason.encode! @current_player %>"
+>
+</div>
 
 <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>

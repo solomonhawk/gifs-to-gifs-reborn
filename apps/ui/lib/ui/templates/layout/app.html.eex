@@ -14,7 +14,9 @@
 
       <%= if @current_player do %>
         <div>
-          <%= link "Switch Player", to: Routes.session_path(@conn, :delete), method: :delete %>
+          <span style="float: right;"><%= link "Switch Player", to: Routes.session_path(@conn, :delete), method: :delete %></span>
+          <span style="float: right;"><%= link "New Game", to: Routes.game_path(@conn, :new) %>&nbsp;|&nbsp;</span>
+          <%= @current_player.name %>
         </div>
       <% end %>
 

@@ -1,7 +1,9 @@
 - [x] [ui] Add basic player sessions
 - [x] [ui] Add game routes
 - [x] [ui] Add `GameChannel`
+- [x] [game] Remove a player from the GameState when they navigate away from /games/:id
 - [ ] [game] Figure out what to do if funmaster leaves or disconnects in the middle of a round
 - [ ] [game] Advance to winner selection after all reactions are in (countdown or just UI transition)
 - [ ] [game] Assign points for winning
 - [ ] [game] Determine win condition (point target parameter on create game screen?, max number of rounds?)
+- [x] [game] Notify UI clients when game server state updates internally

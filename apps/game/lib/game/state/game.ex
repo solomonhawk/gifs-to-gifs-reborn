@@ -7,8 +7,6 @@ defmodule GameApp.Game do
   alias __MODULE__, as: Game
   alias GameApp.{Player, Round}
 
-  @max_rounds 10
-
   @enforce_keys [:shortcode, :creator]
   defstruct shortcode: nil,
             round_number: nil,
@@ -80,8 +78,12 @@ defmodule GameApp.Game do
         funmaster: nil,
         phase: :lobby,
         players: %{"1" => %Player{id: "1", name: "Gamer"}},
+        player_count: 1,
         prompt: nil,
-        reactions: nil,
+        reactions: %{},
+        reaction_count: 0,
+        ready_to_start: false,
+        round_winner: nil,
         round_number: nil,
         scores: %{"1" => 0},
         shortcode: "ABCD",
@@ -112,6 +114,17 @@ defmodule GameApp.Game do
 
   """
   @spec player_join(Game.t(), Player.t()) :: Game.t()
+  def player_join(
+        %Game{players: players, scores: scores, phase: phase} = game,
+        %Player{id: id} = player
+      )
+      when phase not in [:lobby, :game_start] do
+    game
+    |> Map.put(:players, Map.put(players, id, player))
+    |> set_player_score(player, Map.get(scores, id))
+    |> set_funmaster_and_order()
+  end
+
   def player_join(%Game{players: players, scores: scores} = game, %Player{id: id} = player) do
     game
     |> Map.put(:players, Map.put(players, id, player))
@@ -234,7 +247,7 @@ defmodule GameApp.Game do
   end
 
   def start_round(%Game{phase: :round_end, round_number: round_number} = game) do
-    if game_over(game) do
+    if game_over?(game) do
       game
       |> set_winners(game_winners(game))
       |> set_phase(:game_end)
@@ -273,7 +286,12 @@ defmodule GameApp.Game do
         player,
         reaction
       ) do
-    update_round(game, Round.set_reaction(round, player, reaction))
+    game
+    |> update_round(Round.set_reaction(round, player, reaction))
+  end
+
+  def start_winner_selection(%Game{phase: :reaction_selection} = game) do
+    game |> set_phase(:winner_selection)
   end
 
   @doc """
@@ -283,8 +301,14 @@ defmodule GameApp.Game do
   def select_winner(%Game{phase: :winner_selection, rounds: [round | _]} = game, player) do
     game
     |> update_round(Round.set_winner(round, player))
+    |> award_points(player)
     |> set_phase(:round_end)
   end
+
+  def is_empty?(%Game{players: players}) when players == %{}, do: true
+  def is_empty?(_), do: false
+
+  def all_players_reacted?(%Game{} = game), do: reactions_count(game) == players_count(game) - 1
 
   # private
 
@@ -294,13 +318,17 @@ defmodule GameApp.Game do
       shortcode: game.shortcode,
       round_number: game.round_number,
       players: game.players,
+      ready_to_start: can_start?(game),
+      player_count: players_count(game),
       scores: scores_for_players(game.players, game.scores),
       phase: game.phase,
       winners: game.winners,
       creator: game.creator,
       funmaster: game.funmaster,
       prompt: Map.get(round, :prompt),
-      reactions: Map.get(round, :reactions)
+      round_winner: Map.get(round, :winner),
+      reaction_count: reactions_count(game),
+      reactions: Map.get(round, :reactions, %{})
     }
   end
 
@@ -351,6 +379,10 @@ defmodule GameApp.Game do
     Map.put(game, :funmaster, funmaster_for_round(order, players, round_number))
   end
 
+  defp award_points(%Game{scores: scores} = game, %Player{id: id}) do
+    Map.put(game, :scores, Map.put(scores, id, Map.get(scores, id) + 1))
+  end
+
   @spec remove_player(Game.t(), Player.t()) :: Game.t()
   defp remove_player(%Game{players: players} = game, %Player{id: id} = player) do
     game
@@ -361,14 +393,22 @@ defmodule GameApp.Game do
   @spec remove_reaction(Game.t(), Player.t()) :: Game.t()
   defp remove_reaction(%Game{rounds: []} = game, _player), do: game
 
-  defp remove_reaction(%Game{rounds: [round | rounds]} = game, %Player{id: id}) do
-    Map.put(game, :rounds, [Round.remove_reaction(round, id)] ++ rounds)
+  defp remove_reaction(%Game{rounds: [round | _rounds]} = game, player) do
+    update_round(game, Round.remove_reaction(round, player))
   end
 
   @spec update_round(Game.t(), Round.t()) :: Game.t()
   defp update_round(%Game{rounds: [_round | rounds]} = game, new_round) do
     Map.put(game, :rounds, [new_round] ++ rounds)
   end
+
+  defp players_count(%Game{players: players}), do: Kernel.map_size(players)
+
+  defp reactions_count(%Game{rounds: []}), do: 0
+  defp reactions_count(%Game{rounds: [round | _]}), do: Kernel.map_size(round.reactions)
+
+  defp can_start?(%Game{phase: :lobby} = game), do: players_count(game) >= 3
+  defp can_start?(_), do: false
 
   defp scores_for_players(players, scores) do
     Map.take(scores, Map.keys(players))
@@ -393,9 +433,11 @@ defmodule GameApp.Game do
     |> Enum.map(& &1.id)
   end
 
-  defp game_over(%Game{round_number: round_number}) do
-    round_number == @max_rounds
-  end
+  defp game_over?(%Game{round_number: round_number, players: players})
+       when round_number >= map_size(players) * 1,
+       do: true
+
+  defp game_over?(_), do: false
 
   defp game_winners(%Game{scores: scores, players: players}) do
     scores

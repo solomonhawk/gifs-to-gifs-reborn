@@ -12,11 +12,13 @@ defmodule GameApp.Server do
   require Logger
 
   @game_timeout :timer.minutes(10)
+  # @leave_timeout :timer.seconds(10)
+  @winner_selection_timeout :timer.seconds(5)
   @round_start_timeout :timer.seconds(5)
   @round_end_timeout :timer.seconds(5)
 
   def start_link(shortcode, player) do
-    GenServer.start_link(Server, Game.create(shortcode, player), name: via_tuple(shortcode))
+    GenServer.start_link(Server, {shortcode, player}, name: via_tuple(shortcode))
   end
 
   ### Client API
@@ -56,9 +58,9 @@ defmodule GameApp.Server do
   @doc """
   Starts the next round for the game with the given shortcode.
   """
-  @spec start_round(String.t()) :: :ok
-  def start_round(shortcode) do
-    GenServer.cast(via_tuple(shortcode), :start_round)
+  @spec start_round(String.t(), pid()) :: :ok
+  def start_round(shortcode, channel_pid) do
+    GenServer.cast(via_tuple(shortcode), {:start_round, channel_pid})
   end
 
   @doc """
@@ -72,23 +74,34 @@ defmodule GameApp.Server do
   @doc """
   Selects a reaction for the given player in the current round.
   """
-  @spec select_reaction(String.t(), Player.t(), String.t()) :: :ok
-  def select_reaction(shortcode, player, reaction) do
-    GenServer.cast(via_tuple(shortcode), {:select_reaction, player, reaction})
+  @spec select_reaction(String.t(), Player.t(), String.t(), pid()) :: :ok
+  def select_reaction(shortcode, player, reaction, channel_pid) do
+    GenServer.cast(via_tuple(shortcode), {:select_reaction, player, reaction, channel_pid})
   end
 
   @doc """
   Selects a winner for the current round.
   """
-  @spec select_winner(String.t(), Player.t()) :: :ok
-  def select_winner(shortcode, winner) do
-    GenServer.cast(via_tuple(shortcode), {:select_winner, winner})
+  @spec select_winner(String.t(), Player.t(), pid()) :: :ok
+  def select_winner(shortcode, winner, channel_pid) do
+    GenServer.cast(via_tuple(shortcode), {:select_winner, winner, channel_pid})
   end
 
   ### Server API
 
   @impl true
-  def init(game) do
+  def init({shortcode, player}) do
+    game =
+      case :ets.lookup(:games_table, shortcode) do
+        [] ->
+          game = Game.create(shortcode, player)
+          :ets.insert(:games_table, {shortcode, game})
+          game
+
+        [{^shortcode, game}] ->
+          game
+      end
+
     Logger.info("Spawned game server process '#{game.shortcode}'.")
     {:ok, game, @game_timeout}
   end
@@ -100,57 +113,131 @@ defmodule GameApp.Server do
 
   @impl true
   def handle_cast({:player_join, player}, game) do
-    {:noreply, Game.player_join(game, player), @game_timeout}
+    next = Game.player_join(game, player)
+    update_ets(game, next)
+    {:noreply, next, @game_timeout}
   end
 
   @impl true
   def handle_cast({:player_leave, player}, game) do
-    {:noreply, Game.player_leave(game, player), @game_timeout}
+    next = Game.player_leave(game, player)
+    update_ets(game, next)
+
+    # NOTE: Why do this? Just let the server time out eventually
+    #
+    # Maybe shutdown after a players leaves (if none left)
+    # Process.send_after(self(), :after_player_leave, @leave_timeout)
+
+    {:noreply, next, @game_timeout}
   end
 
   @impl true
   def handle_cast(:start_game, game) do
-    {:noreply, Game.start_game(game), @game_timeout}
+    next = Game.start_game(game)
+    update_ets(game, next)
+
+    {:noreply, next, @game_timeout}
   end
 
   @impl true
-  def handle_cast(:start_round, game) do
+  def handle_cast({:start_round, channel_pid}, game) do
+    next = Game.start_round(game)
+    update_ets(game, next)
+
     # Advance to prompt selection after @round_start_timeout
-    Process.send_after(self(), :after_round_start, @round_start_timeout)
-    {:noreply, Game.start_round(game), @game_timeout}
+    Process.send_after(self(), {:after_round_start, channel_pid}, @round_start_timeout)
+
+    {:noreply, next, @game_timeout}
   end
 
   @impl true
   def handle_cast({:select_prompt, prompt}, game) do
-    {:noreply, Game.select_prompt(game, prompt), @game_timeout}
+    next = Game.select_prompt(game, prompt)
+    update_ets(game, next)
+    {:noreply, next, @game_timeout}
   end
 
   @impl true
-  def handle_cast({:select_reaction, player, reaction}, game) do
-    {:noreply, Game.select_reaction(game, player, reaction), @game_timeout}
+  def handle_cast({:select_reaction, player, reaction, channel_pid}, game) do
+    next = Game.select_reaction(game, player, reaction)
+    update_ets(game, next)
+
+    # Advance to winner_selection after a reaction is selected, if all reactions selected
+    if Game.all_players_reacted?(next) do
+      Process.send_after(self(), {:after_select_reaction, channel_pid}, @winner_selection_timeout)
+    end
+
+    {:noreply, next, @game_timeout}
   end
 
   @impl true
-  def handle_cast({:select_winner, winner}, game) do
-    # Advance to prompt selection after @round_end_timeout
-    Process.send_after(self(), :after_select_winner, @round_end_timeout)
-    {:noreply, Game.select_winner(game, winner), @game_timeout}
+  def handle_cast({:select_winner, winner, channel_pid}, game) do
+    next = Game.select_winner(game, winner)
+    update_ets(game, next)
+
+    # Advance to next round after @round_end_timeout
+    Process.send_after(self(), {:after_select_winner, channel_pid}, @round_end_timeout)
+
+    {:noreply, next, @game_timeout}
+  end
+
+  # Info Callbacks
+
+  @impl true
+  def handle_info(:after_player_leave, game) do
+    if Game.is_empty?(game) do
+      {:stop, {:shutdown, :empty_game}, game}
+    else
+      {:noreply, game, @game_timeout}
+    end
   end
 
   @impl true
-  def handle_info(:after_round_start, game) do
-    {:noreply, Game.start_prompt_selection(game), @game_timeout}
+  def handle_info({:after_round_start, channel_pid}, game) do
+    next = Game.start_prompt_selection(game)
+    update_ets(game, next)
+
+    send(channel_pid, :broadcast_update)
+
+    {:noreply, next, @game_timeout}
   end
 
   @impl true
-  def handle_info(:after_select_winner, game) do
-    {:noreply, Game.start_round(game), @game_timeout}
+  def handle_info({:after_select_reaction, channel_pid}, game) do
+    next = Game.start_winner_selection(game)
+    update_ets(game, next)
+    send(channel_pid, :broadcast_update)
+    {:noreply, next, @game_timeout}
+  end
+
+  @impl true
+  def handle_info({:after_select_winner, channel_pid}, game) do
+    # send(self(), {:start_round, channel_pid})
+    Server.start_round(game.shortcode, channel_pid)
+    send(channel_pid, :broadcast_update)
+    {:noreply, game, @game_timeout}
   end
 
   @impl true
   def handle_info(:timeout, game) do
+    {:stop, {:shutdown, :timeout}, game}
+  end
+
+  @impl true
+  def terminate({:shutdown, :empty_game}, game) do
+    :ets.delete(:games_table, game.shortcode)
+    Logger.info("Server '#{game.shortcode}' shutdown because all players left.")
+    :ok
+  end
+
+  def terminate({:shutdown, :timeout}, game) do
+    :ets.delete(:games_table, game.shortcode)
     Logger.info("Shutting down game '#{game.shortcode}', timed out.")
-    {:stop, :normal, game}
+    :ok
+  end
+
+  def terminate(_reason, _game) do
+    :ok
   end
 
   ### Helpers
@@ -191,6 +278,10 @@ defmodule GameApp.Server do
       _ ->
         generate_shortcode()
     end
+  end
+
+  defp update_ets(game, next) do
+    :ets.insert(:games_table, {game.shortcode, next})
   end
 
   defp shortcode_string() do

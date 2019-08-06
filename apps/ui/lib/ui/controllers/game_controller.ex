@@ -1,7 +1,10 @@
 defmodule Ui.GameController do
   use Ui, :controller
 
+  alias GameApp.Server, as: GameServer
+
   plug :require_player
+  plug :set_cache_headers
 
   def new(conn, _) do
     render(conn, "new.html")
@@ -12,7 +15,7 @@ defmodule Ui.GameController do
   end
 
   def create(conn, _) do
-    shortcode = GameApp.Server.generate_shortcode()
+    shortcode = GameServer.generate_shortcode()
     player = get_session(conn, :current_player)
 
     case GameApp.ServerSupervisor.start_game(shortcode, player) do
@@ -27,8 +30,12 @@ defmodule Ui.GameController do
   end
 
   def show(conn, %{"id" => shortcode}) do
-    case GameApp.Server.game_pid(shortcode) do
+    player = get_session(conn, :current_player)
+
+    case GameServer.game_pid(shortcode) do
       pid when is_pid(pid) ->
+        GameServer.join(shortcode, player)
+
         conn
         |> assign(:shortcode, shortcode)
         |> assign(:auth_token, generate_auth_token(conn))
@@ -39,6 +46,10 @@ defmodule Ui.GameController do
         |> put_flash(:error, "Game not found!")
         |> redirect(to: Routes.game_path(conn, :new))
     end
+  end
+
+  defp generate_auth_token(conn) do
+    Phoenix.Token.sign(conn, "secret salt", get_session(conn, :current_player))
   end
 
   defp require_player(conn, _opts) do
@@ -54,8 +65,9 @@ defmodule Ui.GameController do
     end
   end
 
-  defp generate_auth_token(conn) do
-    current_player = get_session(conn, :current_player)
-    Phoenix.Token.sign(conn, "secret salt", current_player)
+  defp set_cache_headers(conn, _opts) do
+    conn
+    |> Plug.Conn.put_resp_header("cache-control", "no-store, private")
+    |> Plug.Conn.put_resp_header("pragma", "no-cache")
   end
 end
