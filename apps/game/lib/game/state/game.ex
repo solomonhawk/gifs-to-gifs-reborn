@@ -7,6 +7,8 @@ defmodule GameApp.Game do
   alias __MODULE__, as: Game
   alias GameApp.{Player, Round}
 
+  @max_rounds 10
+
   @enforce_keys [:shortcode, :creator]
   defstruct shortcode: nil,
             round_number: nil,
@@ -14,7 +16,7 @@ defmodule GameApp.Game do
             players: %{},
             scores: %{},
             phase: :lobby,
-            winner: nil,
+            winners: [],
             creator: nil,
             funmaster: nil,
             funmaster_order: []
@@ -36,7 +38,7 @@ defmodule GameApp.Game do
           players: %{optional(String.t()) => Player.t()},
           scores: %{optional(String.t()) => integer()},
           phase: game_state,
-          winner: Player.t() | nil,
+          winners: list(Player.t()),
           creator: Player.t(),
           funmaster: Player.t() | nil,
           funmaster_order: list(String.t())
@@ -83,7 +85,7 @@ defmodule GameApp.Game do
         round_number: nil,
         scores: %{"1" => 0},
         shortcode: "ABCD",
-        winner: nil
+        winners: []
       }
 
   """
@@ -113,7 +115,7 @@ defmodule GameApp.Game do
   def player_join(%Game{players: players, scores: scores} = game, %Player{id: id} = player) do
     game
     |> Map.put(:players, Map.put(players, id, player))
-    |> set_player_score(player, scores[player.id])
+    |> set_player_score(player, Map.get(scores, id))
   end
 
   @doc """
@@ -144,27 +146,44 @@ defmodule GameApp.Game do
     |> set_funmaster_and_order()
   end
 
-  def player_leave(%Game{} = game, player) do
+  def player_leave(game, player) do
     game |> remove_player(player)
   end
 
   @doc """
-  Starts a game.
+  Starts a game. Requires at least 3 players including the creator.
 
   ## Examples
 
-      iex> g = Game.create("ABCD", Player.create("1", "Gamer"))
+      iex> p1 = Player.create("1", "Gamer1")
+      iex> p2 = Player.create("2", "Gamer2")
+      iex> p3 = Player.create("3", "Gamer3")
+      iex> g = Game.create("ABCD", p1)
+      ...>     |> Game.player_join(p2)
+      ...>     |> Game.player_join(p3)
       iex> Game.start_game(g)
       %Game{
         shortcode: "ABCD",
         phase: :game_start,
-        creator: %Player{id: "1", name: "Gamer"},
-        players: %{"1" => %Player{id: "1", name: "Gamer"}},
-        scores: %{"1" => 0}
+        creator: %Player{id: "1", name: "Gamer1"},
+        players: %{
+          "1" => %Player{id: "1", name: "Gamer1"},
+          "2" => %Player{id: "2", name: "Gamer2"},
+          "3" => %Player{id: "3", name: "Gamer3"}
+        },
+        scores: %{
+          "1" => 0,
+          "2" => 0,
+          "3" => 0
+        }
       }
 
   """
   @spec start_game(Game.t()) :: Game.t()
+  def start_game(%Game{phase: :lobby, players: players} = game)
+      when map_size(players) < 3,
+      do: game
+
   def start_game(%Game{phase: :lobby} = game) do
     game |> set_phase(:game_start)
   end
@@ -174,14 +193,35 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> g = Game.create("ABCD", Player.create("1", "Gamer"))
-      iex> Game.start_game(g)
+      iex> p1 = Player.create("1", "Gamer1")
+      iex> p2 = Player.create("2", "Gamer2")
+      iex> p3 = Player.create("3", "Gamer3")
+      iex> g = Game.create("ABCD", p1)
+      ...>     |> Game.player_join(p2)
+      ...>     |> Game.player_join(p3)
+      iex> g = Game.start_game(g)
+      iex> :rand.seed(:exsplus, {1, 2, 3})
+      iex> Game.start_round(g)
       %Game{
         shortcode: "ABCD",
-        phase: :game_start,
-        creator: %Player{id: "1", name: "Gamer"},
-        players: %{"1" => %Player{id: "1", name: "Gamer"}},
-        scores: %{"1" => 0}
+        phase: :round_start,
+        round_number: 1,
+        creator: %Player{id: "1", name: "Gamer1"},
+        players: %{
+          "1" => %Player{id: "1", name: "Gamer1"},
+          "2" => %Player{id: "2", name: "Gamer2"},
+          "3" => %Player{id: "3", name: "Gamer3"}
+        },
+        scores: %{
+          "1" => 0,
+          "2" => 0,
+          "3" => 0
+        },
+        funmaster: %Player{id: "2", name: "Gamer2"},
+        funmaster_order: ["2", "1", "3"],
+        rounds: [
+          %GameApp.Round{number: 1, prompt: nil, reactions: %{}, winner: nil}
+        ]
       }
 
   """
@@ -194,10 +234,16 @@ defmodule GameApp.Game do
   end
 
   def start_round(%Game{phase: :round_end, round_number: round_number} = game) do
-    game
-    |> set_phase(:round_start)
-    |> set_round(round_number + 1)
-    |> set_funmaster()
+    if game_over(game) do
+      game
+      |> set_winners(game_winners(game))
+      |> set_phase(:game_end)
+    else
+      game
+      |> set_phase(:round_start)
+      |> set_round(round_number + 1)
+      |> set_funmaster()
+    end
   end
 
   @doc """
@@ -233,8 +279,8 @@ defmodule GameApp.Game do
   @doc """
   Starts prompt selection for the current round.
   """
-  @spec select_round_winner(Game.t(), Player.t()) :: Game.t()
-  def select_round_winner(%Game{phase: :winner_selection, rounds: [round | _]} = game, player) do
+  @spec select_winner(Game.t(), Player.t()) :: Game.t()
+  def select_winner(%Game{phase: :winner_selection, rounds: [round | _]} = game, player) do
     game
     |> update_round(Round.set_winner(round, player))
     |> set_phase(:round_end)
@@ -243,14 +289,14 @@ defmodule GameApp.Game do
   # private
 
   @spec summarize(Game.t(), map()) :: map()
-  defp summarize(%Game{} = game, round) when is_map(round) do
+  defp summarize(game, round) when is_map(round) do
     %{
       shortcode: game.shortcode,
       round_number: game.round_number,
       players: game.players,
-      scores: game.scores,
+      scores: scores_for_players(game.players, game.scores),
       phase: game.phase,
-      winner: game.winner,
+      winners: game.winners,
       creator: game.creator,
       funmaster: game.funmaster,
       prompt: Map.get(round, :prompt),
@@ -271,20 +317,21 @@ defmodule GameApp.Game do
     Map.put(game, :phase, phase)
   end
 
-  # defp set_winner(game, winner) do
-  #   Map.put(game, :winner, winner)
-  # end
-
-  @spec set_player_score(%Game{}, map(), integer() | nil) :: %Game{}
-  defp set_player_score(game, player, nil) do
-    Map.put(game, :scores, Map.put(game.scores, player.id, 0))
+  @spec set_winners(Game.t(), list()) :: Game.t()
+  defp set_winners(game, winners) do
+    Map.put(game, :winners, winners)
   end
 
-  defp set_player_score(game, player, score) do
-    Map.put(game, :scores, Map.put(game.scores, player.id, score))
+  @spec set_player_score(Game.t(), map(), integer() | nil) :: Game.t()
+  defp set_player_score(%Game{scores: scores} = game, player, nil) do
+    Map.put(game, :scores, Map.put(scores, player.id, 0))
   end
 
-  @spec set_funmaster_and_order(%Game{}) :: %Game{}
+  defp set_player_score(%Game{scores: scores} = game, player, score) do
+    Map.put(game, :scores, Map.put(scores, player.id, score))
+  end
+
+  @spec set_funmaster_and_order(Game.t()) :: Game.t()
   defp set_funmaster_and_order(%Game{players: players} = game) when players == %{} do
     game
     |> Map.put(:funmaster, nil)
@@ -323,6 +370,10 @@ defmodule GameApp.Game do
     Map.put(game, :rounds, [new_round] ++ rounds)
   end
 
+  defp scores_for_players(players, scores) do
+    Map.take(scores, Map.keys(players))
+  end
+
   @spec funmaster_for_round([String.t()], map(), integer()) :: Player.t()
   defp funmaster_for_round(funmaster_order, players, round_number) do
     funmaster_order
@@ -341,4 +392,28 @@ defmodule GameApp.Game do
     |> Enum.shuffle()
     |> Enum.map(& &1.id)
   end
+
+  defp game_over(%Game{round_number: round_number}) do
+    round_number == @max_rounds
+  end
+
+  defp game_winners(%Game{scores: scores, players: players}) do
+    scores
+    |> Map.to_list()
+    |> max_score()
+    |> Enum.map(fn {id, _} -> Map.get(players, id) end)
+  end
+
+  defp max_score(list, acc \\ [])
+  defp max_score([head | tail], []), do: max_score(tail, [head])
+
+  defp max_score([{id, score} | tail], [{_, high_score} | _] = acc) do
+    cond do
+      score == high_score -> max_score(tail, [{id, score} | acc])
+      score > high_score -> max_score(tail, [{id, score}])
+      score < high_score -> max_score(tail, acc)
+    end
+  end
+
+  defp max_score([], acc), do: Enum.reverse(acc)
 end

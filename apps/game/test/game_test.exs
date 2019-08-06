@@ -61,6 +61,8 @@ defmodule GameTest do
   test "start_game/1", %{game: game} do
     game =
       game
+      |> Game.player_join(@player2)
+      |> Game.player_join(@player3)
       |> Game.start_game()
 
     assert game.phase == :game_start
@@ -71,6 +73,7 @@ defmodule GameTest do
       game =
         game
         |> Game.player_join(@player2)
+        |> Game.player_join(@player3)
         |> Game.start_game()
 
       [game: game]
@@ -85,7 +88,7 @@ defmodule GameTest do
       assert game.round_number == 1
       assert length(game.rounds) == 1
       refute game.funmaster == nil
-      assert length(game.funmaster_order) == 2
+      assert length(game.funmaster_order) == 3
     end
 
     test "start_round/1 when phase is :round_end", %{game: game} do
@@ -106,6 +109,8 @@ defmodule GameTest do
   test "start_prompt_selection/1", %{game: game} do
     game =
       game
+      |> Game.player_join(@player2)
+      |> Game.player_join(@player3)
       |> Game.start_game()
       |> Game.start_round()
       |> Game.start_prompt_selection()
@@ -113,6 +118,6 @@ defmodule GameTest do
     assert game.phase == :prompt_selection
   end
 
-  test "select_prompt/2", %{game: game} do
-  end
+  # test "select_prompt/2", %{game: game} do
+  # end
 end

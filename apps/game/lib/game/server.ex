@@ -13,6 +13,7 @@ defmodule GameApp.Server do
 
   @game_timeout :timer.minutes(10)
   @round_start_timeout :timer.seconds(5)
+  @round_end_timeout :timer.seconds(5)
 
   def start_link(shortcode, player) do
     GenServer.start_link(Server, Game.create(shortcode, player), name: via_tuple(shortcode))
@@ -60,6 +61,30 @@ defmodule GameApp.Server do
     GenServer.cast(via_tuple(shortcode), :start_round)
   end
 
+  @doc """
+  Selects a prompt to set for the current round.
+  """
+  @spec select_prompt(String.t(), String.t()) :: :ok
+  def select_prompt(shortcode, prompt) do
+    GenServer.cast(via_tuple(shortcode), {:select_prompt, prompt})
+  end
+
+  @doc """
+  Selects a reaction for the given player in the current round.
+  """
+  @spec select_reaction(String.t(), Player.t(), String.t()) :: :ok
+  def select_reaction(shortcode, player, reaction) do
+    GenServer.cast(via_tuple(shortcode), {:select_reaction, player, reaction})
+  end
+
+  @doc """
+  Selects a winner for the current round.
+  """
+  @spec select_winner(String.t(), Player.t()) :: :ok
+  def select_winner(shortcode, winner) do
+    GenServer.cast(via_tuple(shortcode), {:select_winner, winner})
+  end
+
   ### Server API
 
   @impl true
@@ -91,13 +116,35 @@ defmodule GameApp.Server do
   @impl true
   def handle_cast(:start_round, game) do
     # Advance to prompt selection after @round_start_timeout
-    Process.send_after(self(), :round_start_timeout, @round_start_timeout)
+    Process.send_after(self(), :after_round_start, @round_start_timeout)
     {:noreply, Game.start_round(game), @game_timeout}
   end
 
   @impl true
-  def handle_info(:round_start_timeout, game) do
+  def handle_cast({:select_prompt, prompt}, game) do
+    {:noreply, Game.select_prompt(game, prompt), @game_timeout}
+  end
+
+  @impl true
+  def handle_cast({:select_reaction, player, reaction}, game) do
+    {:noreply, Game.select_reaction(game, player, reaction), @game_timeout}
+  end
+
+  @impl true
+  def handle_cast({:select_winner, winner}, game) do
+    # Advance to prompt selection after @round_end_timeout
+    Process.send_after(self(), :after_select_winner, @round_end_timeout)
+    {:noreply, Game.select_winner(game, winner), @game_timeout}
+  end
+
+  @impl true
+  def handle_info(:after_round_start, game) do
     {:noreply, Game.start_prompt_selection(game), @game_timeout}
+  end
+
+  @impl true
+  def handle_info(:after_select_winner, game) do
+    {:noreply, Game.start_round(game), @game_timeout}
   end
 
   @impl true
