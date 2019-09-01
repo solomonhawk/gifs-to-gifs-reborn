@@ -19,6 +19,9 @@ defmodule GameApp.Game do
             funmaster: nil,
             funmaster_order: []
 
+  @rounds_per_player 3
+  @min_players 3
+
   @type game_state ::
           :lobby
           | :game_start
@@ -387,7 +390,7 @@ defmodule GameApp.Game do
   defp remove_player(%Game{players: players} = game, %Player{id: id} = player) do
     game
     |> Map.put(:players, Map.delete(players, id))
-    |> remove_reaction(player)
+    # |> remove_reaction(player)
   end
 
   @spec remove_reaction(Game.t(), Player.t()) :: Game.t()
@@ -407,7 +410,7 @@ defmodule GameApp.Game do
   defp reactions_count(%Game{rounds: []}), do: 0
   defp reactions_count(%Game{rounds: [round | _]}), do: Kernel.map_size(round.reactions)
 
-  defp can_start?(%Game{phase: :lobby} = game), do: players_count(game) >= 3
+  defp can_start?(%Game{phase: :lobby} = game), do: players_count(game) >= @min_players
   defp can_start?(_), do: false
 
   defp scores_for_players(players, scores) do
@@ -434,7 +437,7 @@ defmodule GameApp.Game do
   end
 
   defp game_over?(%Game{round_number: round_number, players: players})
-       when round_number >= map_size(players) * 1,
+       when round_number >= map_size(players) * @rounds_per_player,
        do: true
 
   defp game_over?(_), do: false

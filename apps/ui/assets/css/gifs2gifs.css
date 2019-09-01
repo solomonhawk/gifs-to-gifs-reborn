@@ -1,0 +1,20 @@
+a,
+a:visited,
+a:active {
+  color: #3093ff;
+}
+
+.app-header {
+  background-color: #222;
+  border-color: #555;
+  padding: 8px 0;
+}
+
+.app-header .logo {
+  display: block;
+  image-rendering: crisp-edges;
+}
+
+.app-header .divider {
+  color: #555;
+}

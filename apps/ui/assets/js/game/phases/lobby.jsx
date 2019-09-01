@@ -15,8 +15,8 @@ export default function Lobby({ game, player, send }) {
       <h3>Welcome to the game!</h3>
 
       <ul>
-        {Object.values(game.players).map(({ id, name }) => (
-          <li key={id}>{name}</li>
+        {Object.values(game.players).map(player => (
+          <li key={player.id}>{player.name} {isCreator(game, player) && "(creator)"}</li>
         ))}
       </ul>
 

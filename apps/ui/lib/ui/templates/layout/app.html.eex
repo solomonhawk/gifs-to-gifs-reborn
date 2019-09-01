@@ -8,17 +8,30 @@
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
   <body>
+    <header class="app-header">
+      <div class="container">
+        <section>
+          <img class="logo" src="/images/gifs2gifs-logo.png" />
+
+          <div>
+            <%= if @current_player do %>
+              <%= link "New Game", to: Routes.game_path(@conn, :new) %>
+              <span class="divider">|</span>
+              <%= link "Switch Player", to: Routes.session_path(@conn, :delete), method: :delete %>
+              <span class="divider">|</span>
+              Logged in as: <%= @current_player.name %>
+            <% end %>
+          </div>
+        </section>
+      </div>
+
+    </header>
+
     <main role="main" class="container">
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-      <%= if @current_player do %>
-        <div>
-          <span style="float: right;"><%= link "Switch Player", to: Routes.session_path(@conn, :delete), method: :delete %></span>
-          <span style="float: right;"><%= link "New Game", to: Routes.game_path(@conn, :new) %>&nbsp;|&nbsp;</span>
-          <%= @current_player.name %>
-        </div>
-      <% end %>
+
 
       <%= render @view_module, @view_template, assigns %>
     </main>

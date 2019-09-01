@@ -1,12 +1,14 @@
 import React from 'react'
+import { scoreFor, isFunmaster, isRoundWinner } from '../data/helpers'
 
-export default function PlayerList({ funmaster, players, scores }) {
-  let rows = Object.values(players).map(({ id, name }) => {
+export default function PlayerList({ game }) {
+  let rows = Object.values(game.players).map(player => {
     return {
-      id,
-      name,
-      isFunmaster: funmaster && id === funmaster.id,
-      score: scores[id]
+      id: player.id,
+      name: player.name,
+      score: scoreFor(game, player),
+      isFunmaster: isFunmaster(game, player),
+      isRoundWinner: isRoundWinner(game, player)
     }
   })
 
@@ -26,7 +28,8 @@ export default function PlayerList({ funmaster, players, scores }) {
               <span style={{ fontWeight: row.isFunmaster ? 'bold' : null }}>
                 {row.name}
               </span>
-              {row.isFunmaster && '*'}
+              {row.isFunmaster && ' (funmaster)'}
+              {row.isRoundWinner && ' (round winner)'}
             </td>
             <td>{row.score}</td>
           </tr>
