@@ -1,11 +1,11 @@
-dist/search_items-a3798ef5b5.js
+dist/search_items-81ae1fbe4c.js
 dist/html-9914b37a220eb2c313b6.css
 dist/html-9914b37a220eb2c313b6.js
 dist/html/fonts/icomoon.eot
 dist/html/fonts/icomoon.svg
 dist/html/fonts/icomoon.ttf
 dist/html/fonts/icomoon.woff
-dist/sidebar_items-a73374f015.js
+dist/sidebar_items-c43cb14371.js
 api-reference.html
 readme.html
 search.html
@@ -16,6 +16,7 @@ GameApp.Round.html
 GameApp.Server.html
 GameApp.ServerSupervisor.html
 Ui.html
+Ui.ChannelWatcher.html
 Ui.Endpoint.html
 Ui.ErrorHelpers.html
 Ui.ErrorView.html
@@ -24,6 +25,7 @@ Ui.GameController.html
 Ui.GameView.html
 Ui.Gettext.html
 Ui.LayoutView.html
+Ui.Presence.html
 Ui.Router.html
 Ui.Router.Helpers.html
 Ui.SessionController.html

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="generator" content="ExDoc v0.21.1">
     <meta name="project" content=" v0.1.0">
-    <title>Ui.LayoutView —  v0.1.0</title>
+    <title>Ui.ChannelWatcher —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
     <script src="dist/sidebar_items-c43cb14371.js"></script>
       <script src="docs_config.js"></script>
@@ -65,7 +65,7 @@
 
       <h1>
         <small class="app-vsn"> v0.1.0</small>
-Ui.LayoutView      </h1>
+Ui.ChannelWatcher      </h1>
 
 
 
@@ -83,35 +83,31 @@ Ui.LayoutView      </h1>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#__phoenix_recompile__?/0">__phoenix_recompile__?()</a>
+    <a href="#child_spec/1">child_spec(init_arg)</a>
   </div>
-    <div class="summary-synopsis"><p>Returns true whenever the list of templates changes in the filesystem.</p></div>
+    <div class="summary-synopsis"><p>Returns a specification to start this module under a supervisor.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#__resource__/0">__resource__()</a>
+    <a href="#demonitor/2">demonitor(server_name, pid)</a>
   </div>
-    <div class="summary-synopsis"><p>The resource name, as an atom, for this view</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#__templates__/0">__templates__()</a>
+    <a href="#init/1">init(_)</a>
   </div>
-    <div class="summary-synopsis"><p>Returns the template root alongside all templates.</p></div>
+    <div class="summary-synopsis"><p>Invoked when the server is started. <code class="inline">start_link/3</code> or <code class="inline">start/3</code> will
+block until it returns.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#render/2">render(template, assigns \\ %{})</a>
+    <a href="#monitor/3">monitor(server_name, pid, mfa)</a>
   </div>
-    <div class="summary-synopsis"><p>Renders the given template locally.</p></div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#template_not_found/2">template_not_found(template, assigns)</a>
+    <a href="#start_link/1">start_link(name)</a>
   </div>
-    <div class="summary-synopsis"><p>Callback invoked when no template is found.
-By default it raises but can be customized
-to render a particular template.</p></div>
 </div>
   </div>
         </section>
@@ -124,70 +120,97 @@ to render a particular template.</p></div>
             </a>
 Functions          </h1>
           <div class="functions-list">
-<section class="detail" id="__phoenix_recompile__?/0">
+<section class="detail" id="child_spec/1">
   <div class="detail-header">
-    <a href="#__phoenix_recompile__?/0" class="detail-link" title="Link to this function">
+    <a href="#child_spec/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">__phoenix_recompile__?()</h1>
+    <h1 class="signature">child_spec(init_arg)</h1>
   </div>
   <section class="docstring">
-<p>Returns true whenever the list of templates changes in the filesystem.</p>
+<p>Returns a specification to start this module under a supervisor.</p>
+<p>See <a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>.</p>
   </section>
 </section>
-<section class="detail" id="__resource__/0">
+<section class="detail" id="demonitor/2">
   <div class="detail-header">
-    <a href="#__resource__/0" class="detail-link" title="Link to this function">
+    <a href="#demonitor/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">__resource__()</h1>
+    <h1 class="signature">demonitor(server_name, pid)</h1>
   </div>
   <section class="docstring">
-<p>The resource name, as an atom, for this view</p>
   </section>
 </section>
-<section class="detail" id="__templates__/0">
+<section class="detail" id="init/1">
   <div class="detail-header">
-    <a href="#__templates__/0" class="detail-link" title="Link to this function">
+    <a href="#init/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">__templates__()</h1>
+    <h1 class="signature">init(_)</h1>
   </div>
   <section class="docstring">
-<p>Returns the template root alongside all templates.</p>
+<p>Invoked when the server is started. <code class="inline">start_link/3</code> or <code class="inline">start/3</code> will
+block until it returns.</p>
+<p><code class="inline">init_arg</code> is the argument term (second argument) passed to <code class="inline">start_link/3</code>.</p>
+<p>Returning <code class="inline">{:ok, state}</code> will cause <code class="inline">start_link/3</code> to return
+<code class="inline">{:ok, pid}</code> and the process to enter its loop.</p>
+<p>Returning <code class="inline">{:ok, state, timeout}</code> is similar to <code class="inline">{:ok, state}</code>,
+except that it also sets a timeout. See the &quot;Timeouts&quot; section
+in the module documentation for more information.</p>
+<p>Returning <code class="inline">{:ok, state, :hibernate}</code> is similar to <code class="inline">{:ok, state}</code>
+except the process is hibernated before entering the loop. See
+<code class="inline">c:handle_call/3</code> for more information on hibernation.</p>
+<p>Returning <code class="inline">{:ok, state, {:continue, continue}}</code> is similar to
+<code class="inline">{:ok, state}</code> except that immediately after entering the loop
+the <code class="inline">c:handle_continue/2</code> callback will be invoked with the value
+<code class="inline">continue</code> as first argument.</p>
+<p>Returning <code class="inline">:ignore</code> will cause <code class="inline">start_link/3</code> to return <code class="inline">:ignore</code> and
+the process will exit normally without entering the loop or calling
+<code class="inline">c:terminate/2</code>. If used when part of a supervision tree the parent
+supervisor will not fail to start nor immediately try to restart the
+<a href="https://hexdocs.pm/elixir/GenServer.html"><code class="inline">GenServer</code></a>. The remainder of the supervision tree will be started
+and so the <a href="https://hexdocs.pm/elixir/GenServer.html"><code class="inline">GenServer</code></a> should not be required by other processes.
+It can be started later with <a href="https://hexdocs.pm/elixir/Supervisor.html#restart_child/2"><code class="inline">Supervisor.restart_child/2</code></a> as the child
+specification is saved in the parent supervisor. The main use cases for
+this are:</p>
+<ul>
+<li>The <a href="https://hexdocs.pm/elixir/GenServer.html"><code class="inline">GenServer</code></a> is disabled by configuration but might be enabled later.
+</li>
+<li>An error occurred and it will be handled by a different mechanism than the
+<a href="https://hexdocs.pm/elixir/Supervisor.html"><code class="inline">Supervisor</code></a>. Likely this approach involves calling <a href="https://hexdocs.pm/elixir/Supervisor.html#restart_child/2"><code class="inline">Supervisor.restart_child/2</code></a>
+after a delay to attempt a restart.
+</li>
+</ul>
+<p>Returning <code class="inline">{:stop, reason}</code> will cause <code class="inline">start_link/3</code> to return
+<code class="inline">{:error, reason}</code> and the process to exit with reason <code class="inline">reason</code> without
+entering the loop or calling <code class="inline">c:terminate/2</code>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/elixir/GenServer.html#c:init/1"><code class="inline">GenServer.init/1</code></a>.</p>
   </section>
 </section>
-<section class="detail" id="render/2">
-    <span id="render/1"></span>
+<section class="detail" id="monitor/3">
   <div class="detail-header">
-    <a href="#render/2" class="detail-link" title="Link to this function">
+    <a href="#monitor/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">render(template, assigns \\ %{})</h1>
+    <h1 class="signature">monitor(server_name, pid, mfa)</h1>
   </div>
   <section class="docstring">
-<p>Renders the given template locally.</p>
   </section>
 </section>
-<section class="detail" id="template_not_found/2">
+<section class="detail" id="start_link/1">
   <div class="detail-header">
-    <a href="#template_not_found/2" class="detail-link" title="Link to this function">
+    <a href="#start_link/1" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">template_not_found(template, assigns)</h1>
-      <div class="specs">
-          <pre>template_not_found(<a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Template.html#t:name/0">Phoenix.Template.name</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">map</a>()) :: <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">no_return</a>()</pre>
-      </div>
+    <h1 class="signature">start_link(name)</h1>
   </div>
   <section class="docstring">
-<p>Callback invoked when no template is found.
-By default it raises but can be customized
-to render a particular template.</p>
   </section>
 </section>
           </div>

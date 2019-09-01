@@ -387,18 +387,19 @@ defmodule GameApp.Game do
   end
 
   @spec remove_player(Game.t(), Player.t()) :: Game.t()
-  defp remove_player(%Game{players: players} = game, %Player{id: id} = player) do
+  defp remove_player(%Game{players: players} = game, %Player{id: id}) do
     game
     |> Map.put(:players, Map.delete(players, id))
+
     # |> remove_reaction(player)
   end
 
-  @spec remove_reaction(Game.t(), Player.t()) :: Game.t()
-  defp remove_reaction(%Game{rounds: []} = game, _player), do: game
+  # @spec remove_reaction(Game.t(), Player.t()) :: Game.t()
+  # defp remove_reaction(%Game{rounds: []} = game, _player), do: game
 
-  defp remove_reaction(%Game{rounds: [round | _rounds]} = game, player) do
-    update_round(game, Round.remove_reaction(round, player))
-  end
+  # defp remove_reaction(%Game{rounds: [round | _rounds]} = game, player) do
+  #   update_round(game, Round.remove_reaction(round, player))
+  # end
 
   @spec update_round(Game.t(), Round.t()) :: Game.t()
   defp update_round(%Game{rounds: [_round | rounds]} = game, new_round) do

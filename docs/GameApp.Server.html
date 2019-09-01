@@ -8,7 +8,7 @@
     <meta name="project" content=" v0.1.0">
     <title>GameApp.Server —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
-    <script src="dist/sidebar_items-a73374f015.js"></script>
+    <script src="dist/sidebar_items-c43cb14371.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
   </head>
@@ -118,6 +118,24 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
+    <a href="#select_prompt/2">select_prompt(shortcode, prompt)</a>
+  </div>
+    <div class="summary-synopsis"><p>Selects a prompt to set for the current round.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#select_reaction/4">select_reaction(shortcode, player, reaction, channel_pid)</a>
+  </div>
+    <div class="summary-synopsis"><p>Selects a reaction for the given player in the current round.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#select_winner/3">select_winner(shortcode, winner, channel_pid)</a>
+  </div>
+    <div class="summary-synopsis"><p>Selects a winner for the current round.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
     <a href="#start_game/1">start_game(shortcode)</a>
   </div>
     <div class="summary-synopsis"><p>Starts the game with the given shortcode.</p></div>
@@ -129,7 +147,7 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#start_round/1">start_round(shortcode)</a>
+    <a href="#start_round/2">start_round(shortcode, channel_pid)</a>
   </div>
     <div class="summary-synopsis"><p>Starts the next round for the game with the given shortcode.</p></div>
 </div>
@@ -230,6 +248,51 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
 <p>Removes a player from the game with the given shortcode.</p>
   </section>
 </section>
+<section class="detail" id="select_prompt/2">
+  <div class="detail-header">
+    <a href="#select_prompt/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">select_prompt(shortcode, prompt)</h1>
+      <div class="specs">
+          <pre>select_prompt(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: :ok</pre>
+      </div>
+  </div>
+  <section class="docstring">
+<p>Selects a prompt to set for the current round.</p>
+  </section>
+</section>
+<section class="detail" id="select_reaction/4">
+  <div class="detail-header">
+    <a href="#select_reaction/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">select_reaction(shortcode, player, reaction, channel_pid)</h1>
+      <div class="specs">
+          <pre>select_reaction(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()) :: :ok</pre>
+      </div>
+  </div>
+  <section class="docstring">
+<p>Selects a reaction for the given player in the current round.</p>
+  </section>
+</section>
+<section class="detail" id="select_winner/3">
+  <div class="detail-header">
+    <a href="#select_winner/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">select_winner(shortcode, winner, channel_pid)</h1>
+      <div class="specs">
+          <pre>select_winner(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()) :: :ok</pre>
+      </div>
+  </div>
+  <section class="docstring">
+<p>Selects a winner for the current round.</p>
+  </section>
+</section>
 <section class="detail" id="start_game/1">
   <div class="detail-header">
     <a href="#start_game/1" class="detail-link" title="Link to this function">
@@ -256,15 +319,15 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
   <section class="docstring">
   </section>
 </section>
-<section class="detail" id="start_round/1">
+<section class="detail" id="start_round/2">
   <div class="detail-header">
-    <a href="#start_round/1" class="detail-link" title="Link to this function">
+    <a href="#start_round/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">start_round(shortcode)</h1>
+    <h1 class="signature">start_round(shortcode, channel_pid)</h1>
       <div class="specs">
-          <pre>start_round(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: :ok</pre>
+          <pre>start_round(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()) :: :ok</pre>
       </div>
   </div>
   <section class="docstring">

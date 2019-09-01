@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="ExDoc v0.21.1">
+    <meta name="project" content=" v0.1.0">
+    <title>Ui.Presence —  v0.1.0</title>
+    <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
+    <script src="dist/sidebar_items-c43cb14371.js"></script>
+      <script src="docs_config.js"></script>
+    <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
+  </head>
+  <body data-type="modules">
+    <script>try { if(localStorage.getItem('night-mode') === 'true') document.body.className += ' night-mode'; } catch (e) { }</script>
+<div class="main">
+
+<button class="sidebar-button sidebar-toggle">
+  <span class="icon-menu" title="Collapse/expand sidebar"></span>
+</button>
+
+<section class="sidebar">
+  <form class="sidebar-search" action="search.html">
+    <button type="submit" class="search-button">
+      <span class="icon-search" aria-hidden="true"></span>
+    </button>
+    <button type="button" tabindex="-1" class="search-close-button">
+      <span class="icon-cross" title="Cancel search"></span>
+    </button>
+    <label class="search-label">
+      <input name="q" type="text" id="search-list" class="search-input" placeholder="Search..." aria-label="Search" autocomplete="off" />
+    </label>
+  </form>
+
+  <div class="autocomplete">
+    <div class="autocomplete-results">
+    </div>
+  </div>
+
+  <div class="sidebar-header">
+    <div class="sidebar-projectDetails">
+      <a href="readme.html" class="sidebar-projectName">
+      </a>
+      <h2 class="sidebar-projectVersion">
+        v0.1.0
+      </h2>
+    </div>
+  </div>
+
+  <ul class="sidebar-listNav">
+    <li><a id="extras-list" href="#full-list">Pages</a></li>
+
+      <li><a id="modules-list" href="#full-list">Modules</a></li>
+
+
+  </ul>
+  <div class="gradient"></div>
+  <ul id="full-list" class="sidebar-fullList"></ul>
+</section>
+
+<section class="content">
+  <div class="content-outer">
+    <div id="content" class="content-inner">
+
+      <h1>
+        <small class="app-vsn"> v0.1.0</small>
+Ui.Presence      </h1>
+
+
+
+        <section id="summary" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#summary">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+            Summary
+          </h1>
+  <div class="summary-functions summary">
+    <h2>
+      <a href="#functions">Functions</a>
+    </h2>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#fetch/2">fetch(topic, presences)</a>
+  </div>
+    <div class="summary-synopsis"><p>Extend presence information with additional data.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#get_by_key/2">get_by_key(topic, key)</a>
+  </div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#handle_diff/2">handle_diff(diff, state)</a>
+  </div>
+    <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:handle_diff/2"><code class="inline">Phoenix.Presence.handle_diff/2</code></a>.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#init/1">init(opts)</a>
+  </div>
+    <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:init/1"><code class="inline">Phoenix.Presence.init/1</code></a>.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#list/1">list(topic)</a>
+  </div>
+    <div class="summary-synopsis"><p>Returns presences for a channel or topic.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#start_link/1">start_link(opts \\ [])</a>
+  </div>
+    <div class="summary-synopsis"><p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:start_link/1"><code class="inline">Phoenix.Presence.start_link/1</code></a>.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#track/3">track(socket, key, meta)</a>
+  </div>
+    <div class="summary-synopsis"><p>Track a channel&#39;s process as a presence.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#track/4">track(pid, topic, key, meta)</a>
+  </div>
+    <div class="summary-synopsis"><p>Track an arbitary process as a presence.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#untrack/2">untrack(socket, key)</a>
+  </div>
+    <div class="summary-synopsis"><p>Stop tracking a channel&#39;s process.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#untrack/3">untrack(pid, topic, key)</a>
+  </div>
+    <div class="summary-synopsis"><p>Stop tracking a process.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#update/3">update(socket, key, meta)</a>
+  </div>
+    <div class="summary-synopsis"><p>Update a channel presence&#39;s metadata.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#update/4">update(pid, topic, key, meta)</a>
+  </div>
+    <div class="summary-synopsis"><p>Update a process presence&#39;s metadata.</p></div>
+</div>
+  </div>
+        </section>
+
+        <section id="functions" class="details-list">
+          <h1 class="section-heading">
+            <a class="hover-link" href="#functions">
+              <span class="icon-link" aria-hidden="true"></span>
+              <span class="sr-only">Link to this section</span>
+            </a>
+Functions          </h1>
+          <div class="functions-list">
+<section class="detail" id="fetch/2">
+  <div class="detail-header">
+    <a href="#fetch/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">fetch(topic, presences)</h1>
+  </div>
+  <section class="docstring">
+<p>Extend presence information with additional data.</p>
+<p>When <a href="#list/1"><code class="inline">list/1</code></a> is used to list all presences of the given <code class="inline">topic</code>, this
+callback is triggered once to modify the result before it is broadcasted to
+all channel subscribers. This avoids N query problems and provides a single
+place to extend presence metadata. You must return a map of data matching the
+original result, including the <code class="inline">:metas</code> key, but can extend the map to include
+any additional information.</p>
+<p>The default implementation simply passes <code class="inline">presences</code> through unchanged.</p>
+<h2 id="fetch/2-example" class="section-heading">
+  <a href="#fetch/2-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Example
+</h2>
+
+<pre><code class="nohighlight makeup elixir"><span class="kd">def</span><span class="w"> </span><span class="nf">fetch</span><span class="p" data-group-id="4447207235-1">(</span><span class="c">_topic</span><span class="p">,</span><span class="w"> </span><span class="n">presences</span><span class="p" data-group-id="4447207235-1">)</span><span class="w"> </span><span class="k" data-group-id="4447207235-2">do</span><span class="w">
+  </span><span class="n">query</span><span class="w"> </span><span class="o">=</span><span class="w">
+    </span><span class="n">from</span><span class="w"> </span><span class="n">u</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="nc">User</span><span class="p">,</span><span class="w">
+      </span><span class="ss">where</span><span class="p">:</span><span class="w"> </span><span class="n">u</span><span class="o">.</span><span class="n">id</span><span class="w"> </span><span class="ow">in</span><span class="w"> </span><span class="o">^</span><span class="nc">Map</span><span class="o">.</span><span class="n">keys</span><span class="p" data-group-id="4447207235-3">(</span><span class="n">presences</span><span class="p" data-group-id="4447207235-3">)</span><span class="p">,</span><span class="w">
+      </span><span class="ss">select</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4447207235-4">{</span><span class="n">u</span><span class="o">.</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">u</span><span class="p" data-group-id="4447207235-4">}</span><span class="w">
+
+  </span><span class="n">users</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">query</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Repo</span><span class="o">.</span><span class="n">all</span><span class="p" data-group-id="4447207235-5">(</span><span class="p" data-group-id="4447207235-5">)</span><span class="w"> </span><span class="o">|&gt;</span><span class="w"> </span><span class="nc">Enum</span><span class="o">.</span><span class="n">into</span><span class="p" data-group-id="4447207235-6">(</span><span class="p" data-group-id="4447207235-7">%{</span><span class="p" data-group-id="4447207235-7">}</span><span class="p" data-group-id="4447207235-6">)</span><span class="w">
+  </span><span class="k">for</span><span class="w"> </span><span class="p" data-group-id="4447207235-8">{</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4447207235-9">%{</span><span class="ss">metas</span><span class="p">:</span><span class="w"> </span><span class="n">metas</span><span class="p" data-group-id="4447207235-9">}</span><span class="p" data-group-id="4447207235-8">}</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">presences</span><span class="p">,</span><span class="w"> </span><span class="ss">into</span><span class="p">:</span><span class="w"> </span><span class="p" data-group-id="4447207235-10">%{</span><span class="p" data-group-id="4447207235-10">}</span><span class="w"> </span><span class="k" data-group-id="4447207235-11">do</span><span class="w">
+    </span><span class="p" data-group-id="4447207235-12">{</span><span class="n">key</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="4447207235-13">%{</span><span class="ss">metas</span><span class="p">:</span><span class="w"> </span><span class="n">metas</span><span class="p">,</span><span class="w"> </span><span class="ss">user</span><span class="p">:</span><span class="w"> </span><span class="n">users</span><span class="p" data-group-id="4447207235-14">[</span><span class="n">key</span><span class="p" data-group-id="4447207235-14">]</span><span class="p" data-group-id="4447207235-13">}</span><span class="p" data-group-id="4447207235-12">}</span><span class="w">
+  </span><span class="k" data-group-id="4447207235-11">end</span><span class="w">
+</span><span class="k" data-group-id="4447207235-2">end</span></code></pre>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:fetch/2"><code class="inline">Phoenix.Presence.fetch/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="get_by_key/2">
+  <div class="detail-header">
+    <a href="#get_by_key/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">get_by_key(topic, key)</h1>
+  </div>
+  <section class="docstring">
+  </section>
+</section>
+<section class="detail" id="handle_diff/2">
+  <div class="detail-header">
+    <a href="#handle_diff/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">handle_diff(diff, state)</h1>
+  </div>
+  <section class="docstring">
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:handle_diff/2"><code class="inline">Phoenix.Presence.handle_diff/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="init/1">
+  <div class="detail-header">
+    <a href="#init/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">init(opts)</h1>
+  </div>
+  <section class="docstring">
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:init/1"><code class="inline">Phoenix.Presence.init/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="list/1">
+  <div class="detail-header">
+    <a href="#list/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">list(topic)</h1>
+  </div>
+  <section class="docstring">
+<p>Returns presences for a channel or topic.</p>
+<p>Calls <code class="inline">list/2</code> with presence module.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:list/1"><code class="inline">Phoenix.Presence.list/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="start_link/1">
+    <span id="start_link/0"></span>
+  <div class="detail-header">
+    <a href="#start_link/1" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">start_link(opts \\ [])</h1>
+  </div>
+  <section class="docstring">
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:start_link/1"><code class="inline">Phoenix.Presence.start_link/1</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="track/3">
+  <div class="detail-header">
+    <a href="#track/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">track(socket, key, meta)</h1>
+  </div>
+  <section class="docstring">
+<p>Track a channel&#39;s process as a presence.</p>
+<p>Tracked presences are grouped by <code class="inline">key</code>, cast as a string. For example, to
+group each user&#39;s channels together, use user IDs as keys. Each presence can
+be associated with a map of metadata to store small, emphemeral state, such as
+a user&#39;s online status. To store detailed information, see <a href="#fetch/2"><code class="inline">fetch/2</code></a>.</p>
+<h2 id="track/3-example" class="section-heading">
+  <a href="#track/3-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Example
+</h2>
+
+<pre><code class="nohighlight makeup elixir"><span class="kn">alias</span><span class="w"> </span><span class="nc">MyApp.Presence</span><span class="w">
+</span><span class="kd">def</span><span class="w"> </span><span class="nf">handle_info</span><span class="p" data-group-id="1066576318-1">(</span><span class="ss">:after_join</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="1066576318-1">)</span><span class="w"> </span><span class="k" data-group-id="1066576318-2">do</span><span class="w">
+  </span><span class="p" data-group-id="1066576318-3">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="bp">_</span><span class="p" data-group-id="1066576318-3">}</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nc">Presence</span><span class="o">.</span><span class="n">track</span><span class="p" data-group-id="1066576318-4">(</span><span class="n">socket</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="o">.</span><span class="n">assigns</span><span class="o">.</span><span class="n">user_id</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="1066576318-5">%{</span><span class="w">
+    </span><span class="ss">online_at</span><span class="p">:</span><span class="w"> </span><span class="n">inspect</span><span class="p" data-group-id="1066576318-6">(</span><span class="nc">System</span><span class="o">.</span><span class="n">system_time</span><span class="p" data-group-id="1066576318-7">(</span><span class="ss">:second</span><span class="p" data-group-id="1066576318-7">)</span><span class="p" data-group-id="1066576318-6">)</span><span class="w">
+  </span><span class="p" data-group-id="1066576318-5">}</span><span class="p" data-group-id="1066576318-4">)</span><span class="w">
+  </span><span class="p" data-group-id="1066576318-8">{</span><span class="ss">:noreply</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="1066576318-8">}</span><span class="w">
+</span><span class="k" data-group-id="1066576318-2">end</span></code></pre>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:track/3"><code class="inline">Phoenix.Presence.track/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="track/4">
+  <div class="detail-header">
+    <a href="#track/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">track(pid, topic, key, meta)</h1>
+  </div>
+  <section class="docstring">
+<p>Track an arbitary process as a presence.</p>
+<p>Same with <a href="#track/3"><code class="inline">track/3</code></a>, except track any process by <code class="inline">topic</code> and <code class="inline">key</code>.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:track/4"><code class="inline">Phoenix.Presence.track/4</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="untrack/2">
+  <div class="detail-header">
+    <a href="#untrack/2" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">untrack(socket, key)</h1>
+  </div>
+  <section class="docstring">
+<p>Stop tracking a channel&#39;s process.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:untrack/2"><code class="inline">Phoenix.Presence.untrack/2</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="untrack/3">
+  <div class="detail-header">
+    <a href="#untrack/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">untrack(pid, topic, key)</h1>
+  </div>
+  <section class="docstring">
+<p>Stop tracking a process.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:untrack/3"><code class="inline">Phoenix.Presence.untrack/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="update/3">
+  <div class="detail-header">
+    <a href="#update/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">update(socket, key, meta)</h1>
+  </div>
+  <section class="docstring">
+<p>Update a channel presence&#39;s metadata.</p>
+<p>Replace a presence&#39;s metadata by passing a new map or a function that takes
+the current map and returns a new one.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:update/3"><code class="inline">Phoenix.Presence.update/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="update/4">
+  <div class="detail-header">
+    <a href="#update/4" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">update(pid, topic, key, meta)</h1>
+  </div>
+  <section class="docstring">
+<p>Update a process presence&#39;s metadata.</p>
+<p>Same as <a href="#update/3"><code class="inline">update/3</code></a>, but with an arbitary process.</p>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Presence.html#c:update/4"><code class="inline">Phoenix.Presence.update/4</code></a>.</p>
+  </section>
+</section>
+          </div>
+        </section>
+      <footer class="footer">
+        <p>
+          <span class="line">
+            Built using
+            <a href="https://github.com/elixir-lang/ex_doc" title="ExDoc" target="_blank" rel="help noopener">ExDoc</a> (v0.21.1),
+          </span>
+          <span class="line">
+            designed by
+            <a href="https://twitter.com/dignifiedquire" target="_blank" rel="noopener" title="@dignifiedquire">Friedel Ziegelmayer</a>.
+          </span>
+        </p>
+        <p>
+          <button class="line footer-button night-mode-toggle">
+            Toggle night mode
+          </button>
+          <button class="line footer-button tooltips-toggle">
+            <span class="tooltips-option-disable">Disable tooltips</span>
+            <span class="tooltips-option-enable">Enable tooltips</span>
+          </button>
+          <button class="line footer-button display-shortcuts-help">
+            Display keyboard shortcuts
+          </button>
+          <button class="line footer-button display-quick-switch">
+            Go to a HexDocs package
+          </button>
+        </p>
+      </footer>
+    </div>
+  </div>
+</section>
+</div>
+  </body>
+</html>

@@ -8,7 +8,7 @@
     <meta name="project" content=" v0.1.0">
     <title>Ui.GameChannel —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
-    <script src="dist/sidebar_items-a73374f015.js"></script>
+    <script src="dist/sidebar_items-c43cb14371.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
   </head>
@@ -83,7 +83,13 @@ Ui.GameChannel      </h1>
     </h2>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#handle_info/2">handle_info(arg, socket)</a>
+    <a href="#handle_in/3">handle_in(binary, arg2, socket)</a>
+  </div>
+    <div class="summary-synopsis"><p>Handle incoming <code class="inline">event</code>s.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#handle_info/2">handle_info(arg1, socket)</a>
   </div>
     <div class="summary-synopsis"><p>Handle regular Elixir process messages.</p></div>
 </div>
@@ -92,6 +98,11 @@ Ui.GameChannel      </h1>
     <a href="#join/3">join(arg, params, socket)</a>
   </div>
     <div class="summary-synopsis"><p>Handle channel joins by <code class="inline">topic</code>.</p></div>
+</div>
+<div class="summary-row">
+  <div class="summary-signature">
+    <a href="#leave/3">leave(shortcode, player, socket)</a>
+  </div>
 </div>
 <div class="summary-row">
   <div class="summary-signature">
@@ -109,13 +120,34 @@ Ui.GameChannel      </h1>
             </a>
 Functions          </h1>
           <div class="functions-list">
+<section class="detail" id="handle_in/3">
+  <div class="detail-header">
+    <a href="#handle_in/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">handle_in(binary, arg2, socket)</h1>
+  </div>
+  <section class="docstring">
+<p>Handle incoming <code class="inline">event</code>s.</p>
+<h2 id="handle_in/3-example" class="section-heading">
+  <a href="#handle_in/3-example" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Example
+</h2>
+
+<pre><code class="nohighlight makeup elixir"><span class="kd">def</span><span class="w"> </span><span class="nf">handle_in</span><span class="p" data-group-id="9584588478-1">(</span><span class="s">&quot;ping&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="9584588478-1">)</span><span class="w"> </span><span class="k" data-group-id="9584588478-2">do</span><span class="w">
+  </span><span class="p" data-group-id="9584588478-3">{</span><span class="ss">:reply</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="9584588478-4">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p" data-group-id="9584588478-4">}</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="9584588478-3">}</span><span class="w">
+</span><span class="k" data-group-id="9584588478-2">end</span></code></pre>
+<p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Channel.html#c:handle_in/3"><code class="inline">Phoenix.Channel.handle_in/3</code></a>.</p>
+  </section>
+</section>
 <section class="detail" id="handle_info/2">
   <div class="detail-header">
     <a href="#handle_info/2" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">handle_info(arg, socket)</h1>
+    <h1 class="signature">handle_info(arg1, socket)</h1>
   </div>
   <section class="docstring">
 <p>Handle regular Elixir process messages.</p>
@@ -140,14 +172,25 @@ refuse authorization, return <code class="inline">{:error, reason}</code>.</p>
   Example
 </h2>
 
-<pre><code class="nohighlight makeup elixir"><span class="kd">def</span><span class="w"> </span><span class="nf">join</span><span class="p" data-group-id="2010747562-1">(</span><span class="s">&quot;room:lobby&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="2010747562-1">)</span><span class="w"> </span><span class="k" data-group-id="2010747562-2">do</span><span class="w">
-  </span><span class="k">if</span><span class="w"> </span><span class="n">authorized?</span><span class="p" data-group-id="2010747562-3">(</span><span class="n">payload</span><span class="p" data-group-id="2010747562-3">)</span><span class="w"> </span><span class="k" data-group-id="2010747562-4">do</span><span class="w">
-    </span><span class="p" data-group-id="2010747562-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="2010747562-5">}</span><span class="w">
-  </span><span class="k" data-group-id="2010747562-4">else</span><span class="w">
-    </span><span class="p" data-group-id="2010747562-6">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="2010747562-7">%{</span><span class="ss">reason</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;unauthorized&quot;</span><span class="p" data-group-id="2010747562-7">}</span><span class="p" data-group-id="2010747562-6">}</span><span class="w">
-  </span><span class="k" data-group-id="2010747562-4">end</span><span class="w">
-</span><span class="k" data-group-id="2010747562-2">end</span></code></pre>
+<pre><code class="nohighlight makeup elixir"><span class="kd">def</span><span class="w"> </span><span class="nf">join</span><span class="p" data-group-id="8182660037-1">(</span><span class="s">&quot;room:lobby&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">payload</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="8182660037-1">)</span><span class="w"> </span><span class="k" data-group-id="8182660037-2">do</span><span class="w">
+  </span><span class="k">if</span><span class="w"> </span><span class="n">authorized?</span><span class="p" data-group-id="8182660037-3">(</span><span class="n">payload</span><span class="p" data-group-id="8182660037-3">)</span><span class="w"> </span><span class="k" data-group-id="8182660037-4">do</span><span class="w">
+    </span><span class="p" data-group-id="8182660037-5">{</span><span class="ss">:ok</span><span class="p">,</span><span class="w"> </span><span class="n">socket</span><span class="p" data-group-id="8182660037-5">}</span><span class="w">
+  </span><span class="k" data-group-id="8182660037-4">else</span><span class="w">
+    </span><span class="p" data-group-id="8182660037-6">{</span><span class="ss">:error</span><span class="p">,</span><span class="w"> </span><span class="p" data-group-id="8182660037-7">%{</span><span class="ss">reason</span><span class="p">:</span><span class="w"> </span><span class="s">&quot;unauthorized&quot;</span><span class="p" data-group-id="8182660037-7">}</span><span class="p" data-group-id="8182660037-6">}</span><span class="w">
+  </span><span class="k" data-group-id="8182660037-4">end</span><span class="w">
+</span><span class="k" data-group-id="8182660037-2">end</span></code></pre>
 <p>Callback implementation for <a href="https://hexdocs.pm/phoenix/1.4.9/Phoenix.Channel.html#c:join/3"><code class="inline">Phoenix.Channel.join/3</code></a>.</p>
+  </section>
+</section>
+<section class="detail" id="leave/3">
+  <div class="detail-header">
+    <a href="#leave/3" class="detail-link" title="Link to this function">
+      <span class="icon-link" aria-hidden="true"></span>
+      <span class="sr-only">Link to this function</span>
+    </a>
+    <h1 class="signature">leave(shortcode, player, socket)</h1>
+  </div>
+  <section class="docstring">
   </section>
 </section>
 <section class="detail" id="start_link/1">
