@@ -1,0 +1,2 @@
+- How should game logic that looks like validations be modeled and propagated back to the UI? E.g. Attempting to start a game with fewer than the minimum number of players? Game.summary returns can_start boolean, disables button in UI
+- Is there a better way to organize code so that implementing a player action doesn't require writing similar code in 4 or 5 places? (GameChannel, GameServer [client api/server callback], Game logic)

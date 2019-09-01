@@ -25,14 +25,6 @@ export default function GameStart({ game, player, send }) {
         </small>
       </p>
 
-      <div>Players: </div>
-
-      <ul>
-        {Object.values(game.players).map(({ id, name }) => (
-          <li key={id}>{name}</li>
-        ))}
-      </ul>
-
       {isCreator(game, player) && (
         <button type="button" onClick={() => send('start_round')}>
           Start First Round

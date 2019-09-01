@@ -3,7 +3,11 @@
 - [x] [ui] Add `GameChannel`
 - [x] [game] Remove a player from the GameState when they navigate away from /games/:id
 - [ ] [game] Figure out what to do if funmaster leaves or disconnects in the middle of a round
-- [ ] [game] Advance to winner selection after all reactions are in (countdown or just UI transition)
-- [ ] [game] Assign points for winning
-- [ ] [game] Determine win condition (point target parameter on create game screen?, max number of rounds?)
+- [x] [game] Advance to winner selection after all reactions are in (countdown or just UI transition)
+- [x] [game] Assign points for winning
+- [x] [game] Determine win condition (point target parameter on create game screen?, max number of rounds?)
 - [x] [game] Notify UI clients when game server state updates internally
+- [ ] [apps] Provision server and deploy somewhere
+- [ ] Figure out the next iteration of selecing a prompt
+- [ ] Figure out the next iteration of selecting a reaction
+- [ ] Show prompt + current reaction to players when funmaster is selecting winner

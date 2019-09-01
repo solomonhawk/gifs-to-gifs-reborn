@@ -18,6 +18,12 @@ defmodule GifsToGifs.MixProject do
         main: "readme",
         extras: ["README.md"],
         output: "docs"
+      ],
+      releases: [
+        prod: [
+          include_executables_for: [:unix],
+          applications: [ui: :permanent, game: :permanent]
+        ]
       ]
     ]
   end
