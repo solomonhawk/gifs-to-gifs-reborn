@@ -35,6 +35,7 @@ class Game extends React.Component {
 
     return (
       <Phase
+        presences={this.state.presences}
         game={this.state.game}
         player={this.props.player}
         send={this.transport.send}

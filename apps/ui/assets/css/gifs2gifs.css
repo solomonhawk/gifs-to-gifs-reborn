@@ -1,3 +1,26 @@
+html,
+body {
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  overflow: auto;
+  padding-bottom: 2rem;
+}
+
+body,
+.container,
+#app {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+#app {
+  min-height: 100%;
+}
+
 a,
 a:visited,
 a:active {
@@ -17,4 +40,132 @@ a:active {
 
 .app-header .divider {
   color: #555;
+}
+
+input[type='email'],
+input[type='number'],
+input[type='password'],
+input[type='search'],
+input[type='tel'],
+input[type='text'],
+input[type='url'],
+textarea,
+select {
+  color: #fff;
+  border-color: #444;
+}
+
+.fixed-ratio {
+  height: 0;
+  position: relative;
+}
+
+.fixed-ratio-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.media {
+  max-width: 100%;
+  background-color: #333;
+  border-radius: 3px;
+  overflow: hidden;
+  width: 100%;
+  object-fit: contain;
+  max-height: 100%;
+}
+
+.mt-auto {
+  margin-top: auto;
+}
+
+.pb-1 {
+  padding-bottom: 4px;
+}
+
+.pb-2 {
+  padding-bottom: 8px;
+}
+
+.mr-2 {
+  margin-right: 8px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.flex {
+  display: flex;
+}
+
+.align-center {
+  align-items: center;
+}
+
+.justify-space-between {
+  justify-content: space-between;
+}
+
+.divider {
+  border-color: #444;
+}
+
+code {
+  color: #9b2f28;
+}
+
+.button,
+a.button,
+button,
+input[type='button'],
+input[type='reset'],
+input[type='submit'] {
+  background-color: #3093ff;
+  background-image: linear-gradient(
+      to right,
+      rgba(48, 147, 255, 0.7),
+      rgba(48, 147, 255, 0.7)
+    ),
+    url(https://media.giphy.com/media/3ohs7XCsmyYxoCDrtC/giphy.gif);
+  background-repeat: no-repeat, repeat;
+  background-position: center center;
+  color: #fff;
+  background-size: 100% auto;
+  font-size: 1.5rem;
+  border-width: 1px;
+  height: 4.5rem;
+  line-height: 4.5rem;
+  font-weight: 800;
+  text-shadow: 0px -1px 0px rgba(48, 147, 255, 0.5);
+  border-color: rgba(48, 147, 255, 0.8);
+  position: relative;
+}
+
+.button:hover,
+.button:focus,
+button:hover,
+button:focus,
+input[type='button']:hover,
+input[type='button']:focus,
+input[type='reset']:hover,
+input[type='reset']:focus,
+input[type='submit']:hover,
+input[type='submit']:focus {
+  border-color: #3093ff;
+}
+
+.table tbody td {
+  border-bottom-color: #444;
+}
+
+.center {
+  text-align: center;
+}
+
+.block {
+  display: block;
 }

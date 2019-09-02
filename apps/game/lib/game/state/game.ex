@@ -7,9 +7,11 @@ defmodule GameApp.Game do
   alias __MODULE__, as: Game
   alias GameApp.{Player, Round}
 
+  require Logger
+
   @enforce_keys [:shortcode, :creator]
   defstruct shortcode: nil,
-            round_number: nil,
+            round_number: 1,
             rounds: [],
             players: %{},
             scores: %{},
@@ -19,7 +21,7 @@ defmodule GameApp.Game do
             funmaster: nil,
             funmaster_order: []
 
-  @rounds_per_player 3
+  @rounds_per_player 1
   @min_players 3
 
   @type game_state ::
@@ -125,13 +127,13 @@ defmodule GameApp.Game do
     game
     |> Map.put(:players, Map.put(players, id, player))
     |> set_player_score(player, Map.get(scores, id))
-    |> set_funmaster_and_order()
   end
 
   def player_join(%Game{players: players, scores: scores} = game, %Player{id: id} = player) do
     game
     |> Map.put(:players, Map.put(players, id, player))
     |> set_player_score(player, Map.get(scores, id))
+    |> set_funmaster_and_order()
   end
 
   @doc """
@@ -155,12 +157,12 @@ defmodule GameApp.Game do
 
   """
   @spec player_leave(Game.t(), Player.t()) :: Game.t()
-  def player_leave(%Game{funmaster: %{id: funmaster_id}} = game, %Player{id: id} = player)
-      when id == funmaster_id do
-    game
-    |> remove_player(player)
-    |> set_funmaster_and_order()
-  end
+  # def player_leave(%Game{funmaster: %{id: funmaster_id}} = game, %Player{id: id} = player)
+  #     when id == funmaster_id do
+  #   game
+  #   |> remove_player(player)
+  #   |> set_funmaster_and_order()
+  # end
 
   def player_leave(game, player) do
     game |> remove_player(player)
@@ -324,6 +326,7 @@ defmodule GameApp.Game do
       ready_to_start: can_start?(game),
       player_count: players_count(game),
       scores: scores_for_players(game.players, game.scores),
+      game_over: game_over?(game),
       phase: game.phase,
       winners: game.winners,
       creator: game.creator,
@@ -390,16 +393,7 @@ defmodule GameApp.Game do
   defp remove_player(%Game{players: players} = game, %Player{id: id}) do
     game
     |> Map.put(:players, Map.delete(players, id))
-
-    # |> remove_reaction(player)
   end
-
-  # @spec remove_reaction(Game.t(), Player.t()) :: Game.t()
-  # defp remove_reaction(%Game{rounds: []} = game, _player), do: game
-
-  # defp remove_reaction(%Game{rounds: [round | _rounds]} = game, player) do
-  #   update_round(game, Round.remove_reaction(round, player))
-  # end
 
   @spec update_round(Game.t(), Round.t()) :: Game.t()
   defp update_round(%Game{rounds: [_round | rounds]} = game, new_round) do

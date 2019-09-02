@@ -21,3 +21,7 @@ export function scoreFor(game, player) {
 export function reactionCount(game) {
   return `${game.reaction_count}/${game.player_count - 1}`
 }
+
+export function allPlayersReacted(game) {
+  return game.reaction_count === game.player_count - 1
+}

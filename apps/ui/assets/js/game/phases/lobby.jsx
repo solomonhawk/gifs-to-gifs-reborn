@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '../components/button'
 import { isCreator } from '../../data/helpers'
 
 /**
@@ -12,22 +13,27 @@ import { isCreator } from '../../data/helpers'
 export default function Lobby({ game, player, send }) {
   return (
     <>
-      <h3>Welcome to the game!</h3>
+      <h3 className="center">
+        <code>{game.shortcode}</code>
+      </h3>
 
       <ul>
         {Object.values(game.players).map(player => (
-          <li key={player.id}>{player.name} {isCreator(game, player) && "(creator)"}</li>
+          <li key={player.id}>
+            {isCreator(game, player) && '🎗'}
+            {player.name}
+          </li>
         ))}
       </ul>
 
       {isCreator(game, player) && (
-        <button
-          type="button"
+        <Button
+          className="mt-auto full-width"
           disabled={!game.ready_to_start}
           onClick={() => send('start_game')}
         >
           Start Game
-        </button>
+        </Button>
       )}
     </>
   )

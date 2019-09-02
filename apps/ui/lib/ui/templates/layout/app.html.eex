@@ -7,11 +7,14 @@
     <title>Gifs to Gifs!</title>
     <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>"/>
   </head>
+
   <body>
     <header class="app-header">
       <div class="container">
         <section>
-          <img class="logo" src="/images/gifs2gifs-logo.png" />
+          <a href="/">
+            <img class="logo" src="/images/gifs2gifs-logo.png" alt="Gifs 2 Gifs Logo, pixelated letters with playful colors" />
+          </a>
 
           <div>
             <%= if @current_player do %>
@@ -31,9 +34,9 @@
       <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
       <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
 
-
-
       <%= render @view_module, @view_template, assigns %>
     </main>
+
+    <script type="text/javascript" src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

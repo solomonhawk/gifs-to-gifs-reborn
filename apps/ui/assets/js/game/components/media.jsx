@@ -5,11 +5,11 @@ export default function Media({ src }) {
 
   if (ext === 'mp4') {
     return (
-      <video autoPlay loop muted style={{ maxWidth: '100%' }}>
+      <video className="media" autoPlay loop muted>
         <source src={src} type={`video/${ext}`} />
       </video>
     )
   }
 
-  return <img src={src} style={{ maxWidth: '100%' }} />
+  return <img className="media" src={src} />
 }

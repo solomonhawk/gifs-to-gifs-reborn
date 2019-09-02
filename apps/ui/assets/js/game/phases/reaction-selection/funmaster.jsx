@@ -1,14 +1,31 @@
 import React from 'react'
-import { reactionCount } from '../../../data/helpers'
+import Countdown from '../../components/countdown'
+import { reactionCount, allPlayersReacted } from '../../../data/helpers'
 
 export default function Funmaster({ game }) {
+  if (allPlayersReacted(game)) {
+    return (
+      <>
+        <p className="center">
+          Reactions are in, <em>get ready to pick a winner!</em>
+        </p>
+
+        <h2 className="center">{reactionCount(game)}</h2>
+
+        <Countdown ms={5000}>
+          {({ remainder }) => (
+            <p className="center">Starting winner selection in {remainder}.</p>
+          )}
+        </Countdown>
+      </>
+    )
+  }
+
   return (
     <>
-      <p>Waiting for players to choose their reactions!</p>
+      <p className="center">Waiting for players to choose their reactions!</p>
 
-      <small>
-        {reactionCount(game)} reactions.
-      </small>
+      <h2 className="center">{reactionCount(game)}</h2>
     </>
   )
 }

@@ -11,8 +11,9 @@ defmodule GameApp.Server do
 
   require Logger
 
+  # TODO(shawk): move these to a GameConfiguration struct so it's easier to pass
+  # through to React app as html attributes?
   @game_timeout :timer.minutes(10)
-  # @leave_timeout :timer.seconds(10)
   @winner_selection_timeout :timer.seconds(5)
   @round_start_timeout :timer.seconds(5)
   @round_end_timeout :timer.seconds(5)
