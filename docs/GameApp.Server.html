@@ -8,7 +8,7 @@
     <meta name="project" content=" v0.1.0">
     <title>GameApp.Server —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
-    <script src="dist/sidebar_items-c43cb14371.js"></script>
+    <script src="dist/sidebar_items-cf92c60d01.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
   </head>
@@ -142,7 +142,7 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#start_link/2">start_link(shortcode, player)</a>
+    <a href="#start_link/3">start_link(shortcode, player, config \\ %GameConfig{})</a>
   </div>
 </div>
 <div class="summary-row">
@@ -308,13 +308,18 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
 <p>Starts the game with the given shortcode.</p>
   </section>
 </section>
-<section class="detail" id="start_link/2">
+<section class="detail" id="start_link/3">
+    <span id="start_link/2"></span>
   <div class="detail-header">
-    <a href="#start_link/2" class="detail-link" title="Link to this function">
+    <a href="#start_link/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">start_link(shortcode, player)</h1>
+    <h1 class="signature">start_link(shortcode, player, config \\ %GameConfig{})</h1>
+      <div class="specs">
+          <pre>start_link(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>(), <a href="GameApp.Config.html#t:t/0">GameApp.Config.t</a>()) ::
+  {:ok, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | :ignore | {:error, {:already_started, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()} | <a href="https://hexdocs.pm/elixir/typespecs.html#built-in-types">term</a>()}</pre>
+      </div>
   </div>
   <section class="docstring">
   </section>
