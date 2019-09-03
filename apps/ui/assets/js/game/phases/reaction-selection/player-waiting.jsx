@@ -24,6 +24,20 @@ export default function PlayerWaiting({ game, player }) {
         Waiting for other players to choose their reactions
       </p>
 
+      {/* TODO(shawk): calculate countdown time remaining based on time phase started */}
+      {!allPlayersReacted(game) ? (
+        <Countdown ms={game.config.reaction_selection_timeout}>
+          {({ remainder }) => (
+            <p className="center">
+              Time remaining{' '}
+              <strong key={remainder} className="zoop">
+                {remainder}
+              </strong>
+            </p>
+          )}
+        </Countdown>
+      ) : null}
+
       <span>{game.funmaster.name}'s Prompt:</span>
 
       <div className="pb-2">

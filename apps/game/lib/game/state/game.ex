@@ -303,7 +303,7 @@ defmodule GameApp.Game do
   @doc """
   Starts prompt selection for the current round.
   """
-  @spec select_winner(Game.t(), Player.t()) :: Game.t()
+  @spec select_winner(Game.t(), Player.t() | nil) :: Game.t()
   def select_winner(%Game{phase: :winner_selection, rounds: [round | _]} = game, player) do
     game
     |> update_round(Round.set_winner(round, player))
@@ -323,12 +323,12 @@ defmodule GameApp.Game do
   def all_players_reacted?(%Game{} = game), do: reactions_count(game) == players_count(game) - 1
 
   def final_round?(%Game{
-    round_number: round_number,
-    players: players,
-    config: %GameConfig{rounds_per_player: rounds_per_player}
-  })
-  when round_number >= map_size(players) * rounds_per_player,
-  do: true
+        round_number: round_number,
+        players: players,
+        config: %GameConfig{rounds_per_player: rounds_per_player}
+      })
+      when round_number >= map_size(players) * rounds_per_player,
+      do: true
 
   def final_round?(_), do: false
 
@@ -406,6 +406,8 @@ defmodule GameApp.Game do
   defp award_points(%Game{scores: scores} = game, %Player{id: id}) do
     Map.put(game, :scores, Map.put(scores, id, Map.get(scores, id) + 1))
   end
+
+  defp award_points(game, nil), do: game
 
   @spec remove_player(Game.t(), Player.t()) :: Game.t()
   defp remove_player(%Game{players: players} = game, %Player{id: id}) do

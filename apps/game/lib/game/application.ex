@@ -4,11 +4,10 @@ defmodule GameApp.Application do
   use Application
 
   def start(_type, _args) do
-    children =
-      [
-        {Registry, keys: :unique, name: GameApp.Registry}
-        | Application.get_env(:game, :children)
-      ]
+    children = [
+      {Registry, keys: :unique, name: GameApp.Registry}
+      | Application.get_env(:game, :children)
+    ]
 
     :ets.new(:games_table, [:public, :named_table])
 

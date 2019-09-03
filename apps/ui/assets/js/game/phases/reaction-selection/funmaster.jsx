@@ -34,6 +34,17 @@ export default function Funmaster({ game }) {
     <>
       <p className="center">Waiting for players to choose their reactions</p>
 
+      <Countdown ms={game.config.reaction_selection_timeout}>
+        {({ remainder }) => (
+          <p className="center">
+            Time remaining{' '}
+            <strong key={remainder} className="zoop">
+              {remainder}
+            </strong>
+          </p>
+        )}
+      </Countdown>
+
       <h2 className="center">{reactionCount(game)}</h2>
 
       <Media src={image} />

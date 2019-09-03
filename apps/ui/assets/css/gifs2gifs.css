@@ -124,11 +124,11 @@ button,
 input[type='button'],
 input[type='reset'],
 input[type='submit'] {
-  background-color: #3093ff;
+  background-color: #111;
   background-image: linear-gradient(
       to right,
-      rgba(48, 147, 255, 0.7),
-      rgba(48, 147, 255, 0.7)
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
     ),
     url(https://media.giphy.com/media/3ohs7XCsmyYxoCDrtC/giphy.gif);
   background-repeat: repeat, no-repeat;
@@ -140,8 +140,8 @@ input[type='submit'] {
   height: 4.5rem;
   line-height: 4.5rem;
   font-weight: 800;
-  text-shadow: 0px -1px 0px rgba(48, 147, 255, 0.5);
-  border-color: rgba(48, 147, 255, 0.8);
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
+  border-color: rgba(0, 0, 0, 0.7);
   position: relative;
 }
 

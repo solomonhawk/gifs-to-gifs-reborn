@@ -36,11 +36,13 @@ export default function ReactionViewer({ game, winnerId, onChange, buttonBg }) {
         </Button>
       </div>
 
-      <div className="pb-2">
-        <FixedRatio ratio={16 / 9}>
-          <Media src={Object.values(game.reactions)[index]} />
-        </FixedRatio>
-      </div>
+      {winnerId ? (
+        <div className="pb-2">
+          <FixedRatio ratio={16 / 9}>
+            <Media src={Object.values(game.reactions)[index]} />
+          </FixedRatio>
+        </div>
+      ) : null}
     </>
   )
 }

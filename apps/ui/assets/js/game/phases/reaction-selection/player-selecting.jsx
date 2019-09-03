@@ -1,6 +1,7 @@
 import React, { useMemo, useState } from 'react'
 import Media from '../../components/media'
 import FixedRatio from '../../components/fixed-ratio'
+import Countdown from '../../components/countdown'
 import Button from '../../components/button'
 import shuffle from 'lodash-es/shuffle'
 import { getRandomFractalImage } from '../../../data/images'
@@ -34,6 +35,17 @@ export default function PlayerSelecting({ game, send }) {
       <h3 className="center">
         Round #{game.round_number}: Choose your reaction.
       </h3>
+
+      <Countdown ms={game.config.reaction_selection_timeout}>
+        {({ remainder }) => (
+          <p className="center">
+            Time remaining{' '}
+            <strong key={remainder} className="zoop">
+              {remainder}
+            </strong>
+          </p>
+        )}
+      </Countdown>
 
       <div className="pb-2">
         <FixedRatio ratio={16 / 9}>

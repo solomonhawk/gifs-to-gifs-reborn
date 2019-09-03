@@ -114,7 +114,7 @@ defmodule GameApp.Round do
       }
 
   """
-  @spec set_winner(Round.t(), Player.t()) :: Round.t()
+  @spec set_winner(Round.t(), Player.t() | nil) :: Round.t()
   def set_winner(round, winner) do
     Map.put(round, :winner, winner)
   end

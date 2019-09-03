@@ -11,7 +11,13 @@ export default function RoundEnd({ game, player }) {
       <h3 className="center">Round #{game.round_number} is over</h3>
 
       <p className="center">
-        <strong>{game.round_winner.name}</strong> wins this time!
+        {game.round_winner ? (
+          <>
+            <strong>{game.round_winner.name}</strong> wins this time!
+          </>
+        ) : (
+          <strong>Nobody wins this time 🤔</strong>
+        )}
       </p>
 
       <Countdown ms={game.config.round_end_timeout}>
@@ -40,11 +46,13 @@ export default function RoundEnd({ game, player }) {
         </FixedRatio>
       </div>
 
-      <div className="pb-2">
-        <FixedRatio ratio={16 / 9}>
-          <Media src={reactionFor(game, game.round_winner)} />
-        </FixedRatio>
-      </div>
+      {game.round_winner ? (
+        <div className="pb-2">
+          <FixedRatio ratio={16 / 9}>
+            <Media src={reactionFor(game, game.round_winner)} />
+          </FixedRatio>
+        </div>
+      ) : null}
 
       <PlayerList game={game} player={player} />
     </>

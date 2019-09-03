@@ -63,9 +63,9 @@ defmodule GameApp.Server do
   @doc """
   Selects a prompt to set for the current round.
   """
-  @spec select_prompt(String.t(), String.t()) :: :ok
-  def select_prompt(shortcode, prompt) do
-    GenServer.cast(via_tuple(shortcode), {:select_prompt, prompt})
+  @spec select_prompt(String.t(), String.t(), pid()) :: :ok
+  def select_prompt(shortcode, prompt, channel_pid) do
+    GenServer.cast(via_tuple(shortcode), {:select_prompt, prompt, channel_pid})
   end
 
   @doc """
@@ -79,7 +79,7 @@ defmodule GameApp.Server do
   @doc """
   Selects a winner for the current round.
   """
-  @spec select_winner(String.t(), Player.t(), pid()) :: :ok
+  @spec select_winner(String.t(), Player.t() | nil, pid()) :: :ok
   def select_winner(shortcode, winner, channel_pid) do
     GenServer.cast(via_tuple(shortcode), {:select_winner, winner, channel_pid})
   end
@@ -120,11 +120,6 @@ defmodule GameApp.Server do
     next = Game.player_leave(game, player)
     update_ets(next)
 
-    # NOTE: Why do this? Just let the server time out eventually
-    #
-    # Maybe shutdown after a players leaves (if none left)
-    # Process.send_after(self(), :after_player_leave, @leave_timeout)
-
     {:noreply, next, game.config.game_timeout}
   end
 
@@ -141,16 +136,27 @@ defmodule GameApp.Server do
     next = Game.start_round(game)
     update_ets(next)
 
-    # Advance to prompt selection after game.config.round_start_timeout
-    Process.send_after(self(), {:after_round_start, channel_pid}, game.config.round_start_timeout)
+    # Advance to prompt selection after timeout
+    Process.send_after(
+      self(),
+      {:round_start_timeout, channel_pid},
+      game.config.round_start_timeout
+    )
 
     {:noreply, next, game.config.game_timeout}
   end
 
   @impl true
-  def handle_cast({:select_prompt, prompt}, game) do
+  def handle_cast({:select_prompt, prompt, channel_pid}, game) do
     next = Game.select_prompt(game, prompt)
     update_ets(next)
+
+    Process.send_after(
+      self(),
+      {:reaction_timeout, channel_pid},
+      game.config.reaction_selection_timeout
+    )
+
     {:noreply, next, game.config.game_timeout}
   end
 
@@ -163,7 +169,7 @@ defmodule GameApp.Server do
     if Game.all_players_reacted?(next) do
       Process.send_after(
         self(),
-        {:after_select_reaction, channel_pid},
+        {:all_players_reacted, channel_pid},
         game.config.winner_selection_timeout
       )
     end
@@ -194,7 +200,7 @@ defmodule GameApp.Server do
   end
 
   @impl true
-  def handle_info({:after_round_start, channel_pid}, game) do
+  def handle_info({:round_start_timeout, channel_pid}, game) do
     next = Game.start_prompt_selection(game)
     update_ets(next)
 
@@ -204,11 +210,17 @@ defmodule GameApp.Server do
   end
 
   @impl true
-  def handle_info({:after_select_reaction, channel_pid}, game) do
+  def handle_info({message, channel_pid}, %{phase: :reaction_selection} = game)
+      when message in [:reaction_timeout, :all_players_reacted] do
     next = Game.start_winner_selection(game)
     update_ets(next)
     send(channel_pid, :broadcast_update)
     {:noreply, next, game.config.game_timeout}
+  end
+
+  def handle_info({message, _channel_pid}, game)
+      when message in [:reaction_timeout, :all_players_reacted] do
+    {:noreply, game, game.config.game_timeout}
   end
 
   @impl true
@@ -219,12 +231,12 @@ defmodule GameApp.Server do
           next = Game.finalize(game)
           update_ets(next)
           next
+
         false ->
           Server.start_round(game.shortcode, channel_pid)
           game
-        end
+      end
 
-    IO.inspect game
     send(channel_pid, :broadcast_update)
     {:noreply, game, game.config.game_timeout}
   end

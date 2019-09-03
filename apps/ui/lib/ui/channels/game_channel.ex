@@ -65,7 +65,7 @@ defmodule Ui.GameChannel do
     {shortcode, player} = game_context(socket)
 
     handle_funmaster_action(shortcode, player, socket, fn ->
-      GameServer.select_prompt(shortcode, prompt)
+      GameServer.select_prompt(shortcode, prompt, self())
       broadcast_game_state(shortcode, socket)
     end)
   end
@@ -75,6 +75,15 @@ defmodule Ui.GameChannel do
 
     handle_action(shortcode, socket, fn ->
       GameServer.select_reaction(shortcode, player, reaction, self())
+      broadcast_game_state(shortcode, socket)
+    end)
+  end
+
+  def handle_in("select_winner", winner, socket) when winner == %{} do
+    {shortcode, player} = game_context(socket)
+
+    handle_funmaster_action(shortcode, player, socket, fn ->
+      GameServer.select_winner(shortcode, nil, self())
       broadcast_game_state(shortcode, socket)
     end)
   end
