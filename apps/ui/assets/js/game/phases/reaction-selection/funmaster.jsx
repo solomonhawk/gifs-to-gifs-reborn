@@ -1,6 +1,8 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Countdown from '../../components/countdown'
+import Media from '../../components/media'
 import { reactionCount, allPlayersReacted } from '../../../data/helpers'
+import { getRandomThinkingImage } from '../../../data/images'
 
 export default function Funmaster({ game }) {
   if (allPlayersReacted(game)) {
@@ -26,11 +28,15 @@ export default function Funmaster({ game }) {
     )
   }
 
+  let image = useMemo(getRandomThinkingImage, [])
+
   return (
     <>
       <p className="center">Waiting for players to choose their reactions</p>
 
       <h2 className="center">{reactionCount(game)}</h2>
+
+      <Media src={image} />
     </>
   )
 }
