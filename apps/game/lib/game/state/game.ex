@@ -205,8 +205,8 @@ defmodule GameApp.Game do
 
   """
   @spec start_game(Game.t()) :: Game.t()
-  def start_game(%Game{phase: :lobby, players: players} = game)
-      when map_size(players) < 3,
+  def start_game(%Game{phase: :lobby, players: players, config: %{min_players: min_players}} = game)
+      when map_size(players) < min_players,
       do: game
 
   def start_game(%Game{phase: :lobby} = game) do
