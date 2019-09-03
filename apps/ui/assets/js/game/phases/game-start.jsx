@@ -2,35 +2,7 @@ import React, { useMemo } from 'react'
 import Button from '../components/button'
 import Media from '../components/media'
 import { isCreator } from '../../data/helpers'
-import shuffle from 'lodash-es/shuffle'
-
-let images = [
-  'https://media.giphy.com/media/GpyS1lJXJYupG/giphy.gif',
-  'https://media.giphy.com/media/10JhviFuU2gWD6/giphy.gif',
-  'https://media.giphy.com/media/OhrNfRrBxgz16/giphy.gif',
-  'https://media.giphy.com/media/JmsG1PY1K94hyOa1v9/giphy.gif',
-  'https://media.giphy.com/media/Yq1pe2v7nNlwA/giphy.gif',
-  'https://media.giphy.com/media/ff0dv4KMGxjna/giphy.gif',
-  'https://media.giphy.com/media/dPghHslnqEKLC/giphy.gif',
-  'https://media.giphy.com/media/O5NyCibf93upy/giphy.gif',
-  'https://media.giphy.com/media/ufiB4rMy9GUUg/giphy.gif',
-  'https://media.giphy.com/media/dC9DTdqPmRnlS/giphy.gif',
-  'https://media.giphy.com/media/fGuqeA6PiXINa/giphy.gif',
-  'https://media.giphy.com/media/uLAoIx3H2qLW8/giphy.gif',
-  'https://media.giphy.com/media/xUA7aM09ByyR1w5YWc/giphy.gif',
-  'https://media.giphy.com/media/9MFsKQ8A6HCN2/giphy.gif',
-  'https://media.giphy.com/media/Vg0JstydL8HCg/giphy.gif',
-  'https://media.giphy.com/media/r1wGrCEZ4zTeU/giphy.gif',
-  'https://media.giphy.com/media/Ic97mPViHEG5O/giphy.gif',
-  'https://media.giphy.com/media/pGU7k489QGCQ0/giphy.gif',
-  'https://media.giphy.com/media/g8A1eJhTQ7Iic/giphy.gif',
-  'https://media.giphy.com/media/57DX612XYgQKI/giphy.gif',
-  'https://media.giphy.com/media/Y5GVgQZCluUWQ/giphy.gif'
-]
-
-export function getRandomLaughImage() {
-  return shuffle(images).pop()
-}
+import { getRandomLaughImage } from '../../data/images'
 
 /**
  * Game Start screen (pre-first-round)

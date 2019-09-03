@@ -3,7 +3,7 @@ import Media from '../../components/media'
 import FixedRatio from '../../components/fixed-ratio'
 import Button from '../../components/button'
 
-export default function ReactionViewer({ game, winnerId, onChange }) {
+export default function ReactionViewer({ game, winnerId, onChange, buttonBg }) {
   let [index, setIndex] = useState(0)
 
   let advance = direction => {
@@ -27,9 +27,13 @@ export default function ReactionViewer({ game, winnerId, onChange }) {
       </div>
 
       <div className="flex justify-space-between align-center pb-2">
-        <Button onClick={() => advance(-1)}>Prev</Button>
+        <Button bg={buttonBg} onClick={() => advance(-1)}>
+          Prev
+        </Button>
         {winnerId ? <span>{game.players[winnerId].name}</span> : null}
-        <Button onClick={() => advance(1)}>Next</Button>
+        <Button bg={buttonBg} onClick={() => advance(1)}>
+          Next
+        </Button>
       </div>
 
       <div className="pb-2">

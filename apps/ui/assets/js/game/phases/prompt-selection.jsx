@@ -1,9 +1,11 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import Media from '../components/media'
 import FixedRatio from '../components/fixed-ratio'
 import Button from '../components/button'
 import { isFunmaster } from '../../data/helpers'
+import { getRandomThinkingImage } from '../../data/images'
 
+// TODO(shawk): allow prompt selection
 let prompt = 'https://i.imgur.com/Lh0yoPt.mp4'
 
 export default function PromptSelection({ game, player, send }) {
@@ -28,6 +30,8 @@ export default function PromptSelection({ game, player, send }) {
     )
   }
 
+  let image = useMemo(getRandomThinkingImage, [])
+
   return (
     <>
       <h3 className="center">Round #{game.round_number}</h3>
@@ -35,6 +39,8 @@ export default function PromptSelection({ game, player, send }) {
       <p className="center">
         Waiting for <strong>{game.funmaster.name}</strong> to pick a prompt
       </p>
+
+      <Media src={image} />
     </>
   )
 }

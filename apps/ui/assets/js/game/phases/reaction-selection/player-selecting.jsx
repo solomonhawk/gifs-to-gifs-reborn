@@ -1,8 +1,9 @@
 import React, { useMemo, useState } from 'react'
 import Media from '../../components/media'
 import FixedRatio from '../../components/fixed-ratio'
-import Button, { getRandomFractalImage } from '../../components/button'
+import Button from '../../components/button'
 import shuffle from 'lodash-es/shuffle'
+import { getRandomFractalImage } from '../../../data/images'
 
 let reactions = [
   'https://media.giphy.com/media/JsnAcyViedw7OdQDFR/giphy.gif',

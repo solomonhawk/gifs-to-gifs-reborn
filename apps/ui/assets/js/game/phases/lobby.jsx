@@ -1,6 +1,11 @@
 import React from 'react'
 import Button from '../components/button'
 import { isCreator } from '../../data/helpers'
+import { baseUrl } from '../../config'
+
+function gameUrl(game) {
+  return `${baseUrl}/games/${game.shortcode}`
+}
 
 /**
  * Lobby screen (pre-game)
@@ -16,6 +21,14 @@ export default function Lobby({ game, player, send }) {
       <h3 className="center">
         <code>{game.shortcode}</code>
       </h3>
+
+      <input
+        readOnly
+        autoFocus
+        type="text"
+        value={gameUrl(game)}
+        onFocus={event => event.target.select()}
+      />
 
       <ul>
         {Object.values(game.players).map(player => (
