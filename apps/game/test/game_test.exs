@@ -109,7 +109,4 @@ defmodule GameTest do
 
     assert game.phase == :prompt_selection
   end
-
-  # test "select_prompt/2", %{game: game} do
-  # end
 end

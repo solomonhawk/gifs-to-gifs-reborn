@@ -117,3 +117,20 @@ writing similar functions in GameChannel, GameServer (client/server callbacks), 
 Next Steps
 determine scheme for selecting "prompts" (random? from which sources? curated? static? etc.)
 implement selecting reactions
+
+
+Some things I knew I'd want:
+
+- Game Servers, one for each game
+- A Supervisor, to manage game server processes
+- A clear separation between game logic and server logic
+- A way to locate a specific game, by the shortcode (Registry)
+- Time-based behavior (timeouts for game phases, cleanup for old game servers)
+- A way to allow users to configure properties of the game (GameConfig)
+- A way for the frontend to talk to the backend (GameChannel)
+
+TODOS:
+- Text factories/fixtures
+- Implement system for selecting prompts (tricky game design problem)
+- Implement system for selecting reactions (pretty straightforward giphy search + shuffle)
+- More test coverage
