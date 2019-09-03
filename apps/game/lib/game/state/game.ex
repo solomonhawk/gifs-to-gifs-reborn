@@ -166,6 +166,8 @@ defmodule GameApp.Game do
 
   """
   @spec player_leave(Game.t(), Player.t()) :: Game.t()
+  def player_leave(%Game{phase: :game_end} = game, _player), do: game
+
   def player_leave(game, player) do
     game |> remove_player(player)
   end
@@ -257,16 +259,10 @@ defmodule GameApp.Game do
   end
 
   def start_round(%Game{phase: :round_end, round_number: round_number} = game) do
-    if final_round?(game) do
-      game
-      |> set_winners(game_winners(game))
-      |> set_phase(:game_end)
-    else
-      game
-      |> set_phase(:round_start)
-      |> set_round(round_number + 1)
-      |> set_funmaster()
-    end
+    game
+    |> set_phase(:round_start)
+    |> set_round(round_number + 1)
+    |> set_funmaster()
   end
 
   @doc """
@@ -315,10 +311,26 @@ defmodule GameApp.Game do
     |> set_phase(:round_end)
   end
 
+  def finalize(game) do
+    game
+    |> set_winners(game_winners(game))
+    |> set_phase(:game_end)
+  end
+
   def is_empty?(%Game{players: players}) when players == %{}, do: true
   def is_empty?(_), do: false
 
   def all_players_reacted?(%Game{} = game), do: reactions_count(game) == players_count(game) - 1
+
+  def final_round?(%Game{
+    round_number: round_number,
+    players: players,
+    config: %GameConfig{rounds_per_player: rounds_per_player}
+  })
+  when round_number >= map_size(players) * rounds_per_player,
+  do: true
+
+  def final_round?(_), do: false
 
   # private
 
@@ -439,16 +451,6 @@ defmodule GameApp.Game do
     |> Enum.shuffle()
     |> Enum.map(& &1.id)
   end
-
-  defp final_round?(%Game{
-         round_number: round_number,
-         players: players,
-         config: %GameConfig{rounds_per_player: rounds_per_player}
-       })
-       when round_number >= map_size(players) * rounds_per_player,
-       do: true
-
-  defp final_round?(_), do: false
 
   defp game_winners(%Game{scores: scores, players: players}) do
     scores

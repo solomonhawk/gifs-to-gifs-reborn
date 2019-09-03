@@ -111,14 +111,14 @@ defmodule GameApp.Server do
   @impl true
   def handle_cast({:player_join, player}, game) do
     next = Game.player_join(game, player)
-    update_ets(game, next)
+    update_ets(next)
     {:noreply, next, game.config.game_timeout}
   end
 
   @impl true
   def handle_cast({:player_leave, player}, game) do
     next = Game.player_leave(game, player)
-    update_ets(game, next)
+    update_ets(next)
 
     # NOTE: Why do this? Just let the server time out eventually
     #
@@ -131,7 +131,7 @@ defmodule GameApp.Server do
   @impl true
   def handle_cast(:start_game, game) do
     next = Game.start_game(game)
-    update_ets(game, next)
+    update_ets(next)
 
     {:noreply, next, game.config.game_timeout}
   end
@@ -139,7 +139,7 @@ defmodule GameApp.Server do
   @impl true
   def handle_cast({:start_round, channel_pid}, game) do
     next = Game.start_round(game)
-    update_ets(game, next)
+    update_ets(next)
 
     # Advance to prompt selection after game.config.round_start_timeout
     Process.send_after(self(), {:after_round_start, channel_pid}, game.config.round_start_timeout)
@@ -150,14 +150,14 @@ defmodule GameApp.Server do
   @impl true
   def handle_cast({:select_prompt, prompt}, game) do
     next = Game.select_prompt(game, prompt)
-    update_ets(game, next)
+    update_ets(next)
     {:noreply, next, game.config.game_timeout}
   end
 
   @impl true
   def handle_cast({:select_reaction, player, reaction, channel_pid}, game) do
     next = Game.select_reaction(game, player, reaction)
-    update_ets(game, next)
+    update_ets(next)
 
     # Advance to winner_selection after a reaction is selected, if all reactions selected
     if Game.all_players_reacted?(next) do
@@ -174,7 +174,7 @@ defmodule GameApp.Server do
   @impl true
   def handle_cast({:select_winner, winner, channel_pid}, game) do
     next = Game.select_winner(game, winner)
-    update_ets(game, next)
+    update_ets(next)
 
     # Advance to next round after game.config.round_end_timeout
     Process.send_after(self(), {:after_select_winner, channel_pid}, game.config.round_end_timeout)
@@ -196,7 +196,7 @@ defmodule GameApp.Server do
   @impl true
   def handle_info({:after_round_start, channel_pid}, game) do
     next = Game.start_prompt_selection(game)
-    update_ets(game, next)
+    update_ets(next)
 
     send(channel_pid, :broadcast_update)
 
@@ -206,14 +206,25 @@ defmodule GameApp.Server do
   @impl true
   def handle_info({:after_select_reaction, channel_pid}, game) do
     next = Game.start_winner_selection(game)
-    update_ets(game, next)
+    update_ets(next)
     send(channel_pid, :broadcast_update)
     {:noreply, next, game.config.game_timeout}
   end
 
   @impl true
   def handle_info({:after_select_winner, channel_pid}, game) do
-    Server.start_round(game.shortcode, channel_pid)
+    game =
+      case Game.final_round?(game) do
+        true ->
+          next = Game.finalize(game)
+          update_ets(next)
+          next
+        false ->
+          Server.start_round(game.shortcode, channel_pid)
+          game
+        end
+
+    IO.inspect game
     send(channel_pid, :broadcast_update)
     {:noreply, game, game.config.game_timeout}
   end
@@ -281,8 +292,8 @@ defmodule GameApp.Server do
     end
   end
 
-  defp update_ets(game, next) do
-    :ets.insert(:games_table, {game.shortcode, next})
+  defp update_ets(next) do
+    :ets.insert(:games_table, {next.shortcode, next})
   end
 
   defp shortcode_string() do
