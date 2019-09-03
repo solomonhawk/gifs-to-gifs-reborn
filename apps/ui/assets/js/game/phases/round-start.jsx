@@ -11,11 +11,18 @@ export default function RoundStart({ game, player }) {
       <h3 className="center">Round #{game.round_number}</h3>
 
       <p className="center">
-        <strong>{game.funmaster.name}</strong> is the funmaster!
+        <strong>{game.funmaster.name}</strong> is the funmaster
       </p>
 
       <Countdown ms={game.config.round_start_timeout}>
-        {({ remainder }) => <p className="center">Starting in {remainder}!</p>}
+        {({ remainder }) => (
+          <p className="center">
+            Starting in{' '}
+            <strong key={remainder} className="zoop">
+              {remainder}
+            </strong>
+          </p>
+        )}
       </Countdown>
 
       <PlayerList game={game} player={player} />

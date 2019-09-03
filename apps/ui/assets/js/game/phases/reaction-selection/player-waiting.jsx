@@ -10,13 +10,18 @@ export default function PlayerWaiting({ game, player }) {
       {allPlayersReacted(game) ? (
         <Countdown ms={game.config.winner_selection_timeout}>
           {({ remainder }) => (
-            <p className="center">Winner selection begins in {remainder}!</p>
+            <p className="center">
+              Winner selection begins in{' '}
+              <strong key={remainder} className="zoop">
+                {remainder}
+              </strong>
+            </p>
           )}
         </Countdown>
       ) : null}
 
       <p className="center">
-        Waiting for other players to choose their reactions!
+        Waiting for other players to choose their reactions
       </p>
 
       <span>{game.funmaster.name}'s Prompt:</span>

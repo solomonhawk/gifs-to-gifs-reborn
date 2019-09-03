@@ -33,7 +33,7 @@ export default function PromptSelection({ game, player, send }) {
       <h3 className="center">Round #{game.round_number}</h3>
 
       <p className="center">
-        Waiting for <strong>{game.funmaster.name}</strong> to pick a prompt!
+        Waiting for <strong>{game.funmaster.name}</strong> to pick a prompt
       </p>
     </>
   )

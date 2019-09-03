@@ -8,7 +8,7 @@ import { reactionFor } from '../../data/helpers'
 export default function RoundEnd({ game, player }) {
   return (
     <>
-      <h3 className="center">Round #{game.round_number} is over!</h3>
+      <h3 className="center">Round #{game.round_number} is over</h3>
 
       <p className="center">
         <strong>{game.round_winner.name}</strong> wins this time!
@@ -17,9 +17,19 @@ export default function RoundEnd({ game, player }) {
       <Countdown ms={game.config.round_end_timeout}>
         {({ remainder }) =>
           game.final_round ? (
-            <p className="center">Game ends in {remainder}.</p>
+            <p className="center">
+              Game ends in{' '}
+              <strong key={remainder} className="zoop">
+                {remainder}
+              </strong>
+            </p>
           ) : (
-            <p className="center">Next round begins in {remainder}!</p>
+            <p className="center">
+              Next round begins in{' '}
+              <strong key={remainder} className="zoop">
+                {remainder}
+              </strong>
+            </p>
           )
         }
       </Countdown>

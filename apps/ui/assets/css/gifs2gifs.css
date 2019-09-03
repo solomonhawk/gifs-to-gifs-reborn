@@ -173,3 +173,22 @@ input[type='submit']:focus {
 .secondary {
   color: #ccc;
 }
+
+@keyframes zoop {
+  0% {
+    transform: scale(1);
+  }
+
+  20% {
+    transform: scale(1.5);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.zoop {
+  animation: zoop 0.5s linear forwards;
+  display: inline-block;
+}
