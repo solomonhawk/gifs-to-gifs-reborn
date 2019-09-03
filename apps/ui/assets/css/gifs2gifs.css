@@ -131,7 +131,7 @@ input[type='submit'] {
       rgba(48, 147, 255, 0.7)
     ),
     url(https://media.giphy.com/media/3ohs7XCsmyYxoCDrtC/giphy.gif);
-  background-repeat: no-repeat, repeat;
+  background-repeat: repeat, no-repeat;
   background-position: center center;
   color: #fff;
   background-size: 100% auto;
@@ -180,7 +180,7 @@ input[type='submit']:focus {
   }
 
   20% {
-    transform: scale(1.5);
+    transform: scale(1.5) rotate(5deg);
   }
 
   100% {
