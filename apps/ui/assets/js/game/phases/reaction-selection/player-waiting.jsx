@@ -8,7 +8,7 @@ export default function PlayerWaiting({ game, player }) {
   return (
     <>
       {allPlayersReacted(game) ? (
-        <Countdown ms={5000}>
+        <Countdown ms={game.config.winner_selection_timeout}>
           {({ remainder }) => (
             <p className="center">Winner selection begins in {remainder}!</p>
           )}

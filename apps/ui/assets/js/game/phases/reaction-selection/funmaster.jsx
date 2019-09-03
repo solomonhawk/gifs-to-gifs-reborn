@@ -12,7 +12,7 @@ export default function Funmaster({ game }) {
 
         <h2 className="center">{reactionCount(game)}</h2>
 
-        <Countdown ms={5000}>
+        <Countdown ms={game.config.winner_selection_timeout}>
           {({ remainder }) => (
             <p className="center">Starting winner selection in {remainder}.</p>
           )}

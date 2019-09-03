@@ -6,6 +6,7 @@ defmodule GameApp.Game do
 
   alias __MODULE__, as: Game
   alias GameApp.{Player, Round}
+  alias GameApp.Config, as: GameConfig
 
   require Logger
 
@@ -19,10 +20,8 @@ defmodule GameApp.Game do
             winners: [],
             creator: nil,
             funmaster: nil,
-            funmaster_order: []
-
-  @rounds_per_player 1
-  @min_players 3
+            funmaster_order: [],
+            config: %GameConfig{}
 
   @type game_state ::
           :lobby
@@ -44,7 +43,8 @@ defmodule GameApp.Game do
           winners: list(Player.t()),
           creator: Player.t(),
           funmaster: Player.t() | nil,
-          funmaster_order: list(String.t())
+          funmaster_order: list(String.t()),
+          config: GameConfig.t()
         }
 
   @doc """
@@ -61,9 +61,10 @@ defmodule GameApp.Game do
       }
 
   """
-  @spec create(String.t(), Player.t()) :: Game.t()
-  def create(shortcode, %Player{id: id} = creator) do
+  @spec create(String.t(), Player.t(), GameConfig.t()) :: Game.t()
+  def create(shortcode, %Player{id: id} = creator, config \\ %GameConfig{}) do
     %Game{
+      config: config,
       shortcode: shortcode,
       creator: creator,
       players: Map.new([{id, creator}]),
@@ -89,10 +90,12 @@ defmodule GameApp.Game do
         reaction_count: 0,
         ready_to_start: false,
         round_winner: nil,
-        round_number: nil,
+        round_number: 1,
         scores: %{"1" => 0},
         shortcode: "ABCD",
-        winners: []
+        winners: [],
+        final_round: true,
+        config: %GameConfig{}
       }
 
   """
@@ -105,6 +108,7 @@ defmodule GameApp.Game do
 
   ## Examples
 
+      iex> :rand.seed(:exsplus, {1, 2, 3})
       iex> g = Game.create("ABCD", Player.create("1", "Gamer"))
       iex> Game.player_join(g, Player.create("2", "Gamer2"))
       %Game{
@@ -114,7 +118,9 @@ defmodule GameApp.Game do
           "1" => %Player{id: "1", name: "Gamer"},
           "2" => %Player{id: "2", name: "Gamer2"}
         },
-        scores: %{"1" => 0, "2" => 0}
+        scores: %{"1" => 0, "2" => 0},
+        funmaster: %GameApp.Player{id: "2", name: "Gamer2"},
+        funmaster_order: ["2", "1"]
       }
 
   """
@@ -143,6 +149,7 @@ defmodule GameApp.Game do
 
   ## Examples
 
+      iex> :rand.seed(:exsplus, {1, 2, 3})
       iex> p1 = Player.create("1", "Gamer")
       iex> p2 = Player.create("2", "Gamer2")
       iex> g = Game.create("ABCD", p1)
@@ -152,18 +159,13 @@ defmodule GameApp.Game do
         shortcode: "ABCD",
         creator: %Player{id: "1", name: "Gamer"},
         players: %{"1" => %Player{id: "1", name: "Gamer"}},
-        scores: %{"1" => 0, "2" => 0}
+        scores: %{"1" => 0, "2" => 0},
+        funmaster: %GameApp.Player{id: "2", name: "Gamer2"},
+        funmaster_order: ["2", "1"]
       }
 
   """
   @spec player_leave(Game.t(), Player.t()) :: Game.t()
-  # def player_leave(%Game{funmaster: %{id: funmaster_id}} = game, %Player{id: id} = player)
-  #     when id == funmaster_id do
-  #   game
-  #   |> remove_player(player)
-  #   |> set_funmaster_and_order()
-  # end
-
   def player_leave(game, player) do
     game |> remove_player(player)
   end
@@ -173,6 +175,7 @@ defmodule GameApp.Game do
 
   ## Examples
 
+      iex> :rand.seed(:exsplus, {1, 2, 3})
       iex> p1 = Player.create("1", "Gamer1")
       iex> p2 = Player.create("2", "Gamer2")
       iex> p3 = Player.create("3", "Gamer3")
@@ -193,7 +196,9 @@ defmodule GameApp.Game do
           "1" => 0,
           "2" => 0,
           "3" => 0
-        }
+        },
+        funmaster: %GameApp.Player{id: "3", name: "Gamer3"},
+        funmaster_order: ["3", "2", "1"]
       }
 
   """
@@ -211,6 +216,7 @@ defmodule GameApp.Game do
 
   ## Examples
 
+      iex> :rand.seed(:exsplus, {1, 2, 3})
       iex> p1 = Player.create("1", "Gamer1")
       iex> p2 = Player.create("2", "Gamer2")
       iex> p3 = Player.create("3", "Gamer3")
@@ -218,7 +224,6 @@ defmodule GameApp.Game do
       ...>     |> Game.player_join(p2)
       ...>     |> Game.player_join(p3)
       iex> g = Game.start_game(g)
-      iex> :rand.seed(:exsplus, {1, 2, 3})
       iex> Game.start_round(g)
       %Game{
         shortcode: "ABCD",
@@ -252,7 +257,7 @@ defmodule GameApp.Game do
   end
 
   def start_round(%Game{phase: :round_end, round_number: round_number} = game) do
-    if game_over?(game) do
+    if final_round?(game) do
       game
       |> set_winners(game_winners(game))
       |> set_phase(:game_end)
@@ -320,13 +325,14 @@ defmodule GameApp.Game do
   @spec summarize(Game.t(), map()) :: map()
   defp summarize(game, round) when is_map(round) do
     %{
+      config: game.config,
       shortcode: game.shortcode,
       round_number: game.round_number,
       players: game.players,
       ready_to_start: can_start?(game),
       player_count: players_count(game),
       scores: scores_for_players(game.players, game.scores),
-      game_over: game_over?(game),
+      final_round: final_round?(game),
       phase: game.phase,
       winners: game.winners,
       creator: game.creator,
@@ -405,7 +411,10 @@ defmodule GameApp.Game do
   defp reactions_count(%Game{rounds: []}), do: 0
   defp reactions_count(%Game{rounds: [round | _]}), do: Kernel.map_size(round.reactions)
 
-  defp can_start?(%Game{phase: :lobby} = game), do: players_count(game) >= @min_players
+  defp can_start?(%Game{config: %GameConfig{min_players: min_players}} = game) do
+    players_count(game) >= min_players
+  end
+
   defp can_start?(_), do: false
 
   defp scores_for_players(players, scores) do
@@ -431,11 +440,15 @@ defmodule GameApp.Game do
     |> Enum.map(& &1.id)
   end
 
-  defp game_over?(%Game{round_number: round_number, players: players})
-       when round_number >= map_size(players) * @rounds_per_player,
+  defp final_round?(%Game{
+         round_number: round_number,
+         players: players,
+         config: %GameConfig{rounds_per_player: rounds_per_player}
+       })
+       when round_number >= map_size(players) * rounds_per_player,
        do: true
 
-  defp game_over?(_), do: false
+  defp final_round?(_), do: false
 
   defp game_winners(%Game{scores: scores, players: players}) do
     scores

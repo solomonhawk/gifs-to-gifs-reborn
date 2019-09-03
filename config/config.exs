@@ -12,6 +12,8 @@ import Config
 config :ui,
   generators: [context_app: false]
 
+config :game, :children, [GameApp.ServerSupervisor]
+
 # Configures the endpoint
 config :ui, Ui.Endpoint,
   url: [host: "localhost"],

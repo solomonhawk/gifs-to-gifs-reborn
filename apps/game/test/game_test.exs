@@ -1,6 +1,7 @@
 defmodule GameTest do
   use ExUnit.Case, async: true
   alias GameApp.{Game, Player}
+  alias GameApp.Config, as: GameConfig
 
   doctest GameApp.Game, import: true
 
@@ -46,15 +47,6 @@ defmodule GameTest do
       assert Kernel.map_size(game.players) == 2
       assert game.scores[@player2.id] == 0
       refute Map.has_key?(game.players, @player2.id)
-    end
-
-    test "when leaver is funmaster", %{game: game} do
-      game =
-        game
-        |> Game.player_leave(@player)
-
-      assert game.funmaster == nil
-      assert game.funmaster_order == []
     end
   end
 

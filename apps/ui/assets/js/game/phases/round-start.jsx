@@ -14,7 +14,7 @@ export default function RoundStart({ game, player }) {
         <strong>{game.funmaster.name}</strong> is the funmaster!
       </p>
 
-      <Countdown ms={5000}>
+      <Countdown ms={game.config.round_start_timeout}>
         {({ remainder }) => <p className="center">Starting in {remainder}!</p>}
       </Countdown>
 

@@ -169,3 +169,7 @@ input[type='submit']:focus {
 .block {
   display: block;
 }
+
+.secondary {
+  color: #ccc;
+}

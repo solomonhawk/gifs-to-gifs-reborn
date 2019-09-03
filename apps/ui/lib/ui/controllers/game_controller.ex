@@ -14,11 +14,12 @@ defmodule Ui.GameController do
     redirect(conn, to: Routes.game_path(conn, :show, shortcode))
   end
 
-  def create(conn, _) do
+  def create(conn, _params) do
+    config = GameApp.Config.create()
     shortcode = GameServer.generate_shortcode()
     player = get_session(conn, :current_player)
 
-    case GameApp.ServerSupervisor.start_game(shortcode, player) do
+    case GameApp.ServerSupervisor.start_game(shortcode, player, config) do
       {:ok, _pid} ->
         redirect(conn, to: Routes.game_path(conn, :show, shortcode))
 

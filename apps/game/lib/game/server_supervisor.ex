@@ -5,6 +5,7 @@ defmodule GameApp.ServerSupervisor do
 
   alias __MODULE__, as: ServerSupervisor
   alias GameApp.Player
+  alias GameApp.Config, as: GameConfig
 
   use DynamicSupervisor
 
@@ -28,11 +29,11 @@ defmodule GameApp.ServerSupervisor do
       {:ok, pid}
 
   """
-  @spec start_game(String.t(), Player.t()) :: {:ok, pid()} | {:error, any()}
-  def start_game(shortcode, player) do
+  @spec start_game(String.t(), Player.t(), GameConfig.t()) :: {:ok, pid()} | {:error, any()}
+  def start_game(shortcode, player, config) do
     child_spec = %{
       id: GameApp.Server,
-      start: {GameApp.Server, :start_link, [shortcode, player]},
+      start: {GameApp.Server, :start_link, [shortcode, player, config]},
       # don't restart game server processes that exit normally
       restart: :transient
     }

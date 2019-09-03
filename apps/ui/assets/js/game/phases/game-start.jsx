@@ -14,7 +14,6 @@ let images = [
   'https://media.giphy.com/media/dPghHslnqEKLC/giphy.gif',
   'https://media.giphy.com/media/O5NyCibf93upy/giphy.gif',
   'https://media.giphy.com/media/ufiB4rMy9GUUg/giphy.gif',
-  'https://media.giphy.com/media/vbxk7KdIbJuDe/giphy.gif',
   'https://media.giphy.com/media/dC9DTdqPmRnlS/giphy.gif',
   'https://media.giphy.com/media/fGuqeA6PiXINa/giphy.gif',
   'https://media.giphy.com/media/uLAoIx3H2qLW8/giphy.gif',
@@ -56,14 +55,16 @@ export default function GameStart({ game, player, send }) {
         <span className="block">
           When you're the <strong>Funmaster</strong>:
         </span>
-        <small>Pick a good prompt, judge reactions by your own criteria.</small>
+        <small className="secondary">
+          Pick a good prompt, judge reactions by your own criteria.
+        </small>
       </p>
 
       <p className="center">
         <span className="block">
           When you're a <strong>Player</strong>:
         </span>
-        <small>
+        <small className="secondary">
           Make the Funmaster laugh, win points, and crush the competition.
         </small>
       </p>

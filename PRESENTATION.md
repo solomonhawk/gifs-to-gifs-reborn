@@ -95,6 +95,11 @@ GenServers
 
 
 
+via_tuple
+generating shortcodes
+registry
+GOTCHA: aliases in doctests are defined in the associated *_test.exs file that executes the doctests
+
 
 
 
