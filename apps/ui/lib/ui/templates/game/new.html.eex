@@ -1,4 +1,4 @@
-<%= form_for @conn, Routes.join_path(@conn, :join), fn f -> %>
+<%= form_for @conn, Routes.join_path(@conn, :join), [autocomplete: "off"], fn f -> %>
   <%= label f, :id, "Enter code:" %>
   <%= text_input f, :id, required: true, maxlength: 4 %>
   <%= submit "Join Game", class: "button full-width" %>

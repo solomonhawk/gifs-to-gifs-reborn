@@ -30,9 +30,6 @@ export default function PlayerList({ game, player }) {
         {rows.map((row, i) => (
           <tr key={row.id}>
             <td>
-              {i === 0 && '😎 '}
-              {i === rows.length - 1 && '😵 '}
-
               <span>{row.name}</span>
 
               {row.isPlayer && ' (🤖)'}

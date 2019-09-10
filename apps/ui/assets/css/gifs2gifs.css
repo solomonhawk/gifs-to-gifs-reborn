@@ -35,7 +35,7 @@ a:active {
 
 .app-header .logo {
   display: block;
-  image-rendering: crisp-edges;
+  image-rendering: pixelated;
 }
 
 .app-header .divider {
