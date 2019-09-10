@@ -30,7 +30,7 @@ defmodule GameApp.ServerSupervisor do
 
   """
   @spec start_game(String.t(), Player.t(), GameConfig.t()) :: {:ok, pid()} | {:error, any()}
-  def start_game(shortcode, player, config) do
+  def start_game(shortcode, player, config \\ %GameConfig{}) do
     child_spec = %{
       id: GameApp.Server,
       start: {GameApp.Server, :start_link, [shortcode, player, config]},

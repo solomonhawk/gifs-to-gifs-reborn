@@ -1,10 +1,13 @@
 import React, { useMemo } from 'react'
 import Countdown from '../../components/countdown'
 import Media from '../../components/media'
+import renderIf from 'render-if'
 import { reactionCount, allPlayersReacted } from '../../../data/helpers'
 import { getRandomThinkingImage } from '../../../data/images'
 
 export default function Funmaster({ game }) {
+  let timeout = game.config.reaction_selection_timeout
+
   if (allPlayersReacted(game)) {
     return (
       <>
@@ -34,16 +37,18 @@ export default function Funmaster({ game }) {
     <>
       <p className="center">Waiting for players to choose their reactions</p>
 
-      <Countdown ms={game.config.reaction_selection_timeout}>
-        {({ remainder }) => (
-          <p className="center">
-            Time remaining{' '}
-            <strong key={remainder} className="zoop">
-              {remainder}
-            </strong>
-          </p>
-        )}
-      </Countdown>
+      {renderIf(timeout)(
+        <Countdown ms={timeout}>
+          {({ remainder }) => (
+            <p className="center">
+              Time remaining{' '}
+              <strong key={remainder} className="zoop">
+                {remainder}
+              </strong>
+            </p>
+          )}
+        </Countdown>
+      )}
 
       <h2 className="center">{reactionCount(game)}</h2>
 

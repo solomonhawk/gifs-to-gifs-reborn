@@ -6,7 +6,7 @@ defmodule Ui.SessionController do
   end
 
   def create(conn, %{"player" => %{"name" => name}}) do
-    player = GameApp.Player.create(UUID.uuid4(), name)
+    player = GameApp.Player.create(id: UUID.uuid4(), name: name)
 
     conn
     |> put_session(:current_player, player)

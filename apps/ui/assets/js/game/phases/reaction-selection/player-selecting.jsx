@@ -4,6 +4,7 @@ import FixedRatio from '../../components/fixed-ratio'
 import Countdown from '../../components/countdown'
 import Button from '../../components/button'
 import shuffle from 'lodash-es/shuffle'
+import renderIf from 'render-if'
 import { getRandomFractalImage } from '../../../data/images'
 
 let reactions = [
@@ -16,6 +17,8 @@ let reactions = [
 let getReaction = () => shuffle(reactions).pop()
 
 export default function PlayerSelecting({ game, send }) {
+  let timeout = game.config.reaction_selection_timeout
+  let buttonImage = useMemo(getRandomFractalImage, [])
   let [reaction, setReaction] = useState(getReaction())
 
   let getRandomReaction = () => {
@@ -28,24 +31,24 @@ export default function PlayerSelecting({ game, send }) {
     setReaction(nextReaction)
   }
 
-  let buttonImage = useMemo(getRandomFractalImage, [])
-
   return (
     <>
       <h3 className="center">
         Round #{game.round_number}: Choose your reaction.
       </h3>
 
-      <Countdown ms={game.config.reaction_selection_timeout}>
-        {({ remainder }) => (
-          <p className="center">
-            Time remaining{' '}
-            <strong key={remainder} className="zoop">
-              {remainder}
-            </strong>
-          </p>
-        )}
-      </Countdown>
+      {renderIf(timeout)(
+        <Countdown ms={timeout}>
+          {({ remainder }) => (
+            <p className="center">
+              Time remaining{' '}
+              <strong key={remainder} className="zoop">
+                {remainder}
+              </strong>
+            </p>
+          )}
+        </Countdown>
+      )}
 
       <div className="pb-2">
         <FixedRatio ratio={16 / 9}>

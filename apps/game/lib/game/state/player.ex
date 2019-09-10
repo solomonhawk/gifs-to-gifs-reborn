@@ -18,8 +18,8 @@ defmodule GameApp.Player do
   @doc """
   Creates a player.
   """
-  @spec create(String.t(), String.t()) :: Player.t()
-  def create(id, name) do
-    %Player{id: id, name: name}
+  @spec create(keyword()) :: Player.t()
+  def create(attrs \\ []) do
+    struct(Player, attrs)
   end
 end

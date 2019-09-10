@@ -52,24 +52,21 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> Game.create("ABCD", Player.create("1", "Gamer"))
+      iex> Game.create(shortcode: "ABCD", creator: Player.create(id: "1", name: "Gamer"))
       %Game{
         shortcode: "ABCD",
         creator: %Player{id: "1", name: "Gamer"},
         players: %{"1" => %Player{id: "1", name: "Gamer"}},
-        scores: %{"1" => 0}
+        scores: %{"1" => 0},
+        funmaster: %Player{id: "1", name: "Gamer"},
+        funmaster_order: ["1"]
       }
 
   """
-  @spec create(String.t(), Player.t(), GameConfig.t()) :: Game.t()
-  def create(shortcode, %Player{id: id} = creator, config \\ %GameConfig{}) do
-    %Game{
-      config: config,
-      shortcode: shortcode,
-      creator: creator,
-      players: Map.new([{id, creator}]),
-      scores: Map.new([{id, 0}])
-    }
+  @spec create(keyword()) :: Game.t()
+  def create(attrs \\ []) do
+    struct(Game, Enum.into(attrs, %{ config: %GameConfig{} }))
+    |> player_join(Keyword.get(attrs, :creator))
   end
 
   @doc """
@@ -77,11 +74,11 @@ defmodule GameApp.Game do
 
   ## Examples
 
-      iex> g = Game.create("ABCD", Player.create("1", "Gamer"))
+      iex> g = Game.create(shortcode: "ABCD", creator: Player.create(id: "1", name: "Gamer"))
       iex> Game.summary(g)
       %{
         creator: %Player{id: "1", name: "Gamer"},
-        funmaster: nil,
+        funmaster: %Player{id: "1", name: "Gamer"},
         phase: :lobby,
         players: %{"1" => %Player{id: "1", name: "Gamer"}},
         player_count: 1,
@@ -109,8 +106,8 @@ defmodule GameApp.Game do
   ## Examples
 
       iex> :rand.seed(:exsplus, {1, 2, 3})
-      iex> g = Game.create("ABCD", Player.create("1", "Gamer"))
-      iex> Game.player_join(g, Player.create("2", "Gamer2"))
+      iex> g = Game.create(shortcode: "ABCD", creator: Player.create(id: "1", name: "Gamer"))
+      iex> Game.player_join(g, Player.create(id: "2", name: "Gamer2"))
       %Game{
         shortcode: "ABCD",
         creator: %Player{id: "1", name: "Gamer"},
@@ -119,8 +116,8 @@ defmodule GameApp.Game do
           "2" => %Player{id: "2", name: "Gamer2"}
         },
         scores: %{"1" => 0, "2" => 0},
-        funmaster: %GameApp.Player{id: "2", name: "Gamer2"},
-        funmaster_order: ["2", "1"]
+        funmaster: %Player{id: "1", name: "Gamer"},
+        funmaster_order: ["1", "2"]
       }
 
   """
@@ -150,9 +147,9 @@ defmodule GameApp.Game do
   ## Examples
 
       iex> :rand.seed(:exsplus, {1, 2, 3})
-      iex> p1 = Player.create("1", "Gamer")
-      iex> p2 = Player.create("2", "Gamer2")
-      iex> g = Game.create("ABCD", p1)
+      iex> p1 = Player.create(id: "1", name: "Gamer")
+      iex> p2 = Player.create(id: "2", name: "Gamer2")
+      iex> g = Game.create(shortcode: "ABCD", creator: p1)
       iex> g = Game.player_join(g, p2)
       iex> Game.player_leave(g, p2)
       %Game{
@@ -160,8 +157,8 @@ defmodule GameApp.Game do
         creator: %Player{id: "1", name: "Gamer"},
         players: %{"1" => %Player{id: "1", name: "Gamer"}},
         scores: %{"1" => 0, "2" => 0},
-        funmaster: %GameApp.Player{id: "2", name: "Gamer2"},
-        funmaster_order: ["2", "1"]
+        funmaster: %Player{id: "1", name: "Gamer"},
+        funmaster_order: ["1", "2"]
       }
 
   """
@@ -178,10 +175,10 @@ defmodule GameApp.Game do
   ## Examples
 
       iex> :rand.seed(:exsplus, {1, 2, 3})
-      iex> p1 = Player.create("1", "Gamer1")
-      iex> p2 = Player.create("2", "Gamer2")
-      iex> p3 = Player.create("3", "Gamer3")
-      iex> g = Game.create("ABCD", p1)
+      iex> p1 = Player.create(id: "1", name: "Gamer1")
+      iex> p2 = Player.create(id: "2", name: "Gamer2")
+      iex> p3 = Player.create(id: "3", name: "Gamer3")
+      iex> g = Game.create(shortcode: "ABCD", creator: p1)
       ...>     |> Game.player_join(p2)
       ...>     |> Game.player_join(p3)
       iex> Game.start_game(g)
@@ -199,8 +196,8 @@ defmodule GameApp.Game do
           "2" => 0,
           "3" => 0
         },
-        funmaster: %GameApp.Player{id: "3", name: "Gamer3"},
-        funmaster_order: ["3", "2", "1"]
+        funmaster: %Player{id: "2", name: "Gamer2"},
+        funmaster_order: ["2", "3", "1"]
       }
 
   """
@@ -219,10 +216,10 @@ defmodule GameApp.Game do
   ## Examples
 
       iex> :rand.seed(:exsplus, {1, 2, 3})
-      iex> p1 = Player.create("1", "Gamer1")
-      iex> p2 = Player.create("2", "Gamer2")
-      iex> p3 = Player.create("3", "Gamer3")
-      iex> g = Game.create("ABCD", p1)
+      iex> p1 = Player.create(id: "1", name: "Gamer1")
+      iex> p2 = Player.create(id: "2", name: "Gamer2")
+      iex> p3 = Player.create(id: "3", name: "Gamer3")
+      iex> g = Game.create(shortcode: "ABCD", creator: p1)
       ...>     |> Game.player_join(p2)
       ...>     |> Game.player_join(p3)
       iex> g = Game.start_game(g)
@@ -242,10 +239,10 @@ defmodule GameApp.Game do
           "2" => 0,
           "3" => 0
         },
-        funmaster: %Player{id: "2", name: "Gamer2"},
-        funmaster_order: ["2", "1", "3"],
+        funmaster: %Player{id: "3", name: "Gamer3"},
+        funmaster_order: ["3", "1", "2"],
         rounds: [
-          %GameApp.Round{number: 1, prompt: nil, reactions: %{}, winner: nil}
+          %Round{number: 1, prompt: nil, reactions: %{}, winner: nil}
         ]
       }
 
@@ -360,7 +357,7 @@ defmodule GameApp.Game do
   defp set_round(%Game{rounds: rounds} = game, round_number) do
     Map.merge(game, %{
       round_number: round_number,
-      rounds: [Round.create(round_number)] ++ rounds
+      rounds: [Round.create(number: round_number)] ++ rounds
     })
   end
 

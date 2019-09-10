@@ -2,12 +2,16 @@ import React from 'react'
 import Media from '../../components/media'
 import Countdown from '../../components/countdown'
 import FixedRatio from '../../components/fixed-ratio'
+import renderIf from 'render-if'
 import { reactionFor, allPlayersReacted } from '../../../data/helpers'
 
 export default function PlayerWaiting({ game, player }) {
+  let timeout = game.config.reaction_selection_timeout
+  let advancingToWinnerSelection = allPlayersReacted(game)
+
   return (
     <>
-      {allPlayersReacted(game) ? (
+      {renderIf(advancingToWinnerSelection)(
         <Countdown ms={game.config.winner_selection_timeout}>
           {({ remainder }) => (
             <p className="center">
@@ -18,15 +22,17 @@ export default function PlayerWaiting({ game, player }) {
             </p>
           )}
         </Countdown>
-      ) : null}
+      )}
 
-      <p className="center">
-        Waiting for other players to choose their reactions
-      </p>
+      {renderIf(!advancingToWinnerSelection)(
+        <p className="center">
+          Waiting for other players to choose their reactions
+        </p>
+      )}
 
       {/* TODO(shawk): calculate countdown time remaining based on time phase started */}
-      {!allPlayersReacted(game) ? (
-        <Countdown ms={game.config.reaction_selection_timeout}>
+      {renderIf(timeout && !advancingToWinnerSelection)(
+        <Countdown ms={timeout}>
           {({ remainder }) => (
             <p className="center">
               Time remaining{' '}
@@ -36,7 +42,7 @@ export default function PlayerWaiting({ game, player }) {
             </p>
           )}
         </Countdown>
-      ) : null}
+      )}
 
       <span>{game.funmaster.name}'s Prompt:</span>
 
