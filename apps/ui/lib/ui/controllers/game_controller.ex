@@ -15,7 +15,7 @@ defmodule Ui.GameController do
   end
 
   def create(conn, _params) do
-    config = GameApp.Config.create(%{ min_players: 2, reaction_selection_timeout: 0 })
+    config = GameApp.Config.create(min_players: 2, reaction_selection_timeout: 0)
     shortcode = GameServer.generate_shortcode()
     player = get_session(conn, :current_player)
 
