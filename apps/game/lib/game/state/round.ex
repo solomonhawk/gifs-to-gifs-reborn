@@ -25,7 +25,7 @@ defmodule GameApp.Round do
 
   ## Examples
 
-      iex> Round.create(1)
+      iex> Round.create(number: 1)
       %Round{
         number: 1,
         winner: nil,
@@ -33,9 +33,9 @@ defmodule GameApp.Round do
       }
 
   """
-  @spec create(integer()) :: Round.t()
-  def create(number) do
-    %Round{number: number}
+  @spec create(keyword()) :: Round.t()
+  def create(attrs \\ []) do
+    struct(Round, attrs)
   end
 
   @doc """
@@ -43,7 +43,7 @@ defmodule GameApp.Round do
 
   ## Examples
 
-      iex> r = Round.create(1)
+      iex> r = Round.create(number: 1)
       iex> Round.set_prompt(r, "Wat")
       %Round{
         number: 1,
@@ -63,8 +63,8 @@ defmodule GameApp.Round do
 
   ## Examples
 
-      iex> r = Round.create(1)
-      iex> Round.set_reaction(r, Player.create("1", "Gamer"), "OMG!")
+      iex> r = Round.create(number: 1)
+      iex> Round.set_reaction(r, Player.create(id: "1", name: "Gamer"), "OMG!")
       %Round{
         number: 1,
         winner: nil,
@@ -84,8 +84,8 @@ defmodule GameApp.Round do
 
   ## Examples
 
-      iex> r = Round.create(1)
-      iex> p = Player.create("1", "Gamer")
+      iex> r = Round.create(number: 1)
+      iex> p = Player.create(id: "1", name: "Gamer")
       iex> r = Round.set_reaction(r, p, "OMG!")
       iex> Round.remove_reaction(r, p)
       %Round{
@@ -105,8 +105,8 @@ defmodule GameApp.Round do
 
   ## Examples
 
-      iex> r = Round.create(1)
-      iex> Round.set_winner(r, Player.create("1", "Gamer"))
+      iex> r = Round.create(number: 1)
+      iex> Round.set_winner(r, Player.create(id: "1", name: "Gamer"))
       %Round{
         number: 1,
         winner: %Player{id: "1", name: "Gamer"},

@@ -1,17 +1,17 @@
 defmodule GameTest do
   use ExUnit.Case, async: true
-  alias GameApp.{Game, Player}
+  alias GameApp.{Round, Game, Player}
   alias GameApp.Config, as: GameConfig
 
   doctest GameApp.Game, import: true
 
   @shortcode "ABCD"
-  @player Player.create("1", "Gamer")
-  @player2 Player.create("2", "Gamer2")
-  @player3 Player.create("3", "Gamer3")
+  @player Player.create(id: "1", name: "Gamer")
+  @player2 Player.create(id: "2", name: "Gamer2")
+  @player3 Player.create(id: "3", name: "Gamer3")
 
   setup do
-    [game: Game.create(@shortcode, @player)]
+    [game: Game.create(shortcode: @shortcode, creator: @player)]
   end
 
   test "create/2", %{game: game} do

@@ -1,7 +1,9 @@
 defmodule ServerSupervisorTest do
   use ExUnit.Case, async: false
 
-  alias GameApp.{ServerSupervisor, Player, Config}
+  alias GameApp.{ServerSupervisor, Player}
+
+  @player Player.create(id: "1", name: "Test Player")
 
   setup do
     start_supervised!(ServerSupervisor)
@@ -15,11 +17,11 @@ defmodule ServerSupervisorTest do
 
   test "can start game server worker children processes" do
     assert {:ok, _} =
-             ServerSupervisor.start_game("TEST", Player.create("1", "Test Player"), %Config{})
+             ServerSupervisor.start_game("TEST", @player)
   end
 
   test "can stop a game server worker child process cleanly" do
-    {:ok, _} = ServerSupervisor.start_game("TEST", Player.create("1", "Test Player"), %Config{})
+    {:ok, _} = ServerSupervisor.start_game("TEST", @player)
 
     assert :ok = ServerSupervisor.stop_game("TEST")
 
@@ -28,7 +30,7 @@ defmodule ServerSupervisorTest do
   end
 
   test "restarts game server processes that crash" do
-    {:ok, pid} = ServerSupervisor.start_game("TEST", Player.create("1", "Test Player"), %Config{})
+    {:ok, pid} = ServerSupervisor.start_game("TEST", @player)
 
     Process.exit(pid, :shutdown)
 

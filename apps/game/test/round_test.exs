@@ -4,10 +4,10 @@ defmodule RoundTest do
 
   doctest GameApp.Round, import: true
 
-  @player Player.create("1", "Gamer")
+  @player Player.create(id: "1", name: "Gamer")
 
   setup do
-    [round: Round.create(1)]
+    [round: Round.create(number: 1)]
   end
 
   test "create/1", %{round: round} do

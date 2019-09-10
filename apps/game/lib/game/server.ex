@@ -91,7 +91,7 @@ defmodule GameApp.Server do
     game =
       case :ets.lookup(:games_table, shortcode) do
         [] ->
-          game = Game.create(shortcode, player, config)
+          game = Game.create(shortcode: shortcode, creator: player, config: config)
           :ets.insert(:games_table, {shortcode, game})
           game
 
@@ -151,11 +151,13 @@ defmodule GameApp.Server do
     next = Game.select_prompt(game, prompt)
     update_ets(next)
 
-    Process.send_after(
-      self(),
-      {:reaction_timeout, channel_pid},
-      game.config.reaction_selection_timeout
-    )
+    if (game.config.reaction_selection_timeout > 0) do
+      Process.send_after(
+        self(),
+        {:reaction_timeout, channel_pid},
+        game.config.reaction_selection_timeout
+      )
+    end
 
     {:noreply, next, game.config.game_timeout}
   end
@@ -183,21 +185,12 @@ defmodule GameApp.Server do
     update_ets(next)
 
     # Advance to next round after game.config.round_end_timeout
-    Process.send_after(self(), {:after_select_winner, channel_pid}, game.config.round_end_timeout)
+    Process.send_after(self(), {:select_winner_timeout, channel_pid}, game.config.round_end_timeout)
 
     {:noreply, next, game.config.game_timeout}
   end
 
   # Info Callbacks
-
-  @impl true
-  def handle_info(:after_player_leave, game) do
-    if Game.is_empty?(game) do
-      {:stop, {:shutdown, :empty_game}, game}
-    else
-      {:noreply, game, game.config.game_timeout}
-    end
-  end
 
   @impl true
   def handle_info({:round_start_timeout, channel_pid}, game) do
@@ -224,7 +217,7 @@ defmodule GameApp.Server do
   end
 
   @impl true
-  def handle_info({:after_select_winner, channel_pid}, game) do
+  def handle_info({:select_winner_timeout, channel_pid}, game) do
     game =
       case Game.final_round?(game) do
         true ->
