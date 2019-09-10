@@ -20,7 +20,8 @@ defmodule GameApp.Config do
           reaction_selection_timeout: integer()
         }
 
-  def create(attrs \\ %{}) do
+  @spec create(keyword()) :: GameConfig.t()
+  def create(attrs \\ []) do
     struct(GameConfig, attrs)
   end
 end
