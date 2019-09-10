@@ -8,7 +8,7 @@
     <meta name="project" content=" v0.1.0">
     <title>GameApp.Server —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
-    <script src="dist/sidebar_items-cf92c60d01.js"></script>
+    <script src="dist/sidebar_items-f993c7449f.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
   </head>
@@ -118,7 +118,7 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
 </div>
 <div class="summary-row">
   <div class="summary-signature">
-    <a href="#select_prompt/2">select_prompt(shortcode, prompt)</a>
+    <a href="#select_prompt/3">select_prompt(shortcode, prompt, channel_pid)</a>
   </div>
     <div class="summary-synopsis"><p>Selects a prompt to set for the current round.</p></div>
 </div>
@@ -248,15 +248,15 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
 <p>Removes a player from the game with the given shortcode.</p>
   </section>
 </section>
-<section class="detail" id="select_prompt/2">
+<section class="detail" id="select_prompt/3">
   <div class="detail-header">
-    <a href="#select_prompt/2" class="detail-link" title="Link to this function">
+    <a href="#select_prompt/3" class="detail-link" title="Link to this function">
       <span class="icon-link" aria-hidden="true"></span>
       <span class="sr-only">Link to this function</span>
     </a>
-    <h1 class="signature">select_prompt(shortcode, prompt)</h1>
+    <h1 class="signature">select_prompt(shortcode, prompt, channel_pid)</h1>
       <div class="specs">
-          <pre>select_prompt(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>()) :: :ok</pre>
+          <pre>select_prompt(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()) :: :ok</pre>
       </div>
   </div>
   <section class="docstring">
@@ -286,7 +286,7 @@ given <code class="inline">shortcode</code>, or <code class="inline">nil</code> 
     </a>
     <h1 class="signature">select_winner(shortcode, winner, channel_pid)</h1>
       <div class="specs">
-          <pre>select_winner(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>(), <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()) :: :ok</pre>
+          <pre>select_winner(<a href="https://hexdocs.pm/elixir/String.html#t:t/0">String.t</a>(), <a href="GameApp.Player.html#t:t/0">GameApp.Player.t</a>() | nil, <a href="https://hexdocs.pm/elixir/typespecs.html#basic-types">pid</a>()) :: :ok</pre>
       </div>
   </div>
   <section class="docstring">
