@@ -1,9 +1,8 @@
 import React from 'react'
 import PlayerList from '../components/player-list'
 import Countdown from '../components/countdown'
-import FixedRatio from '../components/fixed-ratio'
-import Media from '../components/media'
 import { reactionFor, isRoundWinner, roundWinner } from '../../data/helpers'
+import GifWithReaction from '../components/gif-with-reaction'
 
 export default function RoundEnd({ game, player }) {
   return (
@@ -13,7 +12,7 @@ export default function RoundEnd({ game, player }) {
       <p className="center">
         {isRoundWinner(game, player) ? (
           <>
-            <strong>You</strong> won the round!
+            🏆 <strong>You</strong> won the round!
           </>
         ) : roundWinner(game) ? (
           <>
@@ -44,19 +43,10 @@ export default function RoundEnd({ game, player }) {
         }
       </Countdown>
 
-      <div className="pb-2">
-        <FixedRatio ratio={16 / 9}>
-          <Media src={game.prompt} />
-        </FixedRatio>
-      </div>
-
-      {game.round_winner ? (
-        <div className="pb-2">
-          <FixedRatio ratio={16 / 9}>
-            <Media src={reactionFor(game, game.round_winner)} />
-          </FixedRatio>
-        </div>
-      ) : null}
+      <GifWithReaction
+        upper={game.prompt}
+        lower={reactionFor(game, game.round_winner) || '/images/giphy.png'}
+      />
 
       <PlayerList game={game} player={player} />
     </>

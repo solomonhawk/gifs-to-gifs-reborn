@@ -66,16 +66,76 @@ select {
   left: 0;
   right: 0;
   bottom: 0;
+  border-radius: 3px;
+  background-color: #17161a;
 }
 
 .media {
   max-width: 100%;
-  background-color: #333;
   border-radius: 3px;
   overflow: hidden;
   width: 100%;
   object-fit: contain;
   max-height: 100%;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.reaction-upper {
+  border: 2px solid #f5c245;
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-bottom-width: 0;
+}
+
+.reaction-lower {
+  border: 2px solid #4ca8ed;
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-top-width: 0;
+}
+
+.gif-connector {
+  overflow: visible;
+  height: 0;
+  position: relative;
+  z-index: 1;
+  border: 1px solid #6aac5c;
+}
+
+.gif-connector::before {
+  content: '';
+  width: 36px;
+  height: 46px;
+  clip-path: polygon(50% 0%, 85% 50%, 50% 100%, 15% 50%);
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  margin-left: -18px;
+  margin-top: -23px;
+  background-color: #6aac5c;
+}
+
+.gif-connector-content {
+  z-index: 3;
+  top: 0;
+  left: 50%;
+  margin-left: -15px;
+  margin-top: -20px;
+  position: absolute;
+  width: 30px;
+  height: 40px;
+  background-size: 200% auto;
+  background-position: 50% 50%;
+  clip-path: polygon(50% 0%, 85% 50%, 50% 100%, 15% 50%);
+}
+
+.search-preview {
+  padding-top: 15%;
+  padding-bottom: 15%;
+  opacity: 0.5;
 }
 
 .mt-auto {
@@ -138,11 +198,21 @@ input[type='submit'] {
   font-size: 1.5rem;
   border-width: 1px;
   height: 4.5rem;
-  line-height: 4.5rem;
+  line-height: 4.2rem;
   font-weight: 800;
   text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.5);
   border-color: rgba(0, 0, 0, 0.7);
+  border-width: 2px;
   position: relative;
+}
+
+.button[disabled],
+a.button[disabled],
+button[disabled],
+input[type='button'][disabled],
+input[type='reset'][disabled],
+input[type='submit'][disabled] {
+  border: none;
 }
 
 .button:hover,
@@ -224,12 +294,12 @@ input[type='submit']:focus {
 
 .text-input {
   background: #fff;
-  color: #333;
+  color: #17161a;
   font-size: 14px;
-  border-radius: 3px;
+  border-radius: 0;
   padding: 10px;
-  border: none;
-  margin-bottom: 8px;
+  border: 2px solid #6aac5c;
+  margin: 0;
 }
 
 .text-input:focus {

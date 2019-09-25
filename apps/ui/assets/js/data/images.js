@@ -88,7 +88,26 @@ let loserImages = [
   'https://media.giphy.com/media/EndO2bvE3adMc/giphy.gif',
   'https://media.giphy.com/media/1jARfPtdz7eE0/giphy.gif',
   'https://media.giphy.com/media/GW10shdM3oXok/giphy.gif',
-  'https://media.giphy.com/media/l2JhxnwyDuF9pWE24/giphy.gif'
+  'https://media.giphy.com/media/l2JhxnwyDuF9pWE24/giphy.gif',
+  'https://media.giphy.com/media/Vd8V1PpBe1Jr3SNP1d/giphy.gif'
+]
+
+let patternImages = [
+  'https://media.giphy.com/media/3ohhwhHdgMUUGQ97he/giphy.gif',
+  'https://media.giphy.com/media/26ueZ3ADWRdWhWc4o/giphy.gif',
+  'https://media.giphy.com/media/hPlsN9Z6JNF4s/giphy.gif',
+  'https://media.giphy.com/media/xThuWjC7yute751y0g/giphy.gif',
+  'https://media.giphy.com/media/jl58h8QATXiA9oDyhw/giphy.gif',
+  'https://media.giphy.com/media/20KNY9lMa9a24ddaiF/giphy.gif',
+  'https://media.giphy.com/media/fnW3G7of3rwedztH4w/giphy.gif',
+  'https://media.giphy.com/media/l6JPvw93tlqI7xRPYC/giphy.gif',
+  'https://media.giphy.com/media/2wTahmbK632LnN7geD/giphy.gif',
+  'https://media.giphy.com/media/26xBtGbfnmmhd2wKY/giphy.gif',
+  'https://media.giphy.com/media/5hvEVo427VkpCrAFXm/giphy.gif',
+  'https://media.giphy.com/media/65OOoQ8bPU2KeKnTlX/giphy.gif',
+  'https://media.giphy.com/media/RJSpAVC75nnbPLSJ6Q/giphy.gif',
+  'https://media.giphy.com/media/3o7aD01EBRIx586l7a/giphy.gif',
+  'https://media.giphy.com/media/82x8uANaXPswEfK0RD/giphy.gif'
 ]
 
 export function getRandomThinkingImage() {
@@ -109,4 +128,8 @@ export function getRandomWinnerImage() {
 
 export function getRandomLoserImage() {
   return shuffle(loserImages).pop()
+}
+
+export function getRandomPatternImage() {
+  return shuffle(patternImages).pop()
 }

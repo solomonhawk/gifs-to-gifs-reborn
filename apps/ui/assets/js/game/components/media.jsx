@@ -1,6 +1,7 @@
 import React from 'react'
+import cx from 'classnames'
 
-export default function Media({ src }) {
+export default function Media({ src, style, className }) {
   if (!src) {
     return null
   }
@@ -9,11 +10,17 @@ export default function Media({ src }) {
 
   if (ext === 'mp4') {
     return (
-      <video className="media" autoPlay loop muted>
+      <video
+        className={cx('media', className)}
+        autoPlay
+        loop
+        muted
+        style={style}
+      >
         <source src={src} type={`video/${ext}`} />
       </video>
     )
   }
 
-  return <img className="media" src={src} />
+  return <img className={cx('media', className)} style={style} src={src} />
 }

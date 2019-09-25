@@ -15,6 +15,18 @@ export default function Selector({
 }) {
   let buttonImage = useMemo(getRandomFractalImage, [])
 
+  let image = (function() {
+    if (isSearching) {
+      return (
+        <Media src="https://media.giphy.com/media/xTkcEQACH24SMPxIQg/giphy.gif" />
+      )
+    } else if (reaction) {
+      return <Media key={reaction} src={reaction} />
+    } else {
+      return <Media className="search-preview" src="/images/giphy.png" />
+    }
+  })()
+
   return (
     <>
       <label className="visually-hidden" htmlFor="search">
@@ -30,11 +42,9 @@ export default function Selector({
         onChange={e => setSearchTerm(e.target.value)}
       />
 
-      {isSearching && <div>Searching ...</div>}
-
       <div className="pb-2">
-        <FixedRatio ratio={16 / 9}>
-          <Media key={reaction} src={reaction} />
+        <FixedRatio ratio={16 / 9} className="reaction-lower">
+          {image}
         </FixedRatio>
       </div>
 

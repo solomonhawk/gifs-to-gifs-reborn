@@ -27,11 +27,9 @@ export default function PlayerSelecting({ game, send }) {
         </Countdown>
       )}
 
-      <div className="pb-2">
-        <FixedRatio ratio={16 / 9}>
-          <Media src={game.prompt} />
-        </FixedRatio>
-      </div>
+      <FixedRatio ratio={16 / 9} className="reaction-upper">
+        <Media src={game.prompt} />
+      </FixedRatio>
 
       <GifSelector
         onSelect={reaction => send('select_reaction', { reaction })}

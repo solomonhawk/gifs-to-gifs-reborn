@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useCallback } from 'react'
-import useDebounce from '../../../hooks/use-debounce'
+import { useDebounce } from 'use-debounce'
 import isEqual from 'lodash-es/isEqual'
 import shuffle from 'lodash-es/shuffle'
 import result from 'lodash-es/result'
@@ -11,7 +11,8 @@ export default function GifSelector({ onSelect }) {
   let [searchTerm, setSearchTerm] = useState('')
   let [results, setResults] = useState([])
   let [isSearching, setIsSearching] = useState(false)
-  let debouncedSearchTerm = useDebounce(searchTerm, 500)
+  let [debouncedIsSearching] = useDebounce(isSearching, 500, { leading: true })
+  let [debouncedSearchTerm] = useDebounce(searchTerm, 500)
 
   let shuffleResults = useCallback(
     results => {
@@ -55,7 +56,7 @@ export default function GifSelector({ onSelect }) {
   return (
     <Selector
       setSearchTerm={setSearchTerm}
-      isSearching={isSearching}
+      isSearching={debouncedIsSearching}
       reaction={reaction}
       results={results}
       onShuffle={() => shuffleResults(results)}

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import Media from '../../components/media'
-import FixedRatio from '../../components/fixed-ratio'
 import Button from '../../components/button'
+import GifWithReaction from '../../components/gif-with-reaction'
 import { playerName } from '../../../data/helpers'
 
 export default function ReactionViewer({ game, playerId, onChange, buttonBg }) {
@@ -22,9 +21,10 @@ export default function ReactionViewer({ game, playerId, onChange, buttonBg }) {
   return (
     <>
       <div className="pb-2">
-        <FixedRatio ratio={16 / 9}>
-          <Media src={game.prompt} />
-        </FixedRatio>
+        <GifWithReaction
+          upper={game.prompt}
+          lower={playerId ? Object.values(game.reactions)[index] : undefined}
+        />
       </div>
 
       <div className="flex justify-space-between align-center pb-2">
@@ -37,8 +37,12 @@ export default function ReactionViewer({ game, playerId, onChange, buttonBg }) {
         </Button>
 
         <div>
-          {playerId ? <span>{playerName(game, playerId)}</span> : null} (
-          {index + 1}/{game.reaction_count})
+          {playerId ? (
+            <span>{playerName(game, playerId)}</span>
+          ) : (
+            'No reactions!'
+          )}{' '}
+          ({playerId ? `${index + 1}/${game.reaction_count})` : null}
         </div>
 
         <Button
@@ -49,14 +53,6 @@ export default function ReactionViewer({ game, playerId, onChange, buttonBg }) {
           Next
         </Button>
       </div>
-
-      {playerId ? (
-        <div className="pb-2">
-          <FixedRatio ratio={16 / 9}>
-            <Media src={Object.values(game.reactions)[index]} />
-          </FixedRatio>
-        </div>
-      ) : null}
     </>
   )
 }

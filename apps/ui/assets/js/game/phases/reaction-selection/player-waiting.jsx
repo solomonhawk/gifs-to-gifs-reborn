@@ -1,9 +1,8 @@
 import React from 'react'
-import Media from '../../components/media'
 import Countdown from '../../components/countdown'
-import FixedRatio from '../../components/fixed-ratio'
 import renderIf from 'render-if'
 import { reactionFor, allPlayersReacted } from '../../../data/helpers'
+import GifWithReaction from '../../components/gif-with-reaction'
 
 export default function PlayerWaiting({ game, player }) {
   let timeout = game.config.reaction_selection_timeout
@@ -44,21 +43,9 @@ export default function PlayerWaiting({ game, player }) {
         </Countdown>
       )}
 
-      <span>{game.funmaster.name}'s Prompt:</span>
+      <span>Your reaction to {game.funmaster.name}'s Prompt:</span>
 
-      <div className="pb-2">
-        <FixedRatio ratio={16 / 9}>
-          <Media src={game.prompt} />
-        </FixedRatio>
-      </div>
-
-      <span>Your reaction:</span>
-
-      <div className="pb-2">
-        <FixedRatio ratio={16 / 9}>
-          <Media src={reactionFor(game, player)} />
-        </FixedRatio>
-      </div>
+      <GifWithReaction upper={game.prompt} lower={reactionFor(game, player)} />
     </>
   )
 }
