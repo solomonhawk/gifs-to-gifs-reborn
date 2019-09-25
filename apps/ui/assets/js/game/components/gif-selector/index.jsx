@@ -40,6 +40,13 @@ export default function GifSelector({ onSelect }) {
           setIsSearching(false)
           shuffleResults(results)
         })
+        .catch(error => {
+          // @TODO(shawk): error handling, global or local TBD
+          alert(
+            result(error.response.data.message) ||
+              'Ooops! Something went wrong.'
+          )
+        })
     } else {
       setResults([])
     }
