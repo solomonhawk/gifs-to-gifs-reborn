@@ -18,3 +18,23 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
+## Set Up
+
+From the `apps/ui/assets` folder:
+
+1. **Install `yarn` dependencies**
+
+        yarn install
+
+2. **Configure environment variables**
+
+        cp .env.example .env
+
+    After creating `.env` you may need to fill in any missing values.
+
+3. **For local development, start the webpack server**
+
+        yarn watch
+
+    Alternatively, from the root folder of the project you can simply run `make assets`.

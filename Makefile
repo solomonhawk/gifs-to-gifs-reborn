@@ -1,13 +1,16 @@
-test:
+t:
 	MIX_ENV=test mix test
 
-test.watch:
+tw:
 	mix test.watch
 
-coverage:
+types:
+	mix dialyzer
+
+cov:
 	MIX_ENV=test mix coveralls
 
-coverage.html:
+cov.html:
 	MIX_ENV=test mix coveralls.html
 
 assets:
@@ -20,4 +23,4 @@ iex:
 	PORT=4000 iex -S mix phx.server
 
 .DEFAULT: test
-.PHONY: test test.watch coverage coverage.html assets
+.PHONY: t tw types cov cov.html assets
