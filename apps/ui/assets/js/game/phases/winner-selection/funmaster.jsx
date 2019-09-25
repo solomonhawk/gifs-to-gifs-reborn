@@ -4,11 +4,11 @@ import Button from '../../components/button'
 import { getRandomFractalImage } from '../../../data/images'
 
 export default function Funmaster({ game, send }) {
-  let [winnerId, setWinnerId] = useState(null)
+  let [playerId, setPlayerId] = useState(null)
 
   let onSelect = () =>
     send('select_winner', {
-      winner: game.players[winnerId]
+      winner: game.players[playerId]
     })
 
   let buttonImage = useMemo(getRandomFractalImage, [])
@@ -19,8 +19,8 @@ export default function Funmaster({ game, send }) {
 
       <ReactionViewer
         game={game}
-        winnerId={winnerId}
-        onChange={setWinnerId}
+        playerId={playerId}
+        onChange={setPlayerId}
         buttonBg={buttonImage}
       />
 

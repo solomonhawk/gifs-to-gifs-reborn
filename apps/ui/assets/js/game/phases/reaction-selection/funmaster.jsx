@@ -1,8 +1,9 @@
 import React, { useMemo } from 'react'
 import Countdown from '../../components/countdown'
 import Media from '../../components/media'
+import FixedRatio from '../../components/fixed-ratio'
 import renderIf from 'render-if'
-import { reactionCount, allPlayersReacted } from '../../../data/helpers'
+import { reactionCountText, allPlayersReacted } from '../../../data/helpers'
 import { getRandomThinkingImage } from '../../../data/images'
 
 export default function Funmaster({ game }) {
@@ -15,7 +16,7 @@ export default function Funmaster({ game }) {
           Reactions are in, <em>get ready to pick a winner</em>
         </p>
 
-        <h2 className="center">{reactionCount(game)}</h2>
+        <h2 className="center">{reactionCountText(game)}</h2>
 
         <Countdown ms={game.config.winner_selection_timeout}>
           {({ remainder }) => (
@@ -50,9 +51,11 @@ export default function Funmaster({ game }) {
         </Countdown>
       )}
 
-      <h2 className="center">{reactionCount(game)}</h2>
+      <h2 className="center">{reactionCountText(game)}</h2>
 
-      <Media src={image} />
+      <FixedRatio ratio={16 / 9}>
+        <Media src={image} />
+      </FixedRatio>
     </>
   )
 }

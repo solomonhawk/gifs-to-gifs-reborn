@@ -26,3 +26,5 @@ erl_crash.dump
 *.secret.exs
 
 .env
+
+.vscode/*

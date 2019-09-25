@@ -6,6 +6,7 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
+    "axios": "^0.19.0",
     "classnames": "^2.2.6",
     "dotenv": "^8.1.0",
     "lodash-es": "^4.17.15",

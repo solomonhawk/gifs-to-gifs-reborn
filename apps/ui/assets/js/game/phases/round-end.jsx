@@ -3,7 +3,7 @@ import PlayerList from '../components/player-list'
 import Countdown from '../components/countdown'
 import FixedRatio from '../components/fixed-ratio'
 import Media from '../components/media'
-import { reactionFor } from '../../data/helpers'
+import { reactionFor, isRoundWinner, roundWinner } from '../../data/helpers'
 
 export default function RoundEnd({ game, player }) {
   return (
@@ -11,7 +11,11 @@ export default function RoundEnd({ game, player }) {
       <h3 className="center">Round #{game.round_number} is over</h3>
 
       <p className="center">
-        {game.round_winner ? (
+        {isRoundWinner(game, player) ? (
+          <>
+            <strong>You</strong> won the round!
+          </>
+        ) : roundWinner(game) ? (
           <>
             <strong>{game.round_winner.name}</strong> wins this time!
           </>

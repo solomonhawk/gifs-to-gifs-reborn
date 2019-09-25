@@ -30,8 +30,6 @@ export default function PromptSelection({ game, player, send }) {
     )
   }
 
-  let image = useMemo(getRandomThinkingImage, [])
-
   return (
     <>
       <h3 className="center">Round #{game.round_number}</h3>
@@ -40,7 +38,9 @@ export default function PromptSelection({ game, player, send }) {
         Waiting for <strong>{game.funmaster.name}</strong> to pick a prompt
       </p>
 
-      <Media src={image} />
+      <FixedRatio ratio={16 / 9}>
+        <Media src={useMemo(getRandomThinkingImage, [])} />
+      </FixedRatio>
     </>
   )
 }

@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import Button from '../components/button'
 import Media from '../components/media'
+import FixedRatio from '../components/fixed-ratio'
 import { isCreator } from '../../data/helpers'
 import { getRandomLaughImage } from '../../data/images'
 
@@ -8,8 +9,6 @@ import { getRandomLaughImage } from '../../data/images'
  * Game Start screen (pre-first-round)
  */
 export default function GameStart({ game, player, send }) {
-  let image = useMemo(getRandomLaughImage, [])
-
   return (
     <>
       <h3 className="center">Get ready to play!</h3>
@@ -33,7 +32,9 @@ export default function GameStart({ game, player, send }) {
       </p>
 
       <div className="pb-2">
-        <Media src={image} />
+        <FixedRatio ratio={16 / 9}>
+          <Media src={useMemo(getRandomLaughImage, [])} />
+        </FixedRatio>
       </div>
 
       {isCreator(game, player) && (

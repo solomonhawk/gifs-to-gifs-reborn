@@ -1,6 +1,10 @@
 import React from 'react'
 
 export default function Media({ src }) {
+  if (!src) {
+    return null
+  }
+
   let ext = src.split('.').pop()
 
   if (ext === 'mp4') {

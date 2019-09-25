@@ -17,3 +17,4 @@ import 'phoenix_html'
 // import socket from "./socket"
 
 import './game'
+import './config'
