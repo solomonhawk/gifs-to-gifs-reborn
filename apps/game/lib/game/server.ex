@@ -151,7 +151,7 @@ defmodule GameApp.Server do
     next = Game.select_prompt(game, prompt)
     update_ets(next)
 
-    if (game.config.reaction_selection_timeout > 0) do
+    if game.config.reaction_selection_timeout > 0 do
       Process.send_after(
         self(),
         {:reaction_timeout, channel_pid},
@@ -185,7 +185,11 @@ defmodule GameApp.Server do
     update_ets(next)
 
     # Advance to next round after game.config.round_end_timeout
-    Process.send_after(self(), {:select_winner_timeout, channel_pid}, game.config.round_end_timeout)
+    Process.send_after(
+      self(),
+      {:select_winner_timeout, channel_pid},
+      game.config.round_end_timeout
+    )
 
     {:noreply, next, game.config.game_timeout}
   end

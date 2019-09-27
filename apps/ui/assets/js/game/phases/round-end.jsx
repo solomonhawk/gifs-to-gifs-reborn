@@ -45,7 +45,7 @@ export default function RoundEnd({ game, player }) {
 
       <GifWithReaction
         upper={game.prompt}
-        lower={reactionFor(game, game.round_winner) || '/images/giphy.png'}
+        lower={reactionFor(game, game.round_winner)}
       />
 
       <PlayerList game={game} player={player} />

@@ -16,8 +16,7 @@ defmodule ServerSupervisorTest do
   end
 
   test "can start game server worker children processes" do
-    assert {:ok, _} =
-             ServerSupervisor.start_game("TEST", @player)
+    assert {:ok, _} = ServerSupervisor.start_game("TEST", @player)
   end
 
   test "can stop a game server worker child process cleanly" do

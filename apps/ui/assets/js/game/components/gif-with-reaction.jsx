@@ -2,14 +2,12 @@ import React from 'react'
 import FixedRatio from './fixed-ratio'
 import Media from './media'
 import GifConnector from './gif-connector'
-
-const defaultImage =
-  'https://media.giphy.com/media/g01ZnwAUvutuK8GIQn/giphy.gif'
+import cx from 'classnames'
 
 export default function GifWithReaction({
   upper,
   children = <GifConnector />,
-  lower = defaultImage
+  lower
 }) {
   return (
     <>
@@ -20,7 +18,10 @@ export default function GifWithReaction({
       {children}
 
       <FixedRatio ratio={16 / 9} className="reaction-lower">
-        <Media src={lower} />
+        <Media
+          className={cx({ 'search-preview': !lower })}
+          src={lower || '/images/giphy.png'}
+        />
       </FixedRatio>
     </>
   )

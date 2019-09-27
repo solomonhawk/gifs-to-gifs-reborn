@@ -1,23 +1,26 @@
 import result from 'lodash/result'
 
+export function id(player) {
+  return result(player, 'id')
+}
 export function isCreator(game, player) {
-  return game.creator.id === player.id
+  return id(game.creator) === id(player)
 }
 
 export function isFunmaster(game, player) {
-  return game.funmaster.id === player.id
+  return id(game.funmaster) === id(player)
 }
 
 export function isRoundWinner(game, player) {
-  return result(roundWinner(game), 'id') === player.id
+  return id(roundWinner(game)) === id(player)
 }
 
 export function reactionFor(game, player) {
-  return game.reactions[player.id]
+  return result(game.reactions, id(player))
 }
 
 export function scoreFor(game, player) {
-  return 100 * game.scores[player.id]
+  return 100 * result(game.scores, id(player), 0)
 }
 
 export function reactionCountText(game) {
@@ -45,7 +48,7 @@ export function gameWinners(game) {
 }
 
 export function isWinner(game, player) {
-  return gameWinners(game).find(w => w.id === player.id)
+  return gameWinners(game).find(w => w.id === id(player))
 }
 
 export function isTie(game) {

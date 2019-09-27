@@ -80,7 +80,7 @@ defmodule Ui.GameChannel do
   end
 
   # No winner selected, happens if all players don't submit reactions in time
-  def handle_in("select_winner", winner, socket) when winner == %{} do
+  def handle_in("select_winner", %{"winner" => nil}, socket) do
     {shortcode, player} = game_context(socket)
 
     handle_funmaster_action(shortcode, player, socket, fn ->

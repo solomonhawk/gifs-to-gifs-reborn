@@ -38,11 +38,13 @@ export default function ReactionViewer({ game, playerId, onChange, buttonBg }) {
 
         <div>
           {playerId ? (
-            <span>{playerName(game, playerId)}</span>
+            <>
+            <span>{playerName(game, playerId)}</span>{' '}
+            ({index + 1}/{game.reaction_count})
+            </>
           ) : (
             'No reactions!'
-          )}{' '}
-          ({playerId ? `${index + 1}/${game.reaction_count})` : null}
+          )}
         </div>
 
         <Button

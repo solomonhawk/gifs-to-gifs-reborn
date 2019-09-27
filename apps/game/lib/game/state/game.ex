@@ -65,7 +65,7 @@ defmodule GameApp.Game do
   """
   @spec create(keyword()) :: Game.t()
   def create(attrs \\ []) do
-    struct(Game, Enum.into(attrs, %{ config: %GameConfig{} }))
+    struct(Game, Enum.into(attrs, %{config: %GameConfig{}}))
     |> player_join(Keyword.get(attrs, :creator))
   end
 
@@ -202,7 +202,9 @@ defmodule GameApp.Game do
 
   """
   @spec start_game(Game.t()) :: Game.t()
-  def start_game(%Game{phase: :lobby, players: players, config: %{min_players: min_players}} = game)
+  def start_game(
+        %Game{phase: :lobby, players: players, config: %{min_players: min_players}} = game
+      )
       when map_size(players) < min_players,
       do: game
 
@@ -454,6 +456,7 @@ defmodule GameApp.Game do
   defp game_winners(%Game{scores: scores, players: players}) do
     scores
     |> Map.to_list()
+    |> Enum.filter(fn {_, score} -> score > 0 end)
     |> max_score()
     |> Enum.map(fn {id, _} -> Map.get(players, id) end)
   end

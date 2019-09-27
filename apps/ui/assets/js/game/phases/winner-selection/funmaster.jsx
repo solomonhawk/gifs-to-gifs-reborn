@@ -8,7 +8,7 @@ export default function Funmaster({ game, send }) {
 
   let onSelect = () =>
     send('select_winner', {
-      winner: game.players[playerId]
+      winner: playerId ? game.players[playerId] : null
     })
 
   let buttonImage = useMemo(getRandomFractalImage, [])

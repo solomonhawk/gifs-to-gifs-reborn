@@ -16,7 +16,9 @@ export default function GameEnd({ game, player }) {
       <h3 className="center">Game Over</h3>
 
       <div className="pb-2">
-        {winnerCount(game) === 1 ? (
+        {winnerCount(game) === 0 ? (
+          <span>Nobody won!</span>
+        ) : winnerCount(game) === 1 ? (
           <p className="center">
             <strong>{gameWinner(game).name}</strong> wins with{' '}
             {scoreFor(game, gameWinner(game))} points!

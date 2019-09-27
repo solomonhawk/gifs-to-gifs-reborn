@@ -6,7 +6,7 @@ import { isFunmaster } from '../../data/helpers'
 import { getRandomThinkingImage } from '../../data/images'
 
 // TODO(shawk): allow prompt selection
-let prompt = 'https://i.imgur.com/Lh0yoPt.mp4'
+let prompt = 'https://i.imgur.com/c0dSyxk.mp4'
 
 export default function PromptSelection({ game, player, send }) {
   if (isFunmaster(game, player)) {
