@@ -16,11 +16,32 @@ cov.html:
 assets:
 	cd apps/ui/assets && yarn watch
 
-run:
+build-assets:
+	cd apps/ui/assets && yarn deploy
+
+dev:
 	PORT=4000 mix phx.server
 
 iex:
 	PORT=4000 iex -S mix phx.server
 
+ssh:
+	ssh root@gifme-web
+
+digest:
+	MIX_ENV=prod mix phx.digest
+
+release: build-assets digest
+	MIX_ENV=prod mix release --overwrite
+
+docker-build:
+	docker build --tag=gifme .
+
+docker:
+	docker run -t -i -p 4000:4000 --rm --env-file ./config/env.prod gifme:latest
+
+run:
+	_build/prod/rel/gifs_to_gifs/bin/gifs_to_gifs start_iex
+
 .DEFAULT: test
-.PHONY: t tw types cov cov.html assets
+.PHONY: t tw types cov cov.html assets build-assets dev iex ssh digest release docker-build docker run

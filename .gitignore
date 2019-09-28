@@ -26,5 +26,6 @@ erl_crash.dump
 *.secret.exs
 
 .env
-
+*env.prod
 .vscode/*
+.yarn-cache.tgz

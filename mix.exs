@@ -20,7 +20,7 @@ defmodule GifsToGifs.MixProject do
         output: "docs"
       ],
       releases: [
-        prod: [
+        gifs_to_gifs: [
           include_executables_for: [:unix],
           applications: [ui: :permanent, game: :permanent]
         ]

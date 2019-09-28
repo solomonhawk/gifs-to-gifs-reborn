@@ -37,7 +37,7 @@ export default function GameEnd({ game, player }) {
         )}
       </div>
 
-      {isWinner(game, player) ? <Winner isTie={isTie(game)} /> : <Loser />}
+      {isWinner(game, player) ? <Winner tie={isTie(game)} /> : <Loser />}
 
       <a href="/games/new" className="button mt-auto full-width">
         Start a new game
