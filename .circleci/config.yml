@@ -24,8 +24,7 @@ aliases:
     key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}-{{ .Environment.CIRCLE_SHA1 }}
     paths:
       - deps
-      - .mix
-      - .hex
+      - ~/circleci/.mix
 
   # - &save_mix_cache_checksum
   #   key: v1-mix-cache-{{ .Branch }}
@@ -65,6 +64,7 @@ jobs:
         environment:
           MIX_ENV: test
 
+    working_directory: ~/repo
     steps:
       - checkout
       - run: mix local.hex --force
@@ -91,6 +91,8 @@ jobs:
 
     steps:
       - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
       - restore_cache: *restore_build_caches_sha
@@ -110,6 +112,8 @@ jobs:
 
     steps:
       - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
       - restore_cache: *restore_build_caches_sha
@@ -129,6 +133,8 @@ jobs:
 
     steps:
       - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
       - restore_cache: *restore_build_caches_sha
@@ -144,6 +150,8 @@ jobs:
 
     steps:
       - checkout
+      - run: mix local.hex --force
+      - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
 
