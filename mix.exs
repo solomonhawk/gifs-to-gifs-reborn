@@ -35,9 +35,17 @@ defmodule GifsToGifs.MixProject do
   # Run "mix help deps" for examples and options.
   defp deps do
     [
-      {:excoveralls, "~> 0.10", only: :test},
-      {:junit_formatter, "~> 3.0", only: :test},
-      {:mix_test_watch, "~> 0.8", only: :dev, runtime: false}
+      {:excoveralls, "~> 0.10", only: [:dev, :test]},
+      {:junit_formatter, "~> 3.0", only: [:dev, :test]},
+      {:mix_test_watch, "~> 0.8", only: [:dev, :test], runtime: false},
+      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev, :test], runtime: false}
+    ]
+  end
+
+  defp aliases do
+    [
+      "coveralls": ["coveralls --umbrella"],
+      "coveralls.detail": ["coveralls.detail --umbrella"]
     ]
   end
 end

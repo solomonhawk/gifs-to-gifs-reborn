@@ -29,8 +29,7 @@ defmodule GameApp.MixProject do
     [
       {:earmark, "~> 1.2", only: :dev},
       {:ex_doc, "~> 0.19", only: :dev},
-      {:cortex, "~> 0.1", only: [:dev, :test]},
-      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
+      {:cortex, "~> 0.1", only: [:dev, :test]}
     ]
   end
 end
