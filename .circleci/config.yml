@@ -70,8 +70,8 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
 
-      - restore_cache: *restore_mix_caches
-      - restore_cache: *restore_build_caches
+      - restore_cache: *restore_mix_caches_sha
+      - restore_cache: *restore_build_caches_sha
 
       # get deps and compile
       - run: mix deps.get
