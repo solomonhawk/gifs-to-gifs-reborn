@@ -14,15 +14,21 @@ aliases:
   ### save caches
   - &save_mix_cache_checksum
     key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-    paths: 'deps'
+    paths:
+      - 'deps'
+      - ~/.mix
 
   - &save_mix_cache_branch
     key: v1-mix-cache-{{ .Branch }}
-    paths: 'deps'
+    paths:
+      - 'deps'
+      - ~/.mix
 
   - &save_mix_cache_generic
     key: v1-mix-cache
-    paths: 'deps'
+    paths:
+      - 'deps'
+      - ~/.mix
 
   - &save_build_cache_branch
     key: v1-build-cache-{{ .Branch }}
