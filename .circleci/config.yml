@@ -1,53 +1,38 @@
-version: 2
 aliases:
-  - &restore_mix_cache # restore mix cache
-    restore_cache:
-      keys: # list of cache keys, in decreasing specificity
-        - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-        - v1-mix-cache-{{ .Branch }}
-        - v1-mix-cache
+  ### restore caches
+  - &restore_mix_caches
+    keys:
+      - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+      - v1-mix-cache-{{ .Branch }}
+      - v1-mix-cache
 
-  - &restore_build_cache # restore build cache
-    restore_cache:
-      keys:
-        - v1-build-cache-{{ .Branch }}
-        - v1-build-cache
+  - &restore_build_caches
+    keys:
+      - v1-build-cache-{{ .Branch }}
+      - v1-build-cache
 
-  - &save_mix_cache_checksum # generate and store mix cache
-    save_cache:
-      key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-      paths: 'deps'
+  ### save caches
+  - &save_mix_cache_checksum
+    key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+    paths: 'deps'
 
   - &save_mix_cache_branch
-    save_cache:
-      key: v1-mix-cache-{{ .Branch }}
-      paths: 'deps'
+    key: v1-mix-cache-{{ .Branch }}
+    paths: 'deps'
 
   - &save_mix_cache_generic
-    save_cache:
-      key: v1-mix-cache
-      paths: 'deps'
+    key: v1-mix-cache
+    paths: 'deps'
 
-  - &save_build_cache_branch # generate and store build cache
-    save_cache:
-      key: v1-build-cache-{{ .Branch }}
-      paths: '_build'
+  - &save_build_cache_branch
+    key: v1-build-cache-{{ .Branch }}
+    paths: '_build'
+
   - &save_build_cache_generic
-    save_cache:
-      key: v1-build-cache
-      paths: '_build'
+    key: v1-build-cache
+    paths: '_build'
 
-  - &restore_caches
-    - *restore_mix_cache
-    - *restore_build_cache
-
-  - &save_caches
-    - *save_mix_cache_checksum
-    - *save_mix_cache_branch
-    - *save_mix_cache_generic
-    - *save_build_cache_branch
-    - *save_build_cache_generic
-
+version: 2
 jobs:
   build:
     docker:
@@ -61,13 +46,18 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
 
-      - *restore_caches
+      - restore_cache: *restore_mix_caches
+      - restore_cache: *restore_build_caches
 
       # get deps and compile
       - run: mix deps.get
       - run: mix compile
 
-      - *save_caches
+      - save_cache: *save_mix_cache_checksum
+      - save_cache: *save_mix_cache_branch
+      - save_cache: *save_mix_cache_generic
+      - save_cache: *save_build_cache_generic
+      - save_cache: *save_build_cache_branch
 
   test:
     docker:
@@ -75,7 +65,8 @@ jobs:
 
     steps:
       - checkout
-      - *restore_caches
+      - restore_cache: *restore_mix_caches
+      - restore_cache: *restore_build_caches
 
       # run test coverage
       - run: mix coveralls.html
@@ -92,7 +83,8 @@ jobs:
 
     steps:
       - checkout
-      - *restore_caches
+      - restore_cache: *restore_mix_caches
+      - restore_cache: *restore_build_caches
 
       # generate docs
       - run: mix docs
@@ -109,7 +101,8 @@ jobs:
 
     steps:
       - checkout
-      - *restore_caches
+      - restore_cache: *restore_mix_caches
+      - restore_cache: *restore_build_caches
 
       # run typespecs
       - run: mix dialyzer --halt-exit-status
