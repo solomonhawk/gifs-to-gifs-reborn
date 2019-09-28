@@ -73,7 +73,7 @@ jobs:
       - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_cache_sha
-      - restore_cache: *restore_build_cache_branch
+      - restore_cache: *restore_build_cache_sha
 
       # get deps and compile
       - run: mix deps.get
