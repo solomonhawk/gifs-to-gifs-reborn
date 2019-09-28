@@ -25,6 +25,7 @@ aliases:
     paths:
       - deps
       - .mix
+      - .hex
 
   # - &save_mix_cache_checksum
   #   key: v1-mix-cache-{{ .Branch }}
