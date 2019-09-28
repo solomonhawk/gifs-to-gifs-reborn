@@ -65,7 +65,6 @@ jobs:
         environment:
           MIX_ENV: test
 
-    working_directory: ~/repo
     steps:
       - checkout
       - run: mix local.hex --force
@@ -92,8 +91,6 @@ jobs:
 
     steps:
       - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
       - restore_cache: *restore_build_caches_sha
@@ -113,8 +110,6 @@ jobs:
 
     steps:
       - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
       - restore_cache: *restore_build_caches_sha
@@ -134,8 +129,6 @@ jobs:
 
     steps:
       - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
       - restore_cache: *restore_build_caches_sha
@@ -151,8 +144,6 @@ jobs:
 
     steps:
       - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
 
