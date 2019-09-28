@@ -1,6 +1,6 @@
 version: 2
 aliases:
-  - &restore_caches
+  - &restore_mix_cache
     # restore mix cache
     restore_cache:
       keys:  # list of cache keys, in decreasing specificity
@@ -8,31 +8,49 @@ aliases:
         - v1-mix-cache-{{ .Branch }}
         - v1-mix-cache
 
+  - &restore_build_cache
     # restore build cache
     restore_cache:
       keys:
         - v1-build-cache-{{ .Branch }}
         - v1-build-cache
 
-  - &save_caches
+  - &save_mix_cache_checksum
     # generate and store mix cache
     save_cache:
         key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
         paths: "deps"
+
+  - &save_mix_cache_branch
     save_cache:
         key: v1-mix-cache-{{ .Branch }}
         paths: "deps"
+
+  - &save_mix_cache_generic
     save_cache:
         key: v1-mix-cache
         paths: "deps"
 
+  - &save_build_cache_branch
     # generate and store build cache
     save_cache:
         key: v1-build-cache-{{ .Branch }}
         paths: "_build"
+  - &save_build_cache_generic
     save_cache:
         key: v1-build-cache
         paths: "_build"
+
+  - &restore_caches
+    *restore_mix_cache
+    *restore_build_cache
+
+  - &save_caches
+    *save_mix_cache_checksum
+    *save_mix_cache_branch
+    *save_mix_cache_generic
+    *save_build_cache_branch
+    *save_build_cache_generic
 
 jobs:
   build:
