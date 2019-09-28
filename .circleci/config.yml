@@ -14,10 +14,10 @@ aliases:
     keys:
       - v1-build-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
 
-  # - &restore_build_caches
-  #   keys:
-  #     - v1-build-cache-{{ .Branch }}
-  #     - v1-build-cache
+  - &restore_build_caches
+    keys:
+      - v1-build-cache-{{ .Branch }}
+      - v1-build-cache
 
   ### save caches
   - &save_mix_cache_sha
@@ -71,11 +71,12 @@ jobs:
       - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
-      - restore_cache: *restore_build_caches_sha
+      - restore_cache: *restore_build_caches
 
       # get deps and compile
       - run: mix deps.get
       - run: mix compile
+      - run: ls deps
 
       - save_cache: *save_mix_cache_sha
       - save_cache: *save_build_cache_sha
@@ -95,7 +96,7 @@ jobs:
       - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
-      - restore_cache: *restore_build_caches_sha
+      - restore_cache: *restore_build_caches
 
       # run test coverage
       - run: mix coveralls.html
@@ -116,7 +117,7 @@ jobs:
       - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
-      - restore_cache: *restore_build_caches_sha
+      - restore_cache: *restore_build_caches
 
       # generate docs
       - run: mix docs
@@ -137,7 +138,7 @@ jobs:
       - run: mix local.rebar --force
 
       - restore_cache: *restore_mix_caches_sha
-      - restore_cache: *restore_build_caches_sha
+      - restore_cache: *restore_build_caches
 
       # run typespecs
       - run: mix dialyzer --halt-exit-status
