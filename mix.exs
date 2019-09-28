@@ -36,6 +36,7 @@ defmodule GifsToGifs.MixProject do
   defp deps do
     [
       {:excoveralls, "~> 0.10", only: :test},
+      {:junit_formatter, "~> 3.0", only: :test},
       {:mix_test_watch, "~> 0.8", only: :dev, runtime: false}
     ]
   end
