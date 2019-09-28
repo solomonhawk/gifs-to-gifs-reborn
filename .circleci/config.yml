@@ -1,6 +1,6 @@
 aliases:
   ### restore caches
-  - &restore_mix_caches_sha
+  - &restore_mix_cache_sha
     keys:
       - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}-{{ .Environment.CIRCLE_SHA1 }}
 
@@ -10,11 +10,11 @@ aliases:
   #     - v1-mix-cache-{{ .Branch }}
   #     - v1-mix-cache
 
-  - &restore_build_caches_sha
+  - &restore_build_cache_sha
     keys:
       - v1-build-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
 
-  - &restore_build_caches
+  - &restore_build_cache_branch
     keys:
       - v1-build-cache-{{ .Branch }}
       - v1-build-cache
@@ -48,9 +48,9 @@ aliases:
     key: v1-build-cache-{{ .Branch }}--{{ .Environment.CIRCLE_SHA1 }}
     paths: _build
 
-  # - &save_build_cache_branch
-  #   key: v1-build-cache-{{ .Branch }}-
-  #   paths: _build
+  - &save_build_cache_branch
+    key: v1-build-cache-{{ .Branch }}
+    paths: _build
 
   # - &save_build_cache_generic
   #   key: v1-build-cache
@@ -70,8 +70,8 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
 
-      - restore_cache: *restore_mix_caches_sha
-      - restore_cache: *restore_build_caches
+      - restore_cache: *restore_mix_cache_sha
+      - restore_cache: *restore_build_cache_branch
 
       # get deps and compile
       - run: mix deps.get
@@ -79,7 +79,7 @@ jobs:
       - run: ls deps
 
       - save_cache: *save_mix_cache_sha
-      - save_cache: *save_build_cache_sha
+      - save_cache: *save_build_cache_branch
       # - save_cache: *save_mix_cache_checksum
       # - save_cache: *save_mix_cache_branch
       # - save_cache: *save_mix_cache_generic
@@ -92,11 +92,15 @@ jobs:
 
     steps:
       - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
+      # - run: mix local.hex --force
+      # - run: mix local.rebar --force
 
-      - restore_cache: *restore_mix_caches_sha
-      - restore_cache: *restore_build_caches
+      - run: ls deps
+
+      - restore_cache: *restore_mix_cache_sha
+      - restore_cache: *restore_build_cache_branch
+
+      - run: ls deps
 
       # run test coverage
       - run: mix coveralls.html
@@ -113,11 +117,11 @@ jobs:
 
     steps:
       - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
+      # - run: mix local.hex --force
+      # - run: mix local.rebar --force
 
-      - restore_cache: *restore_mix_caches_sha
-      - restore_cache: *restore_build_caches
+      - restore_cache: *restore_mix_cache_sha
+      - restore_cache: *restore_build_cache_branch
 
       # generate docs
       - run: mix docs
@@ -134,11 +138,11 @@ jobs:
 
     steps:
       - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
+      # - run: mix local.hex --force
+      # - run: mix local.rebar --force
 
-      - restore_cache: *restore_mix_caches_sha
-      - restore_cache: *restore_build_caches
+      - restore_cache: *restore_mix_cache_sha
+      - restore_cache: *restore_build_cache_branch
 
       # run typespecs
       - run: mix dialyzer --halt-exit-status
@@ -151,10 +155,10 @@ jobs:
 
     steps:
       - checkout
-      - run: mix local.hex --force
-      - run: mix local.rebar --force
+      # - run: mix local.hex --force
+      # - run: mix local.rebar --force
 
-      - restore_cache: *restore_mix_caches_sha
+      - restore_cache: *restore_mix_cache_sha
 
       # check formatting
       - run: mix format --check-formatted
