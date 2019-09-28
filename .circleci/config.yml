@@ -15,28 +15,28 @@ aliases:
   - &save_mix_cache_checksum
     key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
     paths:
-      - 'deps'
-      - ~/.mix
+      - deps
+      - .mix
 
   - &save_mix_cache_branch
     key: v1-mix-cache-{{ .Branch }}
     paths:
-      - 'deps'
-      - ~/.mix
+      - deps
+      - .mix
 
   - &save_mix_cache_generic
     key: v1-mix-cache
     paths:
-      - 'deps'
-      - ~/.mix
+      - deps
+      - .mix
 
   - &save_build_cache_branch
     key: v1-build-cache-{{ .Branch }}
-    paths: '_build'
+    paths: _build
 
   - &save_build_cache_generic
     key: v1-build-cache
-    paths: '_build'
+    paths: _build
 
 version: 2
 jobs:
@@ -121,6 +121,7 @@ jobs:
 
     steps:
       - checkout
+      - restore_cache: *restore_mix_caches
 
       # check formatting
       - run: mix format --check-formatted
