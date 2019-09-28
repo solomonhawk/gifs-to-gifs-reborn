@@ -43,5 +43,11 @@ docker:
 run:
 	_build/prod/rel/gifs_to_gifs/bin/gifs_to_gifs start_iex
 
+check-ci:
+	circleci config validate
+
+process-ci:
+	circleci config process .circleci/config.yml
+
 .DEFAULT: test
 .PHONY: t tw types cov cov.html assets build-assets dev iex ssh digest release docker-build docker run
