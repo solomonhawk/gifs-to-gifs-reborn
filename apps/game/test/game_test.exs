@@ -18,7 +18,7 @@ defmodule GameTest do
     assert game.shortcode == @shortcode
     assert game.creator == @player1
     assert game.players[@player1.id] == @player1
-    assert game.scores[@player1.id] == 1
+    assert game.scores[@player1.id] == 0
   end
 
   test "player_join/2", %{game: game} do
