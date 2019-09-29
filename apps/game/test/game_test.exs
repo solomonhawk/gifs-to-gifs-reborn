@@ -18,7 +18,7 @@ defmodule GameTest do
     assert game.shortcode == @shortcode
     assert game.creator == @player1
     assert game.players[@player1.id] == @player1
-    assert game.scores[@player1.id] == 1
+    assert game.scores[@player1.id] == 0
   end
 
   test "player_join/2", %{game: game} do
@@ -70,7 +70,7 @@ defmodule GameTest do
       assert game.round_number == 1
       assert length(game.rounds) == 1
       refute game.funmaster == nil
-      assert length(game.funmaster_order) == 1
+      assert length(game.funmaster_order) == 3
     end
 
     test "start_round/1 when phase is :round_end", %{game: game} do
