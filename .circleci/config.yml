@@ -119,16 +119,16 @@ jobs:
       - restore_cache: *restore_mix_cache_sha
       - restore_cache: *restore_build_cache_sha
       - restore_cache:
-        keys:
-          - v1-dialyzer-plt-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+          keys:
+            - v1-dialyzer-plt-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
 
       # run typespecs
       - run: mix dialyzer --halt-exit-status
 
       - save_cache:
-        key: v1-dialyzer-plt-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
-        paths:
-          - _plts
+          key: v1-dialyzer-plt-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - _plts
 
   format:
     <<: *defaults
