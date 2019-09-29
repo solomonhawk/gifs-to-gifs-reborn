@@ -7,6 +7,8 @@ defmodule GifsToGifs.MixProject do
       version: "0.1.0",
       start_permanent: Mix.env() == :prod,
       deps: deps(),
+      aliases: aliases(),
+      dialyzer: dialyzer(),
       test_coverage: [tool: ExCoveralls],
       preferred_cli_env: [
         coveralls: :test,
@@ -44,8 +46,15 @@ defmodule GifsToGifs.MixProject do
 
   defp aliases do
     [
-      "coveralls": ["coveralls --umbrella"],
+      coveralls: ["coveralls --umbrella"],
       "coveralls.detail": ["coveralls.detail --umbrella"]
+    ]
+  end
+
+  defp dialyzer do
+    [
+      flags: [:error_handling, :race_conditions, :underspecs, :unmatched_returns],
+      plt_add_apps: [:ex_unit, :mix]
     ]
   end
 end
