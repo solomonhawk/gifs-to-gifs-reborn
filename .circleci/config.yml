@@ -89,6 +89,10 @@ jobs:
           path: cover
           destination: coverage_results
 
+      - store_artifacts:
+          path: reports
+          destination: test_results
+
   docs:
     <<: *defaults
     steps:
