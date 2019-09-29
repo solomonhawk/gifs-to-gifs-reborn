@@ -54,7 +54,8 @@ defmodule GifsToGifs.MixProject do
   defp dialyzer do
     [
       flags: [:error_handling, :race_conditions, :underspecs, :unmatched_returns],
-      plt_add_apps: [:ex_unit, :mix]
+      plt_add_apps: [:ex_unit, :mix],
+      plt_file: {:no_warn, "_plts/dialyzer.plt"}
     ]
   end
 end

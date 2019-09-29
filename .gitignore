@@ -25,7 +25,12 @@ erl_crash.dump
 # Ignore secret config files
 *.secret.exs
 
+# Env config
 .env
 *env.prod
+
 .vscode/*
-.yarn-cache.tgz
+
+# Dialyzer
+/_plts/*.plt
+/_plts/*.plt.hash
