@@ -50,7 +50,7 @@ defmodule GifsToGifs.MixProject do
   defp aliases do
     [
       coveralls: ["coveralls --umbrella"],
-      coveralls.html: ["coveralls.html --umbrella"],
+      "coveralls.html": ["coveralls.html --umbrella"],
       "coveralls.detail": ["coveralls.detail --umbrella"]
     ]
   end
