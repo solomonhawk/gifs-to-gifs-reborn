@@ -1,60 +1,50 @@
 aliases:
   ### restore caches
-  - &restore_mix_cache_sha
+  - &restore_mix_cache
     keys:
-      - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}-{{ .Environment.CIRCLE_SHA1 }}
+      - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
+      - v1-mix-cache-{{ .Branch }}
+      - v1-mix-cache
 
-  # - &restore_mix_caches
-  #   keys:
-  #     - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-  #     - v1-mix-cache-{{ .Branch }}
-  #     - v1-mix-cache
-
-  - &restore_build_cache_sha
-    keys:
-      - v1-build-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
-
-  - &restore_build_cache_branch
+  - &restore_build_cache
     keys:
       - v1-build-cache-{{ .Branch }}
       - v1-build-cache
 
+  - &restore_plt_cache
+    keys:
+      - v1-dialyzer-plt-cache
+
   ### save caches
-  - &save_mix_cache_sha
-    key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}-{{ .Environment.CIRCLE_SHA1 }}
+  - &save_mix_cache_checksum
+    key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
     paths:
       - deps
       - ~/.mix
 
-  # - &save_mix_cache_checksum
-  #   key: v1-mix-cache-{{ .Branch }}
-  #   paths:
-  #     - deps
-  #     - .mix
+  - &save_mix_cache_branch
+    key: v1-mix-cache-{{ .Branch }}
+    paths:
+      - deps
+      - ~/.mix
 
-  # - &save_mix_cache_branch
-  #   key: v1-mix-cache-{{ .Branch }}
-  #   paths:
-  #     - deps
-  #     - .mix
-
-  # - &save_mix_cache_generic
-  #   key: v1-mix-cache
-  #   paths:
-  #     - deps
-  #     - .mix
-
-  - &save_build_cache_sha
-    key: v1-build-cache-{{ .Branch }}--{{ .Environment.CIRCLE_SHA1 }}
-    paths: _build
+  - &save_mix_cache_fallback
+      key: v1-mix-cache
+      paths:
+      - deps
+      - ~/.mix
 
   - &save_build_cache_branch
     key: v1-build-cache-{{ .Branch }}
     paths: _build
 
-  # - &save_build_cache_generic
-  #   key: v1-build-cache
-  #   paths: _build
+  - &save_build_cache_fallback
+    key: v1-build-cache
+    paths: _build
+
+  - &save_plt_cache
+    key: v1-dialyzer-plt-cache
+    paths: _plts
 
 defaults: &defaults
   working_directory: ~/repo
@@ -72,15 +62,18 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
 
-      - restore_cache: *restore_mix_cache_sha
-      - restore_cache: *restore_build_cache_sha
+      - restore_cache: *restore_mix_cache
+      - restore_cache: *restore_build_cache
 
       # get deps and compile
       - run: mix deps.get
       - run: mix compile
 
-      - save_cache: *save_mix_cache_sha
-      - save_cache: *save_build_cache_sha
+      - save_cache: *save_mix_cache_checksum
+      - save_cache: *save_mix_cache_branch
+      - save_cache: *save_mix_cache_fallback
+      - save_cache: *save_build_cache_branch
+      - save_cache: *save_build_cache_fallback
 
   test:
     <<: *defaults
@@ -88,8 +81,8 @@ jobs:
       - checkout
       - run: sudo apt-get -y install inotify-tools
 
-      - restore_cache: *restore_mix_cache_sha
-      - restore_cache: *restore_build_cache_sha
+      - restore_cache: *restore_mix_cache
+      - restore_cache: *restore_build_cache
 
       # run test coverage
       - run: mix coveralls.html
@@ -102,8 +95,8 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache: *restore_mix_cache_sha
-      - restore_cache: *restore_build_cache_sha
+      - restore_cache: *restore_mix_cache
+      - restore_cache: *restore_build_cache
 
       # generate docs
       - run: mix docs
@@ -116,25 +109,20 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache: *restore_mix_cache_sha
-      - restore_cache: *restore_build_cache_sha
-      - restore_cache:
-          keys:
-            - v1-dialyzer-plt-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache: *restore_mix_cache
+      - restore_cache: *restore_build_cache
+      - restore_cache: *restore_plt_cache
 
       # run typespecs
       - run: mix dialyzer --halt-exit-status
 
-      - save_cache:
-          key: v1-dialyzer-plt-cache-{{ .Branch }}-{{ .Environment.CIRCLE_SHA1 }}
-          paths:
-            - _plts
+      - save_cache: *save_plt_cache
 
   format:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache: *restore_mix_cache_sha
+      - restore_cache: *restore_mix_cache
 
       # check formatting
       - run: mix format --check-formatted
