@@ -59,7 +59,8 @@ defmodule GifsToGifs.MixProject do
     [
       flags: [:error_handling, :race_conditions, :underspecs, :unmatched_returns],
       plt_add_apps: [:ex_unit, :mix],
-      plt_file: {:no_warn, "_plts/dialyzer.plt"}
+      plt_file: {:no_warn, "_plts/dialyzer.plt"},
+      ignore_warnings: ".dialyzer_ignore.exs"
     ]
   end
 end

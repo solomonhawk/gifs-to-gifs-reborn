@@ -9,7 +9,7 @@ defmodule GameApp.Application do
       | Application.get_env(:game, :children)
     ]
 
-    :ets.new(:games_table, [:public, :named_table])
+    _ = :ets.new(:games_table, [:public, :named_table])
 
     opts = [strategy: :one_for_one, name: GameApp.Supervisor]
     Supervisor.start_link(children, opts)

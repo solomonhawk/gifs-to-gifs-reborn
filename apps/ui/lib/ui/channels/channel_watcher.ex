@@ -44,7 +44,7 @@ defmodule Ui.ChannelWatcher do
         {:noreply, state}
 
       {:ok, {mod, func, args}} ->
-        Task.start_link(fn -> apply(mod, func, args) end)
+        {:ok, _} = Task.start_link(fn -> apply(mod, func, args) end)
         {:noreply, drop_channel(state, pid)}
     end
   end

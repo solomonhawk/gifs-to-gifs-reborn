@@ -88,6 +88,8 @@ defmodule GameApp.Server do
 
   @impl true
   def init({shortcode, player, %GameConfig{game_timeout: game_timeout} = config}) do
+    # TODO(shawk): dialyzer reports there may be a race condition when attempting
+    # to do a :ets.insert after an :ets.lookup. Ignoring for now, revisit later.
     game =
       case :ets.lookup(:games_table, shortcode) do
         [] ->
@@ -99,7 +101,7 @@ defmodule GameApp.Server do
           game
       end
 
-    Logger.info("Spawned game server process '#{game.shortcode}'.")
+    _ = Logger.info("Spawned game server process '#{game.shortcode}'.")
     {:ok, game, game_timeout}
   end
 
@@ -151,7 +153,7 @@ defmodule GameApp.Server do
     next = Game.select_prompt(game, prompt)
     update_ets(next)
 
-    if game.config.reaction_selection_timeout > 0 do
+    _ = if game.config.reaction_selection_timeout > 0 do
       Process.send_after(
         self(),
         {:reaction_timeout, channel_pid},
@@ -168,7 +170,7 @@ defmodule GameApp.Server do
     update_ets(next)
 
     # Advance to winner_selection after a reaction is selected, if all reactions selected
-    if Game.all_players_reacted?(next) do
+    _ = if Game.all_players_reacted?(next) do
       Process.send_after(
         self(),
         {:all_players_reacted, channel_pid},
@@ -246,18 +248,18 @@ defmodule GameApp.Server do
   @impl true
   def terminate({:shutdown, :empty_game}, game) do
     :ets.delete(:games_table, game.shortcode)
-    Logger.info("Server '#{game.shortcode}' shutdown because all players left.")
+    _ = Logger.info("Server '#{game.shortcode}' shutdown because all players left.")
     :ok
   end
 
   def terminate({:shutdown, :timeout}, game) do
     :ets.delete(:games_table, game.shortcode)
-    Logger.info("Shutting down game '#{game.shortcode}', timed out.")
+    _ = Logger.info("Shutting down game '#{game.shortcode}', timed out.")
     :ok
   end
 
   def terminate(_reason, game) do
-    Logger.info("Game server process terminated '#{game.shortcode}'.")
+    _ = Logger.info("Game server process terminated '#{game.shortcode}'.")
     :ok
   end
 

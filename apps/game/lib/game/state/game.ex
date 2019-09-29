@@ -445,7 +445,7 @@ defmodule GameApp.Game do
 
   @spec generate_funmaster_order(map()) :: [String.t()] | []
   defp generate_funmaster_order(players) do
-    :random.seed(:os.timestamp())
+    _ = :random.seed(:os.timestamp())
 
     players
     |> Map.values()
