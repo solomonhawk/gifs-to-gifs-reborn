@@ -40,7 +40,10 @@ defmodule GifsToGifs.MixProject do
       {:excoveralls, "~> 0.10", only: [:dev, :test]},
       {:junit_formatter, "~> 3.0", only: [:dev, :test]},
       {:mix_test_watch, "~> 0.8", only: [:dev, :test], runtime: false},
-      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev, :test], runtime: false}
+      {:dialyxir, "~> 1.0.0-rc.6", only: [:dev, :test], runtime: false},
+      {:ex_doc, "~> 0.19", only: [:dev, :test]},
+      {:earmark, "~> 1.2", only: [:dev, :test]},
+      {:cortex, "~> 0.1", only: [:dev, :test]}
     ]
   end
 
