@@ -1,21 +1,21 @@
 aliases:
-  ### restore caches
-  - &restore_mix_cache
+  # restore caches
+  - &mix_caches
     keys:
       - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
       - v1-mix-cache-{{ .Branch }}
       - v1-mix-cache
 
-  - &restore_build_cache
+  - &build_caches
     keys:
       - v1-build-cache-{{ .Branch }}
       - v1-build-cache
 
-  - &restore_plt_cache
+  - &plt_cache
     keys:
       - v1-dialyzer-plt-cache
 
-  ### save caches
+  # save caches
   - &save_mix_cache_checksum
     key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.exs" }}-{{ checksum "mix.lock" }}
     paths:
@@ -62,8 +62,8 @@ jobs:
       - run: mix local.hex --force
       - run: mix local.rebar --force
 
-      - restore_cache: *restore_mix_cache
-      - restore_cache: *restore_build_cache
+      - restore_cache: *mix_caches
+      - restore_cache: *build_caches
 
       # get deps and compile
       - run: mix deps.get
@@ -81,8 +81,8 @@ jobs:
       - checkout
       - run: sudo apt-get -y install inotify-tools
 
-      - restore_cache: *restore_mix_cache
-      - restore_cache: *restore_build_cache
+      - restore_cache: *mix_caches
+      - restore_cache: *build_caches
 
       # run test coverage
       - run: mix coveralls.html
@@ -95,8 +95,8 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache: *restore_mix_cache
-      - restore_cache: *restore_build_cache
+      - restore_cache: *mix_caches
+      - restore_cache: *build_caches
 
       # generate docs
       - run: mix docs
@@ -109,9 +109,9 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache: *restore_mix_cache
-      - restore_cache: *restore_build_cache
-      - restore_cache: *restore_plt_cache
+      - restore_cache: *mix_caches
+      - restore_cache: *build_caches
+      - restore_cache: *plt_cache
 
       # run typespecs
       - run: mix dialyzer
@@ -122,7 +122,7 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache: *restore_mix_cache
+      - restore_cache: *mix_caches
 
       # check formatting
       - run: mix format --check-formatted
