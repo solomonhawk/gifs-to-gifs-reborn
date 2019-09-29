@@ -153,13 +153,14 @@ defmodule GameApp.Server do
     next = Game.select_prompt(game, prompt)
     update_ets(next)
 
-    _ = if game.config.reaction_selection_timeout > 0 do
-      Process.send_after(
-        self(),
-        {:reaction_timeout, channel_pid},
-        game.config.reaction_selection_timeout
-      )
-    end
+    _ =
+      if game.config.reaction_selection_timeout > 0 do
+        Process.send_after(
+          self(),
+          {:reaction_timeout, channel_pid},
+          game.config.reaction_selection_timeout
+        )
+      end
 
     {:noreply, next, game.config.game_timeout}
   end
@@ -170,13 +171,14 @@ defmodule GameApp.Server do
     update_ets(next)
 
     # Advance to winner_selection after a reaction is selected, if all reactions selected
-    _ = if Game.all_players_reacted?(next) do
-      Process.send_after(
-        self(),
-        {:all_players_reacted, channel_pid},
-        game.config.winner_selection_timeout
-      )
-    end
+    _ =
+      if Game.all_players_reacted?(next) do
+        Process.send_after(
+          self(),
+          {:all_players_reacted, channel_pid},
+          game.config.winner_selection_timeout
+        )
+      end
 
     {:noreply, next, game.config.game_timeout}
   end
