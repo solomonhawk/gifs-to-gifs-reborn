@@ -114,7 +114,7 @@ jobs:
       - restore_cache: *restore_plt_cache
 
       # run typespecs
-      - run: mix dialyzer --halt-exit-status
+      - run: mix dialyzer
 
       - save_cache: *save_plt_cache
 
