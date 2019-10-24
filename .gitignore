@@ -7,8 +7,7 @@
 /cover/
 
 # JUnit reports
-/reports/*
-!/reports/.gitkeep
+/_reports/*
 
 # The directory Mix downloads your dependencies sources to.
 /deps/
@@ -38,3 +37,5 @@ erl_crash.dump
 # Dialyzer
 /_plts/*.plt
 /_plts/*.plt.hash
+
+rel/artifacts

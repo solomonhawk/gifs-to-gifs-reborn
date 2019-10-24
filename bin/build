@@ -1,0 +1,17 @@
+#!/bin/sh
+set -e
+
+if command -v docker >/dev/null; then
+  APP_DIR="/app"
+
+  # build the docker container using the latest Dockerfile
+  docker build -t gifme-build:latest .
+
+  # run the container and execute `./bin/build-release` in order to produce
+  # the release artifact, then copy it back to the host
+  docker run -v "$(pwd)/rel/artifacts:$APP_DIR/rel/artifacts" --rm -it gifme-build:latest "$APP_DIR/bin/build-release"
+else
+  echo "You must have docker installed to build a release"
+  echo "Visit https://www.docker.com/get-started for more information"
+  exit 1
+fi

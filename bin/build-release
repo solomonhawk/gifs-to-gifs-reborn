@@ -1,0 +1,36 @@
+#!/bin/bash
+set -e
+
+if [ "$BUILD_ENV" = "true" ]; then
+  cd /app
+
+  # Stop if the environment has different versions of tools
+  source bin/check-tool-versions
+
+  APP_NAME=gifme
+  APP_VSN=$(cat VERSION)
+
+  mkdir -p rel/artifacts
+
+  # Fetch deps and compile
+  mix local.rebar --force
+  mix local.hex --if-missing --force
+
+  export MIX_ENV=prod
+
+  # Run an explicit clean to remove any build artifacts from the host
+  # sweet_xml needs to be compiled before ex_aws, or else S3 uploads won't
+  # find sweet_xml and fail.
+  mix do clean, deps.clean --all, deps.get, compile, compile --force
+
+  # Build the release
+  (cd apps/ui/assets && yarn install && yarn run build-production)
+  mix phx.digest
+  mix release
+
+  # Copy tarball to output
+  cp "_build/prod/rel/$APP_NAME/releases/$APP_VSN/$APP_NAME.tar.gz" rel/artifacts/"$APP_NAME-$APP_VSN.tar.gz"
+else
+  echo "You must use this inside the docker build environment container"
+  exit 1
+fi

@@ -9,6 +9,6 @@ config :ui, Ui.Endpoint,
   server: false
 
 config :junit_formatter,
-  report_dir: Path.join(File.cwd!(), "reports"),
+  report_dir: Path.join(File.cwd!(), "_reports"),
   print_report_file: true,
   prepend_project_name?: true

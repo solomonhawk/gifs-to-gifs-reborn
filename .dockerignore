@@ -1,9 +1,10 @@
-_build/
+_build/dev
+_build/test
 .elixir_ls/
 .git/
 .vscode/
 deps/
-priv/static/
+rel/
 test/
 .dockerignore
 .env
@@ -13,3 +14,4 @@ test/
 Dockerfile
 README.md
 apps/ui/assets/node_modules
+apps/ui/priv/static

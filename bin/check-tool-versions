@@ -1,0 +1,127 @@
+#!/bin/bash
+
+LANGUAGES="erlang elixir nodejs"
+
+get_tool_version() {
+  grep "$1" .tool-versions | awk '{print $2}'
+}
+
+has_matching_versions() {
+  # Usage: has_matching_versions DEPTH VERSION1 VERSION2
+  # Usage: has_matching_versions major v1.2.3 v1.2.5   #=> 0 (yes)
+  # Usage: has_matching_versions minor v1.2.3 v1.2.5   #=> 0 (yes)
+  # Usage: has_matching_versions patch v1.2.3 v1.2.5   #=> 1 (no)
+  # Usage: has_matching_versions patch v1.3.0 v1.2.0   #=> 1 (no)
+  # Usage: has_matching_versions patch v2.0.0 v1.0.0   #=> 1 (no)
+
+  local CHECK_DEPTH="$1"; shift
+  local CURRENT_VERSION="$1"; shift
+  local NEEDED_VERSION="$1"; shift
+  local CURRENT_MAJOR
+  local CURRENT_MINOR
+  local CURRENT_PATCH
+  local NEEDED_MAJOR
+  local NEEDED_MINOR
+  local NEEDED_PATCH
+
+  CURRENT_MAJOR=$(echo "${CURRENT_VERSION#v}" | cut -d. -f1)
+  CURRENT_MINOR=$(echo "$CURRENT_VERSION" | cut -d. -f2)
+  CURRENT_PATCH=$(echo "$CURRENT_VERSION" | cut -d. -f3)
+
+  NEEDED_MAJOR=$(echo "${NEEDED_VERSION#v}" | cut -d. -f1)
+  NEEDED_MINOR=$(echo "$NEEDED_VERSION" | cut -d. -f2)
+  NEEDED_PATCH=$(echo "$NEEDED_VERSION" | cut -d. -f3)
+
+  local RETURN
+  if [ "$CURRENT_MAJOR" = "$NEEDED_MAJOR" ]; then RETURN=0; else RETURN=1; fi
+  if [ "$RETURN" = 1 ]; then return 1; fi
+  if [ "$CHECK_DEPTH" = "minor" ]; then
+    if [ "$CURRENT_MINOR" = "$NEEDED_MINOR" ]; then RETURN=0; else RETURN=1; fi
+  fi
+  if [ "$RETURN" = 1 ]; then return 1; fi
+  if [ "$CHECK_DEPTH" = "patch" ]; then
+    if [ "$CURRENT_PATCH" = "$NEEDED_PATCH" ]; then RETURN=0; else RETURN=1; fi
+  fi
+  return $RETURN
+}
+
+should_check_language () {
+  if [[ "$LANGUAGES_TO_CHECK" = *$1* ]]; then return 0; else return 1; fi
+}
+
+if [ "$#" -eq 0 ]; then
+  LANGUAGES_TO_CHECK=$LANGUAGES
+else
+  LANGUAGES_TO_CHECK=$*
+fi
+
+# Erlang
+if should_check_language "erlang"; then
+  if command -v erl >/dev/null; then
+    NEEDED_ERLANG_VERSION="$(get_tool_version "erlang")"
+    CURRENT_ERLANG_VERSION=$(
+      erl -eval '{ok, Version} = file:read_file(filename:join([code:root_dir(), "releases", erlang:system_info(otp_release), "OTP_VERSION"])), io:fwrite(Version), halt().' -noshell
+    )
+    if has_matching_versions major "$CURRENT_ERLANG_VERSION" "$NEEDED_ERLANG_VERSION"; then
+      echo "Erlang/OTP major versions match"
+      echo "Requested: $NEEDED_ERLANG_VERSION. Available: $CURRENT_ERLANG_VERSION"
+    else
+      echo "The Erlang version does not match"
+      echo "Requested: $NEEDED_ERLANG_VERSION. Available: $CURRENT_ERLANG_VERSION"
+      exit 1
+    fi
+  else
+    echo "Erlang is not installed"
+    exit 1
+  fi
+fi
+
+# Elixir
+if should_check_language "elixir"; then
+  if command -v elixir >/dev/null; then
+    NEEDED_ELIXIR_VERSION="$(get_tool_version "elixir" | sed 's/-otp.*//')"
+    NEEDED_ELIXIR_OTP_VERSION="$(get_tool_version "elixir" | cut -d- -f3)"
+    CURRENT_ELIXIR_VERSION="$(elixir --version | tail -n 1 | awk '{print $2}')"
+    CURRENT_ELIXIR_OTP_VERSION="$(elixir --version | tail -n 1 | awk '{print $6}' | grep -o '[0-9]*')"
+
+    if has_matching_versions patch "$CURRENT_ELIXIR_VERSION" "$NEEDED_ELIXIR_VERSION"; then
+      echo "Elixir versions match"
+      echo "Requested: $NEEDED_ELIXIR_VERSION. Available: $CURRENT_ELIXIR_VERSION"
+    else
+      echo "The Elixir version does not match"
+      echo "Requested: $NEEDED_ELIXIR_VERSION. Available: $CURRENT_ELIXIR_VERSION"
+      exit 1
+    fi
+
+    if has_matching_versions major "$CURRENT_ELIXIR_OTP_VERSION" "$NEEDED_ELIXIR_OTP_VERSION"; then
+      echo "Elixir OTP versions match"
+      echo "Requested: $NEEDED_ELIXIR_OTP_VERSION. Available: $CURRENT_ELIXIR_OTP_VERSION"
+    else
+      echo "The Elixir OTP version does not match"
+      echo "Requested: $NEEDED_ELIXIR_OTP_VERSION. Available: $CURRENT_ELIXIR_OTP_VERSION"
+      exit 1
+    fi
+  else
+    echo "Elixir is not installed"
+    exit 1
+  fi
+fi
+
+# NodeJS
+if should_check_language "nodejs"; then
+  if command -v node >/dev/null; then
+    NEEDED_NODEJS_VERSION="$(get_tool_version "nodejs")"
+    CURRENT_NODEJS_VERSION="$(node --version)"
+    if has_matching_versions major "$CURRENT_NODEJS_VERSION" "$NEEDED_NODEJS_VERSION"; then
+      echo "NodeJS major versions match"
+      echo "Requested: $NEEDED_NODEJS_VERSION. Available: $CURRENT_NODEJS_VERSION"
+    else
+      echo "The NodeJS version does not match"
+      echo "Requested: $NEEDED_NODEJS_VERSION. Available: $CURRENT_NODEJS_VERSION"
+      exit 1
+    fi
+  else
+    echo "NodeJS is not installed"
+    exit 1
+  fi
+fi
