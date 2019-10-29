@@ -116,6 +116,8 @@ release_path="$releases_path/$VERSION"
 
 if [ -f "$RELEASE_FILE" ]; then
   echo_notice "Uploading release"
+  echo "$RELEASE_FILE"
+  echo "$SERVER:$releases_path/$RELEASE_FILENAME"
   scp "$RELEASE_FILE" "$SERVER:$releases_path/$RELEASE_FILENAME"
 
   # Backup, unpack, restart the app, and migrate if necessary
