@@ -20,6 +20,9 @@ set -e
 APP=gifme
 APP_ENV=${1:-none}
 
+# shellcheck source=utils.sh
+source bin/utils.sh
+
 # determine the target server to deploy to
 get_server() {
   case $APP_ENV in
@@ -45,10 +48,23 @@ if [ "$SERVER" = "none" ]; then
   exit 1
 fi
 
-if [[ $(git diff --stat) != '' ]]; then
-  echo_warning "You have uncommitted changes. Please resolve your changes first."
-  exit 1
-fi
+# Don't accidently deploy from non-master branch
+build_release() {
+  if [ "$(git symbolic-ref HEAD --short)" != "master" ]; then
+    echo_warning "You are not on the master branch and trying to build a release"
+    BRANCH_CHOICE=$(echo_prompt "Are you sure you want to continue?" "(y/n)")
+    case "$BRANCH_CHOICE" in
+      y|Y ) echo "Building from non-master";;
+      n|N ) echo "Exiting" && exit 1;;
+      * ) echo "Invalid choice. Exiting" && exit 1;;
+    esac
+  fi
+
+  # shellcheck source=build
+  source ./bin/build
+}
+
+exit_if_dirty
 
 if [ -n "$CI" ]; then
   source ./bin/build
@@ -100,6 +116,8 @@ release_path="$releases_path/$VERSION"
 
 if [ -f "$RELEASE_FILE" ]; then
   echo_notice "Uploading release"
+  echo "$RELEASE_FILE"
+  echo "$SERVER:$releases_path/$RELEASE_FILENAME"
   scp "$RELEASE_FILE" "$SERVER:$releases_path/$RELEASE_FILENAME"
 
   # Backup, unpack, restart the app, and migrate if necessary
@@ -109,16 +127,20 @@ if [ -f "$RELEASE_FILE" ]; then
   ssh "$SERVER" /bin/bash << EOF
   mkdir "$release_path" 2> /dev/null
   tar -C "$release_path" -xzf "$releases_path/$RELEASE_FILENAME"
+
   cd "$release_path"
+
   ln -snfv "$release_path" "$app_path/current"
-  ln -snfv "$release_path/lib/$APP-$VERSION/priv/static" "$app_path/public"
+  ln -snfv "$release_path/lib/ui-0.1.0/priv/static" "$app_path/public"
+
   rm -drf "$release_path/var/log" && \
     mkdir -p "$release_path/var" && \
     ln -sfnv "$shared_path/log" "$release_path/var/log"
+
   sudo systemctl restart "$APP-$APP_ENV"
-  set -a && \
-    source "$shared_path/env.prod" && \
-    ./bin/"$APP" seed
+
+  set -a && source "$shared_path/env.prod"
+
   echo "Success!"
 EOF
 else
