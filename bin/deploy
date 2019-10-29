@@ -123,6 +123,8 @@ if [ -f "$RELEASE_FILE" ]; then
 
   # shellcheck disable=SC2087
   ssh "$SERVER" /bin/bash << EOF
+  mkdir "$release_path" 2> /dev/null
+  tar -C "$release_path" -xzf "$releases_path/$RELEASE_FILENAME"
   echo $(pwd)
 EOF
 else
