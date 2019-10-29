@@ -48,10 +48,23 @@ if [ "$SERVER" = "none" ]; then
   exit 1
 fi
 
-if [[ $(git diff --stat) != '' ]]; then
-  echo_warning "You have uncommitted changes. Please resolve your changes first."
-  exit 1
-fi
+# Don't accidently deploy from non-master branch
+build_release() {
+  if [ "$(git symbolic-ref HEAD --short)" != "master" ]; then
+    echo_warning "You are not on the master branch and trying to build a release"
+    BRANCH_CHOICE=$(echo_prompt "Are you sure you want to continue?" "(y/n)")
+    case "$BRANCH_CHOICE" in
+      y|Y ) echo "Building from non-master";;
+      n|N ) echo "Exiting" && exit 1;;
+      * ) echo "Invalid choice. Exiting" && exit 1;;
+    esac
+  fi
+
+  # shellcheck source=build
+  source ./bin/build
+}
+
+exit_if_dirty
 
 if [ -n "$CI" ]; then
   source ./bin/build
