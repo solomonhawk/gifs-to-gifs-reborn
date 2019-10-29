@@ -127,7 +127,23 @@ if [ -f "$RELEASE_FILE" ]; then
   ssh "$SERVER" /bin/bash << EOF
   mkdir "$release_path" 2> /dev/null
   tar -C "$release_path" -xzf "$releases_path/$RELEASE_FILENAME"
-  echo $(pwd)
+
+  cd "$release_path"
+
+  ln -snfv "$release_path" "$app_path/current"
+  ln -snfv "$release_path/lib/ui-0.1.0/priv/static" "$app_path/public"
+
+  rm -drf "$release_path/var/log" && \
+    mkdir -p "$release_path/var" && \
+    ln -sfnv "$shared_path/log" "$release_path/var/log"
+
+  sudo systemctl restart "$APP-$APP_ENV"
+
+  set -a && \
+    source "$shared_path/env.prod" && \
+    ./bin/"$APP" seed
+
+  echo "Success!"
 EOF
 else
   echo_warning "Could not find the release file: ${WHITE}$RELEASE_FILE"
