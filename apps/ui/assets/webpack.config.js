@@ -6,7 +6,7 @@ const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const Dotenv = require('dotenv-webpack')
 
-module.exports = (_env, _options) => ({
+module.exports = (_env, options) => ({
   optimization: {
     minimizer: [
       new UglifyJsPlugin({ cache: true, parallel: true, sourceMap: false }),
@@ -40,6 +40,7 @@ module.exports = (_env, _options) => ({
     new MiniCssExtractPlugin({ filename: '../css/app.css' }),
     new CopyWebpackPlugin([{ from: 'static/', to: '../' }]),
     new Dotenv({
+      path: options.mode === 'production' ? './.env.prod' : './.env',
       safe: true, // load .env.example to verify all required vars are set
       systemvars: true // load system vars for CI
     })
