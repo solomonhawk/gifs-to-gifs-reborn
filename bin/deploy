@@ -139,9 +139,7 @@ if [ -f "$RELEASE_FILE" ]; then
 
   sudo systemctl restart "$APP-$APP_ENV"
 
-  set -a && \
-    source "$shared_path/env.prod" && \
-    ./bin/"$APP" seed
+  set -a && source "$shared_path/env.prod"
 
   echo "Success!"
 EOF
