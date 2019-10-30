@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :ui, Ui.Endpoint,
   http: [port: 4000],
-  url: [scheme: "http", host: System.get_env("HOST", "localhost"), port: 80],
+  url: [scheme: "http", host: "gifme.pizza", port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json",
   secret_key_base: System.get_env("SECRET_KEY_BASE"),
   force_ssl: [rewrite_on: [:x_forwarded_proto]],
