@@ -39,3 +39,5 @@ erl_crash.dump
 /_plts/*.plt.hash
 
 rel/artifacts
+
+.ssh
