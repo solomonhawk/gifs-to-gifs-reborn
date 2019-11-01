@@ -3,9 +3,8 @@ import Media from '../../components/media'
 import FixedRatio from '../../components/fixed-ratio'
 import { getRandomWinnerImage } from '../../../data/images'
 
-export default function Winner(isTie) {
+export default function Winner({ tie }) {
   let image = useMemo(getRandomWinnerImage, [])
-
   return (
     <>
       <div className="pb-2">
@@ -14,7 +13,7 @@ export default function Winner(isTie) {
         </FixedRatio>
       </div>
 
-      <h2 className="center">You {isTie ? 'tied' : 'won'}! 😎</h2>
+      <h2 className="center">You {tie ? 'tied' : 'won'}! 😎</h2>
     </>
   )
 }

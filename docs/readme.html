@@ -8,7 +8,7 @@
     <meta name="project" content=" v0.1.0">
     <title>GifsToGifs —  v0.1.0</title>
     <link rel="stylesheet" href="dist/html-9914b37a220eb2c313b6.css" />
-    <script src="dist/sidebar_items-f993c7449f.js"></script>
+    <script src="dist/sidebar_items-b6f56e5390.js"></script>
       <script src="docs_config.js"></script>
     <script async src="dist/html-9914b37a220eb2c313b6.js"></script>
   </head>
@@ -88,6 +88,51 @@ Cards Against Humanity or Apples to Apples but with GIFS!!!</p>
 <li><a href="https://solomonhawk.github.io/gifs-to-gifs-reborn/GameApp.ServerSupervisor.html">GameApp.ServerSupervisor</a> - Supervisor for Game Servers
 </li>
 </ul>
+<h2 id="set-up" class="section-heading">
+  <a href="#set-up" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Set Up
+</h2>
+
+<ol>
+<li><p>Install mix dependencies</p>
+<pre><code class="nohighlight makeup elixir"><span class="w"> </span><span class="n">mix</span><span class="w"> </span><span class="n">deps</span><span class="o">.</span><span class="n">get</span></code></pre>
+</li>
+<li><p>Follow the readme instructions for each of the apps</p>
+<pre><code class="nohighlight makeup elixir"><span class="w"> </span><span class="n">cd</span><span class="w"> </span><span class="n">apps</span><span class="o">/</span><span class="n">ui</span><span class="w">
+ </span><span class="n">cat</span><span class="w"> </span><span class="nc">README</span><span class="o">.</span><span class="n">md</span><span class="w">
+
+ </span><span class="n">cd</span><span class="w"> </span><span class="n">apps</span><span class="o">/</span><span class="n">game</span><span class="w">
+ </span><span class="n">cat</span><span class="w"> </span><span class="nc">README</span><span class="o">.</span><span class="n">md</span></code></pre>
+</li>
+</ol>
+<h2 id="running-the-app" class="section-heading">
+  <a href="#running-the-app" class="hover-link"><span class="icon-link" aria-hidden="true"></span></a>
+  Running the app
+</h2>
+
+<p>To run the app locally you may either tell <code class="inline">mix</code> to start the phoenix server with or without an interactive shell.</p>
+<ol>
+<li><p><strong>To start the server directly:</strong></p>
+<pre><code class="nohighlight makeup elixir"><span class="w"> </span><span class="n">mix</span><span class="w"> </span><span class="n">phx</span><span class="o">.</span><span class="n">server</span></code></pre>
+<p> Alias: <code class="inline">make run</code></p>
+</li>
+<li><p><strong>Or with an interactive shell:</strong></p>
+<pre><code class="nohighlight makeup elixir"><span class="w"> </span><span class="n">iex</span><span class="w"> </span><span class="o">-</span><span class="nc">S</span><span class="w"> </span><span class="n">mix</span><span class="w"> </span><span class="n">phx</span><span class="o">.</span><span class="n">server</span></code></pre>
+<p> Alias: <code class="inline">make iex</code></p>
+</li>
+<li><p><strong>Running tests:</strong></p>
+<pre><code class="nohighlight makeup elixir"><span class="w"> </span><span class="n">mix</span><span class="w"> </span><span class="n">test</span></code></pre>
+<p> Alias: <code class="inline">make t</code></p>
+</li>
+<li><p><strong>Or to run tests in watch mode:</strong></p>
+<pre><code class="nohighlight makeup elixir"><span class="w"> </span><span class="n">mix</span><span class="w"> </span><span class="n">test</span><span class="o">.</span><span class="n">watch</span></code></pre>
+<p> Alias: <code class="inline">make tw</code></p>
+</li>
+<li><p><strong>For typechecking:</strong></p>
+<pre><code class="nohighlight makeup elixir"><span class="w"> </span><span class="n">mix</span><span class="w"> </span><span class="n">dialyzer</span></code></pre>
+<p> Alias: <code class="inline">make types</code></p>
+</li>
+</ol>
 <h4>Disclaimer</h4>
 <p>Cards Against Humanity is distributed under a Creative Commons BY-NC-SA 2.0 license. That means you can use and remix the game for free, but you can&#39;t sell it without our permission. “Cards Against Humanity” and the CAH logos are trademarks of Cards Against Humanity LLC. Designed in-house.</p>
       <footer class="footer">

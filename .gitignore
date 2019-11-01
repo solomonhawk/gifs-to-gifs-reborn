@@ -6,6 +6,9 @@
 # If you run "mix test --cover", coverage assets end up here.
 /cover/
 
+# JUnit reports
+/_reports/*
+
 # The directory Mix downloads your dependencies sources to.
 /deps/
 
@@ -25,6 +28,16 @@ erl_crash.dump
 # Ignore secret config files
 *.secret.exs
 
+# Env config
 .env
+*env.prod
 
 .vscode/*
+
+# Dialyzer
+/_plts/*.plt
+/_plts/*.plt.hash
+
+rel/artifacts
+
+.ssh

@@ -51,4 +51,20 @@ defmodule GameApp.ServerSupervisor do
     child_pid = GameApp.Server.game_pid(shortcode)
     DynamicSupervisor.terminate_child(ServerSupervisor, child_pid)
   end
+
+  @doc """
+  Finds a game server with the given shortcode.
+
+  Returns `:ok` or `{:error, :not_found}`.
+  """
+  @spec find_game(String.t()) :: {:ok, pid()} | {:error, :not_found}
+  def find_game(shortcode) do
+    case GameApp.Server.game_pid(shortcode) do
+      pid when is_pid(pid) ->
+        {:ok, pid}
+
+      nil ->
+        {:error, :not_found}
+    end
+  end
 end

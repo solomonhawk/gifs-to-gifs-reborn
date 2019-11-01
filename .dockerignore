@@ -1,0 +1,17 @@
+_build/dev
+_build/test
+.elixir_ls/
+.git/
+.vscode/
+deps/
+rel/
+test/
+.dockerignore
+.env
+.formatter.exs
+.gitignore
+.travis.yml
+Dockerfile
+README.md
+apps/ui/assets/node_modules
+apps/ui/priv/static

@@ -7,3 +7,8 @@ config :game, :children, []
 config :ui, Ui.Endpoint,
   http: [port: 4002],
   server: false
+
+config :junit_formatter,
+  report_dir: Path.join(File.cwd!(), "_reports"),
+  print_report_file: true,
+  prepend_project_name?: true

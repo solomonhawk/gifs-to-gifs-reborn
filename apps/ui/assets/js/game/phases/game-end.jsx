@@ -7,7 +7,8 @@ import {
   gameWinner,
   gameWinners,
   isWinner,
-  isTie
+  isTie,
+  isFunmaster
 } from '../../data/helpers'
 
 export default function GameEnd({ game, player }) {
@@ -37,11 +38,13 @@ export default function GameEnd({ game, player }) {
         )}
       </div>
 
-      {isWinner(game, player) ? <Winner isTie={isTie(game)} /> : <Loser />}
+      {isWinner(game, player) ? <Winner tie={isTie(game)} /> : <Loser />}
 
-      <a href="/games/new" className="button mt-auto full-width">
-        Start a new game
-      </a>
+      {isFunmaster(game, player) ? (
+        <a href="/games/new" className="button mt-auto full-width">
+          Start a new game
+        </a>
+      ) : null}
     </>
   )
 }

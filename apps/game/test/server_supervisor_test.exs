@@ -30,10 +30,18 @@ defmodule ServerSupervisorTest do
 
   test "restarts game server processes that crash" do
     {:ok, pid} = ServerSupervisor.start_game("TEST", @player)
+    ref = Process.monitor(pid)
 
-    Process.exit(pid, :shutdown)
+    Process.exit(pid, :kill)
 
-    assert %{active: 1, specs: 1, supervisors: 0, workers: 1} =
-             DynamicSupervisor.count_children(ServerSupervisor)
+    receive do
+      {:DOWN, ^ref, :process, ^pid, :killed} ->
+        :timer.sleep(1)
+        {:ok, pid} = ServerSupervisor.find_game("TEST")
+        assert is_pid(pid)
+    after
+      1000 ->
+        assert false
+    end
   end
 end

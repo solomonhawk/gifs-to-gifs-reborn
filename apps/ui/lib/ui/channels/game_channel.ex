@@ -19,7 +19,7 @@ defmodule Ui.GameChannel do
   end
 
   def leave(shortcode, player, socket) do
-    Logger.info("Player left '#{shortcode}', #{player.name}.")
+    _ = Logger.info("Player left '#{shortcode}', #{player.name}.")
     GameServer.leave(shortcode, player)
     broadcast_game_state(shortcode, socket)
   end
@@ -153,7 +153,7 @@ defmodule Ui.GameChannel do
       pid when is_pid(pid) ->
         {:ok, pid}
 
-      _ ->
+      nil ->
         {:error, "Game does not exist"}
     end
   end

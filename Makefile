@@ -16,11 +16,32 @@ cov.html:
 assets:
 	cd apps/ui/assets && yarn watch
 
-run:
+build-assets:
+	cd apps/ui/assets && yarn build-production
+
+dev:
 	PORT=4000 mix phx.server
 
 iex:
 	PORT=4000 iex -S mix phx.server
 
+ssh:
+	ssh root@gifme-web
+
+digest:
+	MIX_ENV=prod mix phx.digest
+
+release: build-assets digest
+	MIX_ENV=prod mix release --overwrite
+
+run:
+	_build/prod/rel/gifs_to_gifs/bin/gifs_to_gifs start_iex
+
+check-ci:
+	circleci config validate
+
+process-ci:
+	circleci config process .circleci/config.yml
+
 .DEFAULT: test
-.PHONY: t tw types cov cov.html assets
+.PHONY: t tw types cov cov.html assets build-assets dev iex ssh digest release run check-ci process-ci

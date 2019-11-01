@@ -1,17 +1,194 @@
+aliases:
+  # restore caches
+  - &mix_caches
+    keys:
+      - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+      - v1-mix-cache-{{ .Branch }}
+      - v1-mix-cache
+
+  - &build_caches
+    keys:
+      - v1-build-cache-{{ .Branch }}
+      - v1-build-cache
+
+  - &plt_cache
+    keys:
+      - v1-dialyzer-plt-cache
+
+  # save caches
+  - &save_mix_cache_checksum
+    key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
+    paths:
+      - deps
+      - ~/.mix
+
+  - &save_mix_cache_branch
+    key: v1-mix-cache-{{ .Branch }}
+    paths:
+      - deps
+      - ~/.mix
+
+  - &save_mix_cache_fallback
+    key: v1-mix-cache
+    paths:
+      - deps
+      - ~/.mix
+
+  - &save_build_cache_branch
+    key: v1-build-cache-{{ .Branch }}
+    paths: _build
+
+  - &save_build_cache_fallback
+    key: v1-build-cache
+    paths: _build
+
+  - &save_plt_cache
+    key: v1-dialyzer-plt-cache
+    paths: _plts
+
+defaults: &defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/elixir:1.9.0
+      environment:
+        MIX_ENV: test
+
 version: 2
 jobs:
   build:
-    parallelism: 1
-    docker:
-      - image: circleci/elixir:1.9.0
-        environment:
-          MIX_ENV: test
-
-    working_directory: ~/repo
-
+    <<: *defaults
     steps:
       - checkout
-
       - run: mix local.hex --force
-      - run: mix do deps.get, compile
-      - run: mix test
+      - run: mix local.rebar --force
+
+      - restore_cache: *mix_caches
+      - restore_cache: *build_caches
+
+      - run: mix deps.get
+      - run: mix compile
+
+      - save_cache: *save_mix_cache_checksum
+      - save_cache: *save_mix_cache_branch
+      - save_cache: *save_mix_cache_fallback
+      - save_cache: *save_build_cache_branch
+      - save_cache: *save_build_cache_fallback
+
+  test:
+    <<: *defaults
+    steps:
+      - checkout
+      - run: sudo apt-get -y install inotify-tools
+      - run: mkdir _reports
+
+      - restore_cache: *mix_caches
+      - restore_cache: *build_caches
+
+      - run: mix coveralls.html
+
+      - store_artifacts:
+          path: cover
+          destination: coverage_results
+
+      - store_test_results:
+          path: _reports
+
+  docs:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache: *mix_caches
+      - restore_cache: *build_caches
+
+      - run: mix docs
+
+      - store_artifacts:
+          path: docs
+          destination: documentation
+
+  typespecs:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache: *mix_caches
+      - restore_cache: *build_caches
+      - restore_cache: *plt_cache
+
+      - run: mix dialyzer --halt-exit-status
+
+      - save_cache: *save_plt_cache
+
+  format:
+    <<: *defaults
+    steps:
+      - checkout
+      - restore_cache: *mix_caches
+
+      - run: mix format --check-formatted
+
+  deploy-staging:
+    working_directory: ~/repo
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - '4c:7b:f0:25:e5:b3:8e:b8:5b:9c:c6:3b:d9:85:e8:de'
+      - run:
+          name: Build and deploy release to staging
+          command: ./bin/deploy staging
+
+  deploy-production:
+    working_directory: ~/repo
+    machine:
+      image: circleci/classic:latest
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - '4c:7b:f0:25:e5:b3:8e:b8:5b:9c:c6:3b:d9:85:e8:de'
+      - run:
+          name: Set up artifacts directory
+          command: mkdir -p rel/artifacts
+      - run:
+          name: Build and deploy release to production
+          command: ./bin/deploy production
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - build
+      - format:
+          requires:
+            - build
+      - docs:
+          requires:
+            - build
+      - typespecs:
+          requires:
+            - build
+      - test:
+          requires:
+            - build
+      - deploy-staging:
+          context: gifme-staging
+          requires:
+            - format
+            - docs
+            - typespecs
+            - test
+          filters:
+            branches:
+              only: staging
+      - deploy-production:
+          context: gifme-production
+          requires:
+            - format
+            - docs
+            - typespecs
+            - test
+          filters:
+            branches:
+              only: master
