@@ -15,19 +15,19 @@ $ iex -S mix
 2. Create a Game Server, providing a shortcode and player (only id required for now)
 
 ```elixir
-$ iex> GameApp.ServerSupervisor.start_game("ABCD", %GameApp.Player{ name: "fatal1ty", id: "Gamer" })
+$ iex> GifMe.Game.ServerSupervisor.start_game("ABCD", %GifMe.Game.Player{ name: "fatal1ty", id: "Gamer" })
 ```
 
 3. Get a summary of the game state (shortcode required to locate correct game server process to message)
 
 ```elixir
-$ iex> GameApp.Server.summary("ABCD")
+$ iex> GifMe.Game.Server.summary("ABCD")
 
 %{
-  creator: %GameApp.Player{id: "gamer", name: "fatal1ity"},
+  creator: %GifMe.Game.Player{id: "gamer", name: "fatal1ity"},
   funmaster: nil,
   phase: :lobby,
-  players: %{"gamer" => %GameApp.Player{id: "gamer", name: "fatal1ity"}},
+  players: %{"gamer" => %GifMe.Game.Player{id: "gamer", name: "fatal1ity"}},
   prompt: nil,
   reactions: nil,
   round_number: nil,
@@ -40,25 +40,25 @@ $ iex> GameApp.Server.summary("ABCD")
 4. Join another player to the game
 
 ```elixir
-$ iex> GameApp.Server.join("ABCD", %GameApp.Player{ id: "Noob", name: "dylan" })
+$ iex> GifMe.Game.Server.join("ABCD", %GifMe.Game.Player{ id: "Noob", name: "dylan" })
 ```
 
 5. Remove a player from the game
 
 ```elixir
-$ iex> GameApp.Server.leave("ABCD", %GameApp.Player{ id: "Noob", name: "dylan"})
+$ iex> GifMe.Game.Server.leave("ABCD", %GifMe.Game.Player{ id: "Noob", name: "dylan"})
 ```
 
 6. Start the game
 
 ```elixir
-$ iex> GameApp.Server.start_game("ABCD")
+$ iex> GifMe.Game.Server.start_game("ABCD")
 ```
 
 7. Start the next round
 
 ```elixir
-$ iex> GameApp.Server.start_round("ABCD")
+$ iex> GifMe.Game.Server.start_round("ABCD")
 ```
 
 

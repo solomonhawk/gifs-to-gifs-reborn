@@ -1,5 +1,5 @@
-defmodule Ui.Router do
-  use Ui, :router
+defmodule GifMe.Ui.Router do
+  use GifMe.Ui, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -14,7 +14,7 @@ defmodule Ui.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", Ui do
+  scope "/", GifMe.Ui do
     pipe_through :browser
 
     get "/", GameController, :new

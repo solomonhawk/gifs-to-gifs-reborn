@@ -1,3 +1,3 @@
-defmodule Ui.LayoutView do
-  use Ui, :view
+defmodule GifMe.Ui.LayoutView do
+  use GifMe.Ui, :view
 end

@@ -1,5 +1,5 @@
-defmodule Ui.GameControllerTest do
-  use Ui.ConnCase
+defmodule GifMe.Ui.GameControllerTest do
+  use GifMe.Ui.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")

@@ -1,7 +1,7 @@
-defmodule Ui.GameController do
-  use Ui, :controller
+defmodule GifMe.Ui.GameController do
+  use GifMe.Ui, :controller
 
-  alias GameApp.Server, as: GameServer
+  alias GifMe.Game.Server, as: GameServer
 
   plug :require_player
   plug :set_cache_headers
@@ -15,11 +15,11 @@ defmodule Ui.GameController do
   end
 
   def create(conn, _params) do
-    config = GameApp.Config.create(min_players: 2, reaction_selection_timeout: 0)
+    config = GifMe.Game.Config.create(min_players: 2, reaction_selection_timeout: 0)
     shortcode = GameServer.generate_shortcode()
     player = get_session(conn, :current_player)
 
-    case GameApp.ServerSupervisor.start_game(shortcode, player, config) do
+    case GifMe.Game.ServerSupervisor.start_game(shortcode, player, config) do
       {:ok, _pid} ->
         redirect(conn, to: Routes.game_path(conn, :show, shortcode))
 

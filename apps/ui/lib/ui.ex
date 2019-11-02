@@ -1,4 +1,4 @@
-defmodule Ui do
+defmodule GifMe.Ui do
   @moduledoc """
   The entrypoint for defining your web interface, such
   as controllers, views, channels and so on.
@@ -16,6 +16,8 @@ defmodule Ui do
   below. Instead, define any helper function in modules
   and import those modules here.
   """
+
+  alias __MODULE__, as: Ui
 
   def controller do
     quote do

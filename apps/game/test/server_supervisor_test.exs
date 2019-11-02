@@ -1,7 +1,7 @@
 defmodule ServerSupervisorTest do
   use ExUnit.Case, async: false
 
-  alias GameApp.{ServerSupervisor, Player}
+  alias GifMe.Game.{ServerSupervisor, Player}
 
   @player Player.create(id: "1", name: "Test Player")
 

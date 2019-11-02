@@ -1,5 +1,6 @@
-defmodule Ui.Endpoint do
+defmodule GifMe.Ui.Endpoint do
   use Phoenix.Endpoint, otp_app: :ui
+  alias GifMe.Ui
 
   socket "/socket", Ui.UserSocket,
     websocket: true,
@@ -42,5 +43,5 @@ defmodule Ui.Endpoint do
     key: "_ui_key",
     signing_salt: "7c4id0sf"
 
-  plug Ui.Router
+  plug GifMe.Ui.Router
 end

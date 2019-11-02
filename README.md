@@ -10,10 +10,10 @@ The `ExDoc` documentation is available [here](https://solomonhawk.github.io/gifs
 
 ## Starting Points
 
-* [GameApp.Game](https://solomonhawk.github.io/gifs-to-gifs-reborn/GameApp.Game.html) - Game state and logic
-* [GameApp.Round](https://solomonhawk.github.io/gifs-to-gifs-reborn/GameApp.Round.html) - Round state and logic
-* [GameApp.Server](https://solomonhawk.github.io/gifs-to-gifs-reborn/GameApp.Server.html) - Game Server logic (GenServer)
-* [GameApp.ServerSupervisor](https://solomonhawk.github.io/gifs-to-gifs-reborn/GameApp.ServerSupervisor.html) - Supervisor for Game Servers
+* [GifMe.Game.Game](https://solomonhawk.github.io/gifs-to-gifs-reborn/GifMe.Game.Game.html) - Game state and logic
+* [GifMe.Game.Round](https://solomonhawk.github.io/gifs-to-gifs-reborn/GifMe.Game.Round.html) - Round state and logic
+* [GifMe.Game.Server](https://solomonhawk.github.io/gifs-to-gifs-reborn/GifMe.Game.Server.html) - Game Server logic (GenServer)
+* [GifMe.Game.ServerSupervisor](https://solomonhawk.github.io/gifs-to-gifs-reborn/GifMe.Game.ServerSupervisor.html) - Supervisor for Game Servers
 
 ## Set Up
 

@@ -1,4 +1,4 @@
-defmodule GameApp.Config do
+defmodule GifMe.Game.Config do
   alias __MODULE__, as: GameConfig
 
   @derive Jason.Encoder

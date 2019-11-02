@@ -1,3 +1,3 @@
-defmodule Ui.SessionView do
-  use Ui, :view
+defmodule GifMe.Ui.SessionView do
+  use GifMe.Ui, :view
 end

@@ -1,4 +1,4 @@
-defmodule Ui.MixProject do
+defmodule GifMe.Ui.MixProject do
   use Mix.Project
 
   def project do
@@ -24,8 +24,8 @@ defmodule Ui.MixProject do
   # Type `mix help compile.app` for more information.
   def application do
     [
-      mod: {Ui.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      mod: {GifMe.Ui.Application, []},
+      extra_applications: [:logger, :phoenix_ecto, :runtime_tools]
     ]
   end
 
@@ -41,12 +41,14 @@ defmodule Ui.MixProject do
       {:phoenix, "~> 1.4.9"},
       {:phoenix_pubsub, "~> 1.1"},
       {:phoenix_html, "~> 2.11"},
+      {:phoenix_ecto, "~> 4.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
       {:uuid, "~> 1.1"},
-      {:game, in_umbrella: true}
+      {:game, in_umbrella: true},
+      {:db, in_umbrella: true}
     ]
   end
 

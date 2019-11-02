@@ -1,9 +1,9 @@
-defmodule Ui.GameChannel do
-  use Ui, :channel
+defmodule GifMe.Ui.GameChannel do
+  use GifMe.Ui, :channel
 
-  alias Ui.{Presence, ChannelWatcher}
-  alias GameApp.Player
-  alias GameApp.Server, as: GameServer
+  alias GifMe.Ui.{Presence, ChannelWatcher}
+  alias GifMe.Game.Player
+  alias GifMe.Game.Server, as: GameServer
 
   require Logger
 

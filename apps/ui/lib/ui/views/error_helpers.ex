@@ -1,8 +1,8 @@
-defmodule Ui.ErrorHelpers do
+defmodule GifMe.Ui.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
-
+  alias GifMe.Ui
   use Phoenix.HTML
 
   @doc """

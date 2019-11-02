@@ -1,4 +1,4 @@
-defmodule Ui.ConnCase do
+defmodule GifMe.Ui.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -19,10 +19,10 @@ defmodule Ui.ConnCase do
     quote do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
-      alias Ui.Router.Helpers, as: Routes
+      alias GifMe.Ui.Router.Helpers, as: Routes
 
       # The default endpoint for testing
-      @endpoint Ui.Endpoint
+      @endpoint GifMe.Ui.Endpoint
     end
   end
 
