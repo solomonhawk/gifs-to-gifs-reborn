@@ -6,7 +6,7 @@ use Mix.Config
 # The watchers configuration can be used to run external
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
-config :ui, Ui.Endpoint,
+config :ui, GifMe.Ui.Endpoint,
   http: [port: 4000],
   debug_errors: true,
   code_reloader: true,
@@ -46,7 +46,7 @@ config :ui, Ui.Endpoint,
 # different ports.
 
 # Watch static and templates for browser reloading.
-config :ui, Ui.Endpoint,
+config :ui, GifMe.Ui.Endpoint,
   live_reload: [
     patterns: [
       ~r"priv/static/.*(js|css|png|jpeg|jpg|gif|svg)$",
@@ -55,3 +55,10 @@ config :ui, Ui.Endpoint,
       ~r"lib/ui/templates/.*(eex)$"
     ]
   ]
+
+config :db, Db.Repo,
+  database: "gifme_development",
+  username: "solomonhawk",
+  password: "",
+  hostname: "localhost",
+  port: "5432"

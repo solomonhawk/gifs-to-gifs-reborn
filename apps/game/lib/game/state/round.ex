@@ -1,11 +1,11 @@
-defmodule GameApp.Round do
+defmodule GifMe.Game.Round do
   @moduledoc """
-  `GameApp.Round` defines a struct that encapsulates Round state as well as
+  `GifMe.Game.Round` defines a struct that encapsulates Round state as well as
   functions that update the round state.
   """
 
   alias __MODULE__, as: Round
-  alias GameApp.Player
+  alias GifMe.Game.Player
 
   @enforce_keys [:number]
   defstruct number: nil,

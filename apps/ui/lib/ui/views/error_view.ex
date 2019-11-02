@@ -1,5 +1,5 @@
-defmodule Ui.ErrorView do
-  use Ui, :view
+defmodule GifMe.Ui.ErrorView do
+  use GifMe.Ui, :view
 
   # If you want to customize a particular status code
   # for a certain format, you may uncomment below.

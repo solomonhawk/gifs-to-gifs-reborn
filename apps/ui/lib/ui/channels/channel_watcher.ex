@@ -1,4 +1,4 @@
-defmodule Ui.ChannelWatcher do
+defmodule GifMe.Ui.ChannelWatcher do
   use GenServer
 
   ## Client API

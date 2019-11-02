@@ -10,7 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 
-config :ui, Ui.Endpoint,
+config :ui, GifMe.Ui.Endpoint,
   http: [port: 4000],
   url: [scheme: "http", host: System.get_env("HOST", "localhost"), port: 80],
   cache_static_manifest: "priv/static/cache_manifest.json",
@@ -26,7 +26,7 @@ config :logger, :environment_log, path: "var/log/application.log"
 # To get SSL working, you will need to add the `https` key
 # to the previous section and set your `:url` port to 443:
 #
-#     config :ui, Ui.Endpoint,
+#     config :ui, GifMe.Ui.Endpoint,
 #       ...
 #       url: [host: "example.com", port: 443],
 #       https: [
@@ -50,7 +50,7 @@ config :logger, :environment_log, path: "var/log/application.log"
 # We also recommend setting `force_ssl` in your endpoint, ensuring
 # no data is ever sent via http, always redirecting to https:
 #
-#     config :ui, Ui.Endpoint,
+#     config :ui, GifMe.Ui.Endpoint,
 #       force_ssl: [hsts: true]
 #
 # Check `Plug.SSL` for all available options in `force_ssl`.

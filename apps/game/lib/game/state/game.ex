@@ -1,12 +1,12 @@
-defmodule GameApp.Game do
+defmodule GifMe.Game.Game do
   @moduledoc """
-  `GameApp.Game` defines a struct that encapsulates game state as well as many
+  `GifMe.Game.Game` defines a struct that encapsulates game state as well as many
   functions that advance the game state based on actions that players can take.
   """
 
   alias __MODULE__, as: Game
-  alias GameApp.{Player, Round}
-  alias GameApp.Config, as: GameConfig
+  alias GifMe.Game.{Player, Round}
+  alias GifMe.Game.Config, as: GameConfig
 
   require Logger
 

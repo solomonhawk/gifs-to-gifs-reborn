@@ -1,7 +1,8 @@
-defmodule Ui.Application do
+defmodule GifMe.Ui.Application do
   @moduledoc false
 
   use Application
+  alias GifMe.Ui
 
   def start(_type, _args) do
     children = [

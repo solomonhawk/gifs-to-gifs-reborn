@@ -1,4 +1,5 @@
-defmodule Ui.ErrorViewTest do
+defmodule GifMe.Ui.ErrorViewTest do
+  alias GifMe.Ui
   use Ui.ConnCase, async: true
 
   # Bring render/3 and render_to_string/3 for testing custom views

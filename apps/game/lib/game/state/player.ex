@@ -1,4 +1,4 @@
-defmodule GameApp.Player do
+defmodule GifMe.Game.Player do
   @moduledoc """
   A player in the game.
   """

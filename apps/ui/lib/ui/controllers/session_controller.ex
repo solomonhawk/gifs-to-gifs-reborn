@@ -1,12 +1,12 @@
-defmodule Ui.SessionController do
-  use Ui, :controller
+defmodule GifMe.Ui.SessionController do
+  use GifMe.Ui, :controller
 
   def new(conn, _params) do
     render(conn, "new.html")
   end
 
   def create(conn, %{"player" => %{"name" => name}}) do
-    player = GameApp.Player.create(id: UUID.uuid4(), name: name)
+    player = GifMe.Game.Player.create(id: UUID.uuid4(), name: name)
 
     conn
     |> put_session(:current_player, player)

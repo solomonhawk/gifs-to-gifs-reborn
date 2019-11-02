@@ -1,14 +1,14 @@
-defmodule GameApp.Server do
+defmodule GifMe.Game.Server do
   @moduledoc """
-  `GameApp.Server` provides a stateful process that maintains an internal game
+  `GifMe.Game.Server` provides a stateful process that maintains an internal game
   state and provides a public API for interacting with the game.
   """
 
   use GenServer
 
   alias __MODULE__, as: Server
-  alias GameApp.{Game, Player}
-  alias GameApp.Config, as: GameConfig
+  alias GifMe.Game.{Game, Player}
+  alias GifMe.Game.Config, as: GameConfig
 
   require Logger
 
@@ -270,9 +270,9 @@ defmodule GameApp.Server do
   @doc """
   Returns a tuple used to register and lookup a game server process by name.
   """
-  @spec via_tuple(String.t()) :: {:via, Registry, {GameApp.Registry, String.t()}}
+  @spec via_tuple(String.t()) :: {:via, Registry, {GifMe.Game.Registry, String.t()}}
   def via_tuple(shortcode) do
-    {:via, Registry, {GameApp.Registry, "game:" <> shortcode}}
+    {:via, Registry, {GifMe.Game.Registry, "game:" <> shortcode}}
   end
 
   @doc """

@@ -1,3 +1,3 @@
-defmodule Ui.GameViewTest do
-  use Ui.ConnCase, async: true
+defmodule GifMe.Ui.GameViewTest do
+  use GifMe.Ui.ConnCase, async: true
 end

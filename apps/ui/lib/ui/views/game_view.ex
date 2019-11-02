@@ -1,3 +1,3 @@
-defmodule Ui.GameView do
-  use Ui, :view
+defmodule GifMe.Ui.GameView do
+  use GifMe.Ui, :view
 end
