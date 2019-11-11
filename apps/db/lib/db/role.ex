@@ -6,8 +6,8 @@ defmodule GifMe.DB.Role do
   @required_fields ~w(type)a
 
   schema "roles" do
-    field :type, :string
-    has_many :users, GifMe.DB.User
+    field(:type, :string)
+    has_many(:users, GifMe.DB.User)
   end
 
   def changeset(role, params \\ %{}) do

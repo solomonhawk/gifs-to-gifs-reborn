@@ -4,9 +4,9 @@ defmodule GifMe.DB.User do
   @required_fields ~w(nickname email role_id)a
 
   schema "users" do
-    field :nickname, :string
-    field :email, :string
-    belongs_to :role, GifMe.DB.Role, foreign_key: :role_id
+    field(:nickname, :string)
+    field(:email, :string)
+    belongs_to(:role, GifMe.DB.Role, foreign_key: :role_id)
 
     timestamps()
   end
