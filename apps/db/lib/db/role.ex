@@ -1,7 +1,7 @@
 defmodule GifMe.DB.Role do
   use GifMe.DB.Schema
 
-  @role_types ~w(user admin)
+  @role_types ~w(player admin)
 
   @required_fields ~w(type)a
 
