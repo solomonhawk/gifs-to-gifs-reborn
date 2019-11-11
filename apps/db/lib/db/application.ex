@@ -7,8 +7,7 @@ defmodule GifMe.DB.Application do
 
   def start(_type, _args) do
     children = [
-      # Starts a worker by calling: Game.DB.Worker.start_link(arg)
-      # {Game.DB.Worker, arg}
+      GifMe.DB.Repo
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

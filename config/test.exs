@@ -12,3 +12,12 @@ config :junit_formatter,
   report_dir: Path.join(File.cwd!(), "_reports"),
   print_report_file: true,
   prepend_project_name?: true
+
+config :db, GifMe.DB.Repo,
+  database: "gifme_test",
+  username: "solomonhawk",
+  password: "",
+  hostname: "localhost",
+  port: "5432",
+  pool: Ecto.Adapters.SQL.Sandbox,
+  poolsize: 10

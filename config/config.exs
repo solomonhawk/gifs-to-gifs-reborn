@@ -11,9 +11,9 @@ config :ui, GifMe.Ui.Endpoint,
   render_errors: [view: GifMe.Ui.ErrorView, accepts: ~w(html json)],
   pubsub: [name: GifMe.Ui.PubSub, adapter: Phoenix.PubSub.PG2]
 
-config :db, ecto_repos: [Db.Repo]
+config :db, ecto_repos: [GifMe.DB.Repo]
 
-config :db, Db.Repo,
+config :db, GifMe.DB.Repo,
   database: "gifme_development",
   username: "postgres",
   password: "postgres",

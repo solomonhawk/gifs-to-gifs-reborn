@@ -51,6 +51,7 @@ defmodule GifMe.MixProject do
 
   defp aliases do
     [
+      seed: ["run apps/db/priv/repo/seeds.exs"],
       coveralls: ["coveralls --umbrella"],
       "coveralls.html": ["coveralls.html --umbrella"],
       "coveralls.detail": ["coveralls.detail --umbrella"]

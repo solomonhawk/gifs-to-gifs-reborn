@@ -56,7 +56,7 @@ config :ui, GifMe.Ui.Endpoint,
     ]
   ]
 
-config :db, Db.Repo,
+config :db, GifMe.DB.Repo,
   database: "gifme_development",
   username: "solomonhawk",
   password: "",
