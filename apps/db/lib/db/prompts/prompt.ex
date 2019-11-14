@@ -4,8 +4,10 @@ defmodule GifMe.DB.Prompts.Prompt do
   @required_fields ~w(type source url)a
 
   schema "prompts" do
-    field(:type, :string) # e.g. tweet, article, image
-    field(:source, :string) # e.g. twitter, cnn.com, reddit.com
+    # e.g. tweet, article, image
+    field(:type, :string)
+    # e.g. twitter, cnn.com, reddit.com
+    field(:source, :string)
     field(:url, :string)
   end
 

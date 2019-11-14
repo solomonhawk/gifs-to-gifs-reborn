@@ -1,7 +1,6 @@
 defmodule GifMe.DB.RoleTest do
   use GifMe.DB.DataCase, async: true
 
-  alias GifMe.DB.Repo
   alias GifMe.DB.Accounts
   alias GifMe.DB.Accounts.Role
 
