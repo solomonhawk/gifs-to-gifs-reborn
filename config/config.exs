@@ -1,7 +1,7 @@
 import Config
 
 config :ui,
-  generators: [context_app: false]
+  generators: [context_app: false, binary_id: true]
 
 config :game, :children, [GifMe.Game.ServerSupervisor]
 
@@ -11,14 +11,12 @@ config :ui, GifMe.Ui.Endpoint,
   render_errors: [view: GifMe.Ui.ErrorView, accepts: ~w(html json)],
   pubsub: [name: GifMe.Ui.PubSub, adapter: Phoenix.PubSub.PG2]
 
-config :db, ecto_repos: [Db.Repo]
+config :db, ecto_repos: [GifMe.DB.Repo]
 
-config :db, Db.Repo,
-  database: "gifme_development",
-  username: "postgres",
-  password: "postgres",
-  hostname: "localhost",
-  port: "5432"
+config :auth, GifMe.Auth.Guardian,
+  issuer: "GifMe",
+  serializer: GifMe.Auth.Serializer,
+  secret_key: "kP6FbBEQkKlY5gJU4bPcqtOGngIhlGPuMbkG9B96xJlzrCGBmpfLw54oUIaJ1dlF"
 
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

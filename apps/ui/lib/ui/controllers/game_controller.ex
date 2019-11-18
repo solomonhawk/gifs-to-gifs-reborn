@@ -1,9 +1,13 @@
 defmodule GifMe.Ui.GameController do
   use GifMe.Ui, :controller
 
-  alias GifMe.Game.Server, as: GameServer
+  import GifMe.Ui.Router.Helpers
 
-  plug :require_player
+  alias GifMe.Game.Config, as: GameConfig
+  alias GifMe.Game.Server, as: GameServer
+  alias GifMe.Game.ServerSupervisor
+  alias GifMe.Auth.Guardian
+
   plug :set_cache_headers
 
   def new(conn, _) do
@@ -11,27 +15,27 @@ defmodule GifMe.Ui.GameController do
   end
 
   def join(conn, %{"id" => shortcode}) do
-    redirect(conn, to: Routes.game_path(conn, :show, shortcode))
+    redirect(conn, to: game_path(conn, :show, shortcode))
   end
 
   def create(conn, _params) do
-    config = GifMe.Game.Config.create(min_players: 2, reaction_selection_timeout: 0)
+    config = GameConfig.create(min_players: 2, reaction_selection_timeout: 0)
     shortcode = GameServer.generate_shortcode()
-    player = get_session(conn, :current_player)
+    player = current_player(conn)
 
-    case GifMe.Game.ServerSupervisor.start_game(shortcode, player, config) do
+    case ServerSupervisor.start_game(shortcode, player, config) do
       {:ok, _pid} ->
-        redirect(conn, to: Routes.game_path(conn, :show, shortcode))
+        redirect(conn, to: game_path(conn, :show, shortcode))
 
       {:error, _reason} ->
         conn
         |> put_flash(:error, "Error! Unable to create game.")
-        |> redirect(to: Routes.game_path(conn, :new))
+        |> redirect(to: game_path(conn, :new))
     end
   end
 
   def show(conn, %{"id" => shortcode}) do
-    player = get_session(conn, :current_player)
+    player = current_player(conn)
 
     case GameServer.game_pid(shortcode) do
       pid when is_pid(pid) ->
@@ -45,25 +49,16 @@ defmodule GifMe.Ui.GameController do
       nil ->
         conn
         |> put_flash(:error, "Game not found!")
-        |> redirect(to: Routes.game_path(conn, :new))
+        |> redirect(to: game_path(conn, :new))
     end
   end
 
   defp generate_auth_token(conn) do
-    Phoenix.Token.sign(conn, "secret salt", get_session(conn, :current_player))
+    Guardian.Plug.current_token(conn)
   end
 
-  defp require_player(conn, _opts) do
-    cond do
-      get_session(conn, :current_player) ->
-        conn
-
-      true ->
-        conn
-        |> put_session(:referrer, conn.request_path)
-        |> redirect(to: Routes.session_path(conn, :new))
-        |> halt()
-    end
+  defp current_player(conn) do
+    conn.assigns.current_player
   end
 
   defp set_cache_headers(conn, _opts) do

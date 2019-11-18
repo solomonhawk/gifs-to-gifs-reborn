@@ -6,9 +6,6 @@
 # If you run "mix test --cover", coverage assets end up here.
 /cover/
 
-# JUnit reports
-/_reports/*
-
 # The directory Mix downloads your dependencies sources to.
 /deps/
 
@@ -39,6 +36,7 @@ erl_crash.dump
 /_plts/*.plt.hash
 
 rel/artifacts
+tmp
 
 .ssh
 .todo

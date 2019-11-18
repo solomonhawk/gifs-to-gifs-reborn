@@ -110,7 +110,7 @@ defmodule GifMe.Ui.GameChannel do
   end
 
   defp current_player(socket) do
-    socket.assigns.current_player
+    Player.from_user(socket.assigns.current_user)
   end
 
   defp handle_creator_action(shortcode, player, socket, callback) do

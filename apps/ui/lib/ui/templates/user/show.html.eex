@@ -1,0 +1,20 @@
+<h1><%= @user.email %></h1>
+<% IO.inspect @user %>
+<table>
+  <tbody>
+    <tr>
+      <td>Nickname:</td>
+      <td style="width: 100%;"><%= @user.nickname %></td>
+    </tr>
+    <tr>
+      <td>Email:</td>
+      <td style="width: 100%;"><%= @user.email %></td>
+    </tr>
+    <tr>
+      <td>Password:</td>
+      <td style="width: 100%;"><%= @user.password %></td>
+    </tr>
+  </tbody>
+<table>
+
+<%= link "Edit", to: Routes.user_path(@conn, :edit, @user.id) %>

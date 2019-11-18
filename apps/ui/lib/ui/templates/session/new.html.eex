@@ -1,8 +1,17 @@
-<h1>New Session</h1>
+<h1>Sign In</h1>
 
-<%= form_for @conn, Routes.session_path(@conn, :create), [as: :player, autocomplete: "off"], fn f -> %>
-  <%= text_input f, :name,
-                    placeholder: "Name",
-                    autofocus: true,
-                    required: true %>
+<%= form_for @conn, Routes.session_path(@conn, :create), [as: :session], fn f -> %>
+  <div>
+    <%= text_input f, :email, placeholder: "Email" %>
+  </div>
+
+  <div>
+    <%= password_input f, :password, placeholder: "Password" %>
+  </div>
+
+  <%= submit "Sign In" %>
 <% end %>
+
+<div>
+  New user? <%= link "Create an account", to: Routes.user_path(@conn, :new) %>
+</div>

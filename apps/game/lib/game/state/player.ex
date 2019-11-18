@@ -22,4 +22,8 @@ defmodule GifMe.Game.Player do
   def create(attrs \\ []) do
     struct(Player, attrs)
   end
+
+  def from_user(user) do
+    create(id: user.id, name: user.nickname)
+  end
 end

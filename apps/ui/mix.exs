@@ -48,6 +48,7 @@ defmodule GifMe.Ui.MixProject do
       {:plug_cowboy, "~> 2.0"},
       {:uuid, "~> 1.1"},
       {:game, in_umbrella: true},
+      {:auth, in_umbrella: true},
       {:db, in_umbrella: true}
     ]
   end

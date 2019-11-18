@@ -1,29 +1,38 @@
 defmodule GifMe.Ui.SessionController do
   use GifMe.Ui, :controller
 
+  import GifMe.Ui.Router.Helpers
+
+  alias GifMe.Auth
+  alias GifMe.Auth.Guardian
+
+  plug :scrub_params, "session" when action in ~w(create)a
+
   def new(conn, _params) do
-    render(conn, "new.html")
+    case Guardian.Plug.current_resource(conn) do
+      nil -> render(conn, "new.html")
+      _user -> redirect(conn, to: game_path(conn, :new))
+    end
   end
 
-  def create(conn, %{"player" => %{"name" => name}}) do
-    player = GifMe.Game.Player.create(id: UUID.uuid4(), name: name)
+  def create(conn, %{"session" => user_params}) do
+    case Auth.authenticate(conn, user_params) do
+      {:ok, conn, user} ->
+        conn
+        |> put_flash(:info, "Welcome back #{user.nickname}!")
+        |> redirect(to: game_path(conn, :new))
 
-    conn
-    |> put_session(:current_player, player)
-    |> redirect_back_or_to_new_game()
+      {:error, _reason, conn} ->
+        conn
+        |> put_flash(:error, "Invalid email/password combination")
+        |> render("new.html")
+    end
   end
 
-  def delete(conn, _params) do
+  def delete(conn, _) do
     conn
-    |> put_session(:current_player, nil)
-    |> redirect(to: "/")
-  end
-
-  defp redirect_back_or_to_new_game(conn) do
-    path = get_session(conn, :referrer) || Routes.game_path(conn, :new)
-
-    conn
-    |> put_session(:referrer, nil)
-    |> redirect(to: path)
+    |> Auth.logout()
+    |> put_flash(:info, "See you later!")
+    |> redirect(to: session_path(conn, :new))
   end
 end

@@ -1,6 +1,8 @@
 defmodule GifMe.Ui.UserSocket do
   use Phoenix.Socket
 
+  alias GifMe.Auth.Guardian
+
   ## Channels
   channel "games:*", GifMe.Ui.GameChannel
 
@@ -16,16 +18,18 @@ defmodule GifMe.Ui.UserSocket do
   # See `Phoenix.Token` documentation for examples in
   # performing token verification on connect.
   def connect(%{"token" => token}, socket) do
-    case Phoenix.Token.verify(socket, "secret salt", token, max_age: 86400) do
-      {:ok, player} ->
-        {:ok, assign(socket, :current_player, player)}
-
+    with {:ok, claims} <- Guardian.decode_and_verify(token),
+         {:ok, user} <- Guardian.resource_from_claims(claims) do
+      {:ok, assign(socket, :current_user, user)}
+    else
       {:error, _reason} ->
         :error
     end
   end
 
-  def connect(_params, _socket), do: :error
+  def connect(_params, _socket) do
+    :error
+  end
 
   # Socket id's are topics that allow you to identify all sockets for a given user:
   #

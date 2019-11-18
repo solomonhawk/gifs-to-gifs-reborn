@@ -1,0 +1,9 @@
+<h1>Edit Prompt</h1>
+
+<%= form_for @changeset, Routes.prompt_path(@conn, :update, @prompt), [as: :prompt], fn f -> %>
+  <%= text_input f, :type, placeholder: "Type" %>
+  <%= text_input f, :source, placeholder: "Source" %>
+  <%= text_input f, :url, placeholder: "URL" %>
+
+  <%= submit "Update Prompt" %>
+<% end %>
