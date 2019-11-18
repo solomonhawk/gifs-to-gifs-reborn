@@ -25,7 +25,6 @@ node_defaults: &node_defaults
       environment:
         YARN_CACHE_FOLDER: /home/circleci/repo/.cache/yarn
 
-version: 2
 jobs:
   build:
     <<: *elixir_defaults
@@ -98,18 +97,13 @@ jobs:
           path: ~/repo/cover
           destination: exunit-coverage-report
 
-
       # - run: mkdir _reports
-
       # - restore_cache: *mix_caches
       # - restore_cache: *build_caches
-
       # - run: mix coveralls.html
-
       # - store_artifacts:
       #     path: cover
       #     destination: coverage_results
-
       # - store_test_results:
       #     path: _reports
 
