@@ -63,8 +63,8 @@ config :db, GifMe.DB.Repo,
   username: System.get_env("DB_USER"),
   password: System.get_env("DB_PASS")
 
-  # database: "gifme_development",
-  # username: "solomonhawk",
-  # password: "",
-  # hostname: "localhost",
-  # port: "5432"
+# database: "gifme_development",
+# username: "solomonhawk",
+# password: "",
+# hostname: "localhost",
+# port: "5432"

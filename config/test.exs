@@ -24,10 +24,10 @@ config :db, GifMe.DB.Repo,
   pool_size: :erlang.system_info(:schedulers_online),
   pool_overflow: :erlang.system_info(:schedulers_online)
 
-  # database: "gifme_test",
-  # username: "solomonhawk",
-  # password: "",
-  # hostname: "localhost",
-  # port: "5432",
-  # pool: Ecto.Adapters.SQL.Sandbox,
-  # poolsize: 10
+# database: "gifme_test",
+# username: "solomonhawk",
+# password: "",
+# hostname: "localhost",
+# port: "5432",
+# pool: Ecto.Adapters.SQL.Sandbox,
+# poolsize: 10

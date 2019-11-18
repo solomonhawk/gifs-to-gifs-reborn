@@ -29,6 +29,7 @@ defmodule GifMe.Ui.UserController do
       {:ok, _user} ->
         conn
         |> login_and_redirect(user_params)
+
       {:error, changeset} ->
         conn
         |> render("new.html", changeset: changeset)
@@ -56,10 +57,11 @@ defmodule GifMe.Ui.UserController do
         conn
         |> put_flash(:info, "Welcome to gifme")
         |> redirect(to: Routes.user_path(conn, :show, user.id))
+
       {:error, _reason, conn} ->
         conn
         |> put_flash(:error, "Oops, something went wrong.")
         |> redirect(to: Routes.session_path(conn, :new))
-      end
+    end
   end
 end
