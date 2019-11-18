@@ -33,6 +33,8 @@ defmodule GifMe.DB.Accounts.User do
 
   def fields, do: @fields
 
+  def with_computed_fields(nil), do: nil
+
   def with_computed_fields(user) do
     Map.put(user, :is_admin?, Accounts.is_admin?(user))
   end

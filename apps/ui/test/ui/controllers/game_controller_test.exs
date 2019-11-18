@@ -3,6 +3,6 @@ defmodule GifMe.Ui.GameControllerTest do
 
   test "GET /", %{conn: conn} do
     conn = get(conn, "/")
-    assert redirected_to(conn, 302) =~ "/sessions/new"
+    assert redirected_to(conn, 302) =~ "/games/new"
   end
 end
