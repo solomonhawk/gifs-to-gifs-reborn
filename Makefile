@@ -23,7 +23,7 @@ dev:
 	PORT=4000 mix phx.server
 
 iex:
-	PORT=4000 iex --erl "-kernel shell_history enabled" -S mix phx.server
+	./bin/server
 
 ssh:
 	ssh root@gifme-web

@@ -7,7 +7,7 @@
 - [x] [game] Assign points for winning
 - [x] [game] Determine win condition (point target parameter on create game screen?, max number of rounds?)
 - [x] [game] Notify UI clients when game server state updates internally
-- [ ] [apps] Provision server and deploy somewhere
+- [x] [apps] Provision server and deploy somewhere
 - [ ] Figure out the next iteration of selecing a prompt
 - [ ] Figure out the next iteration of selecting a reaction
 - [ ] Show prompt + current reaction to players when funmaster is selecting winner

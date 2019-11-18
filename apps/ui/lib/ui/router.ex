@@ -7,7 +7,19 @@ defmodule GifMe.Ui.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug :assign_current_player
+  end
+
+  pipeline :auth do
+    plug GifMe.Ui.AuthPipeline
+    plug GifMe.Ui.CurrentUser
+  end
+
+  pipeline :protected do
+    plug Guardian.Plug.EnsureAuthenticated
+  end
+
+  pipeline :protected_admin do
+    plug GifMe.Ui.AdminPipeline
   end
 
   pipeline :api do
@@ -15,19 +27,29 @@ defmodule GifMe.Ui.Router do
   end
 
   scope "/", GifMe.Ui do
-    pipe_through :browser
+    pipe_through [:browser, :auth]
 
-    get "/", GameController, :new
+    # TODO(shawk): landing page
+    get "/", Redirector, to: "/sessions/new"
+
+    resources "/users", UserController, only: [:new, :create]
+    resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
+  end
+
+  scope "/", GifMe.Ui do
+    pipe_through [:browser, :auth, :protected]
+
+    get "/", Redirector, to: "/games/new"
+
     post "/join", GameController, :join, as: :join
 
     resources "/games", GameController, only: [:new, :create, :show]
-
-    resources "/sessions", SessionController,
-      only: [:new, :create, :delete],
-      singleton: true
+    resources "/users", UserController, except: [:new, :create]
   end
 
-  defp assign_current_player(conn, _) do
-    assign(conn, :current_player, get_session(conn, :current_player))
+  scope "/admin", GifMe.Ui do
+    pipe_through [:browser, :auth, :protected, :protected_admin]
+
+    resources "/prompts", PromptController
   end
 end

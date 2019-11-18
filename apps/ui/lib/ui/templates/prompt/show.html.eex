@@ -1,0 +1,19 @@
+<h1>Prompt Detail</h1>
+<%= link "Edit", to: Routes.prompt_path(@conn, :edit, @prompt) %>
+
+<table>
+  <tbody>
+    <tr>
+      <td>Type:</td>
+      <td style="width: 100%;"><%= @prompt.type %></td>
+    </tr>
+    <tr>
+      <td>Source:</td>
+      <td style="width: 100%;">via <%= @prompt.source %></td>
+    </tr>
+    <tr>
+      <td>URL:</td>
+      <td style="width: 100%;"><%= @prompt.url %></td>
+    </tr>
+  </tbody>
+<table>

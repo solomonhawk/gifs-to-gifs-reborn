@@ -6,6 +6,7 @@ defmodule GifMe.DB.Repo.Migrations.CreateUsers do
       add :id, :binary_id, primary_key: true
       add :nickname, :string
       add :email, :string
+      add :password_hash, :string
 
       timestamps()
     end

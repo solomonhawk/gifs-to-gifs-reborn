@@ -1,0 +1,32 @@
+<h1>All Prompts</h1>
+
+<%= link "New Prompt", to: Routes.prompt_path(@conn, :new) %>
+
+<%= if length(@prompts) > 0 do %>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Source</th>
+        <th>URL</th>
+        <th></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%= for prompt <- @prompts do %>
+        <tr>
+          <td><%= prompt.type %></td>
+          <td><%= prompt.source %></td>
+          <td><%= link "Link", to: prompt.url %></td>
+          <td><%= link "Edit", to: Routes.prompt_path(@conn, :edit, prompt.id) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div>
+    No prompts yet! <%= link "Make one?", to: Routes.prompt_path(@conn, :new) %>
+  </div>
+<% end %>
+

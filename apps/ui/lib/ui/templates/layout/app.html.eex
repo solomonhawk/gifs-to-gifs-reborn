@@ -18,12 +18,23 @@
           </a>
 
           <div>
-            <%= if @current_player do %>
+            <%= if @current_user do %>
+              <%= if @current_user.is_admin? do %>
+                <%= link "Prompts", to: Routes.prompt_path(@conn, :index) %>
+                <span class="divider">|</span>
+              <% end%>
+
               <%= link "New Game", to: Routes.game_path(@conn, :new) %>
               <span class="divider">|</span>
-              <%= link "Switch Player", to: Routes.session_path(@conn, :delete), method: :delete %>
+
+              <%= link "Log Out", to: Routes.session_path(@conn, :delete), method: :delete %>
               <span class="divider">|</span>
-              Logged in as: <%= @current_player.name %>
+
+              Logged in as: <%= link @current_user.nickname, to: Routes.user_path(@conn, :show, @current_user) %>
+            <% else %>
+              <%= link "Sign In", to: Routes.session_path(@conn, :new) %>
+              <span class="divider">|</span>
+              <%= link "Register", to: Routes.user_path(@conn, :new) %>
             <% end %>
           </div>
         </section>

@@ -54,7 +54,9 @@ defmodule GifMe.MixProject do
       seed: ["run apps/db/priv/repo/seeds.exs"],
       coveralls: ["coveralls --umbrella"],
       "coveralls.html": ["coveralls.html --umbrella"],
-      "coveralls.detail": ["coveralls.detail --umbrella"]
+      "coveralls.detail": ["coveralls.detail --umbrella"],
+      "ecto.setup": ["ecto.create", "ecto.migrate", "run apps/db/priv/repo/seeds.exs"],
+      "ecto.reset": ["ecto.drop", "ecto.setup"]
     ]
   end
 
@@ -62,10 +64,18 @@ defmodule GifMe.MixProject do
     [
       flags: [:error_handling, :race_conditions, :underspecs, :unmatched_returns],
       plt_add_apps: [:ex_unit, :mix],
-      plt_file: {:no_warn, "_plts/dialyzer.plt"},
       ignore_warnings: ".dialyzer_ignore.exs"
+    ] ++ plt_files(ci: System.get_env("CI"))
+  end
+
+  defp plt_files(ci: "true") do
+    [
+      plt_core_path: ".cache/plt-core",
+      plt_file: {:no_warn, ".cache/plt-project/gifme.plt"}
     ]
   end
+
+  defp plt_files(_), do: []
 
   defp make_tar(%Mix.Release{} = rel) do
     tar_filename = "#{rel.name}.tar.gz"

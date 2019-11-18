@@ -58,7 +58,13 @@ config :ui, GifMe.Ui.Endpoint,
 
 config :db, GifMe.DB.Repo,
   database: "gifme_development",
-  username: "solomonhawk",
-  password: "",
-  hostname: "localhost",
-  port: "5432"
+  pool_size: 10,
+  ownership_timeout: 30_000,
+  username: System.get_env("DB_USER"),
+  password: System.get_env("DB_PASS")
+
+  # database: "gifme_development",
+  # username: "solomonhawk",
+  # password: "",
+  # hostname: "localhost",
+  # port: "5432"

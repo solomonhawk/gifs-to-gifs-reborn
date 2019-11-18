@@ -1,0 +1,11 @@
+#!/bin/bash
+set -e
+
+source .env
+
+(
+  cd apps/ui/assets
+  yarn check --integrity || yarn install
+) &
+
+iex --erl "-kernel shell_history enabled" -S mix phx.server

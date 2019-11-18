@@ -1,129 +1,153 @@
-aliases:
-  # restore caches
-  - &mix_caches
-    keys:
-      - v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-      - v1-mix-cache-{{ .Branch }}
-      - v1-mix-cache
+attach_workspace: &attach_workspace
+  attach_workspace:
+    at: ~/repo
 
-  - &build_caches
-    keys:
-      - v1-build-cache-{{ .Branch }}
-      - v1-build-cache
-
-  - &plt_cache
-    keys:
-      - v1-dialyzer-plt-cache
-
-  # save caches
-  - &save_mix_cache_checksum
-    key: v1-mix-cache-{{ .Branch }}-{{ checksum "mix.lock" }}
-    paths:
-      - deps
-      - ~/.mix
-
-  - &save_mix_cache_branch
-    key: v1-mix-cache-{{ .Branch }}
-    paths:
-      - deps
-      - ~/.mix
-
-  - &save_mix_cache_fallback
-    key: v1-mix-cache
-    paths:
-      - deps
-      - ~/.mix
-
-  - &save_build_cache_branch
-    key: v1-build-cache-{{ .Branch }}
-    paths: _build
-
-  - &save_build_cache_fallback
-    key: v1-build-cache
-    paths: _build
-
-  - &save_plt_cache
-    key: v1-dialyzer-plt-cache
-    paths: _plts
-
-defaults: &defaults
+elixir_defaults: &defaults
   working_directory: ~/repo
   docker:
-    - image: circleci/elixir:1.9.0
+    - image: circleci/elixir:1.9.0-node-browsers
       environment:
         MIX_ENV: test
+        HEX_HOME: /home/circleci/repo/.cache/hex
+        MIX_HOME: /home/circleci/repo/.cache/mix
+        DB_USER: root
+    - image: circleci/postgres:10.4-alpine-ram
+      environment:
+        DB_NAME: gifme_test
+        DB_USER: root
+
+node_defaults: &node_defaults
+  working_directory: ~/repo
+  docker:
+    - image: circleci/node:10.15.0
+      environment:
+        YARN_CACHE_FOLDER: /home/circleci/repo/.cache/yarn
 
 version: 2
 jobs:
   build:
-    <<: *defaults
+    <<: *elixir_defaults
     steps:
       - checkout
-      - run: mix local.hex --force
+      - *attach_workspace
+      - restore_cache:
+          key: v1-mix-{{ arch }}-{{ checksum ".tool-versions" }}-{{ checksum "mix.lock" }}
+
+      - run: mkdir -p ~/repo/.cache/{hex,mix}
+      - run: mix local.hex --if-missing --force
       - run: mix local.rebar --force
-
-      - restore_cache: *mix_caches
-      - restore_cache: *build_caches
-
       - run: mix deps.get
-      - run: mix compile
 
-      - save_cache: *save_mix_cache_checksum
-      - save_cache: *save_mix_cache_branch
-      - save_cache: *save_mix_cache_fallback
-      - save_cache: *save_build_cache_branch
-      - save_cache: *save_build_cache_fallback
+      - save_cache:
+          paths:
+            - deps
+            - .cache/hex
+            - .cache/mix
+          key: v1-mix-{{ arch }}-{{ checksum ".tool-versions" }}-{{ checksum "mix.lock" }}
+
+      - run: mix compile --force --warnings-as-errors
+
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - .cache/hex
+            - .cache/mix
+            - deps
+            - _build
+
+  yarn-install:
+    <<: *node_defaults
+    steps:
+      - checkout
+      - *attach_workspace
+      - restore_cache:
+          key: v1-node-modules-{{ arch }}-{{ checksum ".tool-versions" }}-{{ checksum "apps/ui/assets/yarn.lock" }}
+      - run:
+          working_directory: apps/ui/assets
+          command: yarn install
+      - run:
+          working_directory: apps/ui/assets
+          command: yarn build-production
+      - save_cache:
+          paths:
+            - apps/ui/assets/node_modules
+            - .cache/yarn
+          key: v1-node-modules-{{ arch }}-{{ checksum ".tool-versions" }}-{{ checksum "apps/ui/assets/yarn.lock" }}
+      - persist_to_workspace:
+          root: ~/repo
+          paths:
+            - apps/ui/assets/node_modules
+            - apps/ui/priv/static
 
   test:
-    <<: *defaults
+    <<: *elixir_defaults
     steps:
       - checkout
+      - *attach_workspace
+      - run: dockerize -wait tcp://localhost:5432 -timeout 1m
+      - run: sudo apt-get update
       - run: sudo apt-get -y install inotify-tools
-      - run: mkdir _reports
-
-      - restore_cache: *mix_caches
-      - restore_cache: *build_caches
-
-      - run: mix coveralls.html
-
-      - store_artifacts:
-          path: cover
-          destination: coverage_results
-
+      - run: sudo apt install -y postgresql-client || true
+      - run: mix phx.digest
+      - run: mix test --cover
       - store_test_results:
-          path: _reports
+          path: ~/repo/tmp/test-results
+      - store_artifacts:
+          path: ~/repo/cover
+          destination: exunit-coverage-report
+
+
+      # - run: mkdir _reports
+
+      # - restore_cache: *mix_caches
+      # - restore_cache: *build_caches
+
+      # - run: mix coveralls.html
+
+      # - store_artifacts:
+      #     path: cover
+      #     destination: coverage_results
+
+      # - store_test_results:
+      #     path: _reports
 
   docs:
-    <<: *defaults
+    <<: *elixir_defaults
     steps:
       - checkout
-      - restore_cache: *mix_caches
-      - restore_cache: *build_caches
-
+      - *attach_workspace
       - run: mix docs
-
       - store_artifacts:
-          path: docs
+          path: ~/repo/docs
           destination: documentation
 
   typespecs:
-    <<: *defaults
+    <<: *elixir_defaults
     steps:
       - checkout
-      - restore_cache: *mix_caches
-      - restore_cache: *build_caches
-      - restore_cache: *plt_cache
-
+      - *attach_workspace
+      - restore_cache:
+          keys:
+            - v3-dialyxir-lang-{{ checksum ".tool-versions" }}
+      - restore_cache:
+          keys:
+            - v3-dialyxir-project-{{ checksum ".tool-versions" }}-{{ checksum "mix.lock" }}
+      - run: mkdir -p ~/repo/.cache/{plt-core,plt-project}
       - run: mix dialyzer --halt-exit-status
-
-      - save_cache: *save_plt_cache
+      - save_cache:
+          paths:
+            - .cache/plt-core
+          key: v3-dialyxir-lang-{{ checksum ".tool-versions" }}
+      - save_cache:
+          paths:
+            - .cache/plt-project
+          key: v3-dialyxir-project-{{ checksum ".tool-versions" }}-{{ checksum "mix.lock" }}
 
   format:
-    <<: *defaults
+    <<: *elixir_defaults
     steps:
       - checkout
-      - restore_cache: *mix_caches
-
+      - *attach_workspace
       - run: mix format --check-formatted
 
   deploy-staging:
@@ -160,6 +184,9 @@ workflows:
   build_and_test:
     jobs:
       - build
+      - yarn-install:
+          requires:
+            - build
       - format:
           requires:
             - build
@@ -172,6 +199,7 @@ workflows:
       - test:
           requires:
             - build
+            - yarn-install
       - deploy-staging:
           context: gifme-staging
           requires:
