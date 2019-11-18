@@ -1,8 +1,10 @@
+version: 2
+
 attach_workspace: &attach_workspace
   attach_workspace:
     at: ~/repo
 
-elixir_defaults: &defaults
+elixir_defaults: &elixir_defaults
   working_directory: ~/repo
   docker:
     - image: circleci/elixir:1.9.0-node-browsers
