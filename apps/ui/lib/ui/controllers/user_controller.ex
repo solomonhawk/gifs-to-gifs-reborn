@@ -2,7 +2,7 @@ defmodule GifMe.Ui.UserController do
   use GifMe.Ui, :controller
 
   alias GifMe.DB.Accounts
-  alias GifMe.DB.Accounts.{User, Role}
+  alias GifMe.DB.Accounts.User
   alias GifMe.Auth
 
   def new(conn, _) do

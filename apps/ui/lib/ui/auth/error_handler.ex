@@ -1,5 +1,4 @@
 defmodule GifMe.Ui.AuthErrorHandler do
-  import Plug.Conn
   import GifMe.Ui.Router.Helpers
 
   @behaviour Guardian.Plug.ErrorHandler

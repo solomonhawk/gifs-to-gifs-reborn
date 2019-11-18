@@ -30,7 +30,7 @@ defmodule GifMe.Ui.Router do
     pipe_through [:browser, :auth]
 
     # TODO(shawk): landing page
-    get "/", Redirector, to: "/sessions/new"
+    get "/", Redirector, to: "/games/new"
 
     resources "/users", UserController, only: [:new, :create]
     resources "/sessions", SessionController, only: [:new, :create, :delete], singleton: true
@@ -38,8 +38,6 @@ defmodule GifMe.Ui.Router do
 
   scope "/", GifMe.Ui do
     pipe_through [:browser, :auth, :protected]
-
-    get "/", Redirector, to: "/games/new"
 
     post "/join", GameController, :join, as: :join
 

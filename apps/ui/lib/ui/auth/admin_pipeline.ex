@@ -2,8 +2,6 @@ defmodule GifMe.Ui.AdminPipeline do
   import Plug.Conn
   import Guardian.Plug
 
-  alias GifMe.DB.Accounts
-
   def init(opts), do: opts
 
   def call(conn, _opts) do
